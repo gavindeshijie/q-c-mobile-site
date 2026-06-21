@@ -122,7 +122,7 @@ export function Header({ site }: HeaderProps) {
       </nav>
 
       {isAccountOpen ? (
-        <div className="account-modal-layer pointer-events-auto fixed inset-0 z-[90] flex items-center justify-center px-5">
+        <div className="account-modal-layer pointer-events-auto fixed z-[90] flex items-center justify-center p-4">
           <button
             type="button"
             aria-label="关闭个人中心"
@@ -133,7 +133,7 @@ export function Header({ site }: HeaderProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="account-dialog-title"
-            className="account-modal-panel relative z-10 w-full max-w-[360px]"
+            className="account-modal-panel relative z-10 w-full max-w-[330px]"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
