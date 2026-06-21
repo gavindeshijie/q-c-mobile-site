@@ -22,7 +22,7 @@ type AuthMode = "entry" | "otp";
 type CooldownReason = "OTP_RESEND_COOLDOWN" | "EMAIL_PROVIDER_RATE_LIMIT";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const codePattern = /^\d{6}$/;
+const codePattern = /^\d{8}$/;
 const DEFAULT_OTP_COOLDOWN_SECONDS = 60;
 const DEFAULT_PROVIDER_LIMIT_SECONDS = 60 * 60;
 const COOLDOWN_STORAGE_PREFIX = "q-c-email-otp-cooldown:";
@@ -136,7 +136,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const canRequestCode = !isBusy && cooldownSeconds <= 0;
   const canSubmitCode = !isBusy && codePattern.test(code.trim());
   const feedbackError =
-    cooldownReason && cooldownSeconds > 0
+    showRateLimitHint && cooldownReason && cooldownSeconds > 0
       ? getCooldownMessage(cooldownReason, cooldownSeconds)
       : localError ?? auth.error;
 
@@ -317,7 +317,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
     }
 
     if (!codePattern.test(code.trim())) {
-      setLocalError("请输入 6 位邮箱验证码。");
+      setLocalError("请输入 8 位邮箱验证码。");
       return;
     }
 
@@ -488,11 +488,11 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
               type="text"
               inputMode="numeric"
               autoComplete="one-time-code"
-              placeholder="请输入 6 位验证码"
-              maxLength={6}
+              placeholder="请输入 8 位验证码"
+              maxLength={8}
               value={code}
               onChange={(event) => {
-                setCode(event.target.value.replace(/\D/g, "").slice(0, 6));
+                setCode(event.target.value.replace(/\D/g, "").slice(0, 8));
               }}
             />
           </label>

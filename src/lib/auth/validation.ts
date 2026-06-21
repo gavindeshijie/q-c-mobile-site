@@ -13,7 +13,7 @@ export const otpCodeSchema = z
   .string()
   .trim()
   .min(1, "请输入邮箱验证码")
-  .regex(/^\d{6}$/, "请输入 6 位邮箱验证码");
+  .regex(/^\d{8}$/, "请输入 8 位邮箱验证码");
 
 export const loginSchema = z.object({
   email: emailSchema,
@@ -35,7 +35,7 @@ export const verifyOtpSchema = z
     code: otpCodeSchema.optional(),
   })
   .refine((value) => value.token ?? value.code, {
-    message: "请输入 6 位邮箱验证码",
+    message: "请输入 8 位邮箱验证码",
     path: ["token"],
   })
   .transform((value) => ({

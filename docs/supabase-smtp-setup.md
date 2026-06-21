@@ -4,7 +4,7 @@ q-c.hk 使用无密码邮箱验证码登录：
 
 1. 用户输入邮箱。
 2. 点击获取验证码。
-3. Supabase Auth 发送 6 位 OTP。
+3. Supabase Auth 发送 8 位 OTP。
 4. 用户回到 q-c.hk 输入验证码完成登录。
 
 ## 为什么会出现 email rate limit exceeded
@@ -126,7 +126,7 @@ Authentication
 {{ .ConfirmationURL }}
 ```
 
-否则用户会收到链接邮件，而不是 6 位验证码。
+否则用户会收到链接邮件，而不是 8 位验证码。
 
 ## 参考模板
 
@@ -141,7 +141,7 @@ q-c.hk 登录验证码
 ```html
 <h2>q-c.hk 登录验证码</h2>
 <p>你正在使用邮箱验证码登录 q-c.hk。</p>
-<p>你的 6 位验证码是：</p>
+<p>你的 8 位验证码是：</p>
 <h1 style="font-size:32px;letter-spacing:6px;">{{ .Token }}</h1>
 <p>请在有效期内完成登录。</p>
 <p>如果这不是你本人操作，请忽略此邮件。</p>
