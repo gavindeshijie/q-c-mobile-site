@@ -21,11 +21,31 @@ export const siteContent = {
       href: "#business",
     },
     nodes: [
-      { title: "网站与软件定制", subtitle: "WEB / SOFTWARE" },
-      { title: "软硬件结合开发", subtitle: "SOFT / HARDWARE" },
-      { title: "资源整合与销售", subtitle: "RESOURCE / SALES" },
-      { title: "潮流科技商品供应", subtitle: "TREND SUPPLY" },
-      { title: "泰国网店开店协助", subtitle: "THAI E-COMMERCE" },
+      {
+        title: "网站与软件定制",
+        thai: "รับทำเว็บไซต์และซอฟต์แวร์",
+        subtitle: "WEB / SOFTWARE",
+      },
+      {
+        title: "软硬件结合开发",
+        thai: "พัฒนาซอฟต์แวร์และฮาร์ดแวร์",
+        subtitle: "SOFT / HARDWARE",
+      },
+      {
+        title: "本地资源整合与销售",
+        thai: "รวมทรัพยากรท้องถิ่นและการขาย",
+        subtitle: "LOCAL RESOURCE / SALES",
+      },
+      {
+        title: "潮流科技小商品供应",
+        thai: "จัดหาสินค้าเทคโนโลยียอดนิยม",
+        subtitle: "TREND TECH SUPPLY",
+      },
+      {
+        title: "泰国本土网店开店协助与商品供应",
+        thai: "ช่วยเปิดร้านค้าออนไลน์ไทยและจัดหาสินค้า",
+        subtitle: "THAI SHOP / SUPPLY",
+      },
     ],
     highlights: ["Thailand", "Supply", "Technology", "Sales"],
   },

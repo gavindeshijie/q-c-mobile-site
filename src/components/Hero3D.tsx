@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ChevronDown, CircleDot } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, type TargetAndTransition, useReducedMotion } from "framer-motion";
 
 import type { SiteContent } from "@/data/siteContent";
 
@@ -10,19 +10,31 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "left-[calc(50%_-_75px)] top-0 w-[150px]",
-  "right-0 top-[27%] w-[126px]",
-  "left-0 top-[30%] w-[126px]",
-  "left-[3%] bottom-[4%] w-[138px]",
-  "right-[3%] bottom-[4%] w-[138px]",
+  "left-[calc(50%_-_86px)] top-0 w-[172px]",
+  "right-0 top-[22%] w-[158px]",
+  "left-0 top-[25%] w-[158px]",
+  "left-0 bottom-[2%] w-[158px]",
+  "right-0 bottom-[1%] w-[168px]",
 ] as const;
 
-const nodeAnchors = [
-  { x: 50, y: 20 },
-  { x: 82, y: 43 },
-  { x: 18, y: 46 },
-  { x: 27, y: 78 },
-  { x: 73, y: 78 },
+const nodeTilts = ["-3.5deg", "3deg", "-4deg", "2.6deg", "-2.4deg"] as const;
+
+const nodeDepths = [48, 40, 36, 44, 52] as const;
+
+const nodeMotion: TargetAndTransition[] = [
+  { x: [0, 2, -2, 0], y: [0, -6, 2, 0], rotateX: [0, 2, -1, 0] },
+  { x: [0, -3, 2, 0], y: [0, 5, -5, 0], rotateY: [0, -3, 2, 0] },
+  { x: [0, 3, -2, 0], y: [0, -4, 6, 0], rotateY: [0, 3, -2, 0] },
+  { x: [0, -2, 3, 0], y: [0, 7, -3, 0], rotateX: [0, -2, 1, 0] },
+  { x: [0, 3, -3, 0], y: [0, -5, 6, 0], rotateX: [0, 1, -2, 0] },
+];
+
+const connectionPaths = [
+  { d: "M50 52 C50 42 49 30 50 18", x: 50, y: 18 },
+  { d: "M50 52 C61 42 70 36 84 38", x: 84, y: 38 },
+  { d: "M50 52 C39 42 29 40 16 43", x: 16, y: 43 },
+  { d: "M50 52 C39 62 31 70 23 80", x: 23, y: 80 },
+  { d: "M50 52 C61 63 69 71 78 80", x: 78, y: 80 },
 ] as const;
 
 const particlePositions = [
@@ -34,6 +46,10 @@ const particlePositions = [
   "left-[53%] top-[36%]",
   "left-[33%] top-[50%]",
   "left-[70%] top-[70%]",
+  "left-[48%] top-[11%]",
+  "left-[84%] top-[32%]",
+  "left-[8%] top-[36%]",
+  "left-[58%] top-[86%]",
 ] as const;
 
 export function Hero3D({ hero }: Hero3DProps) {
@@ -53,13 +69,17 @@ export function Hero3D({ hero }: Hero3DProps) {
       </div>
 
       <div
-        className="relative mx-auto flex h-[min(88vw,342px)] w-full max-w-[390px] items-center justify-center [perspective:1080px]"
+        className="relative mx-auto flex h-[min(96vw,374px)] w-full max-w-[390px] items-center justify-center [perspective:1120px]"
       >
+        <div className="hero-deep-space absolute inset-[-10%]" />
         <motion.div
           className="hero-hub-glow absolute inset-[-14%]"
           animate={reduceMotion ? undefined : { opacity: [0.58, 0.98, 0.58] }}
           transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
         />
+        <div className="hero-signal-grid absolute inset-[1%]" />
+        <div className="hero-energy-ribbon hero-energy-ribbon-one absolute left-[3%] top-[23%] h-[38%] w-[94%]" />
+        <div className="hero-energy-ribbon hero-energy-ribbon-two absolute left-[7%] top-[45%] h-[32%] w-[86%]" />
         <div className="hero-depth-disc absolute left-1/2 top-[53%] h-[42%] w-[72%] -translate-x-1/2 rounded-full" />
 
         <motion.div
@@ -96,22 +116,23 @@ export function Hero3D({ hero }: Hero3DProps) {
                 </feMerge>
               </filter>
             </defs>
-            {nodeAnchors.map((anchor) => (
-              <g key={`${anchor.x}-${anchor.y}`} filter="url(#hero-line-glow)">
-                <line
-                  x1="50"
-                  y1="50"
-                  x2={anchor.x}
-                  y2={anchor.y}
+            {connectionPaths.map((path, index) => (
+              <g key={path.d} filter="url(#hero-line-glow)">
+                <path
+                  className="hero-connection-base"
+                  d={path.d}
                   stroke="url(#hero-connection-line)"
-                  strokeLinecap="round"
-                  strokeWidth="0.42"
+                />
+                <path
+                  className="hero-connection-flow"
+                  d={path.d}
+                  style={{ animationDelay: `${index * -0.42}s` }}
                 />
                 <circle
-                  cx={anchor.x}
-                  cy={anchor.y}
+                  className="hero-connection-dot"
+                  cx={path.x}
+                  cy={path.y}
                   r="1.15"
-                  fill="rgba(165,243,252,0.9)"
                 />
               </g>
             ))}
@@ -138,9 +159,11 @@ export function Hero3D({ hero }: Hero3DProps) {
               transition={{ duration: 7.6, repeat: Infinity, ease: "easeInOut" }}
             >
               <div className="hero-core-shadow absolute inset-[12%] rounded-full" />
+              <div className="hero-core-rim hero-core-rim-back absolute inset-[-20%] rounded-full" />
               <div className="hero-glass-core absolute inset-0 rounded-full" />
               <div className="hero-core-lattice absolute inset-[10%] rounded-full" />
               <div className="hero-inner-world absolute inset-[22%] rounded-full" />
+              <div className="hero-core-prism absolute left-1/2 top-1/2" />
               <div className="hero-core-cube absolute left-1/2 top-1/2">
                 <span className="hero-cube-face hero-cube-front" />
                 <span className="hero-cube-face hero-cube-back" />
@@ -149,6 +172,7 @@ export function Hero3D({ hero }: Hero3DProps) {
                 <span className="hero-cube-face hero-cube-top" />
                 <span className="hero-cube-face hero-cube-bottom" />
               </div>
+              <div className="hero-core-rim hero-core-rim-front absolute inset-[-15%] rounded-full" />
               <div className="absolute inset-[28%] rounded-full bg-cyan-200/45 blur-xl" />
               <div className="absolute left-[19%] top-[17%] h-[22%] w-[22%] rounded-full bg-white/45 blur-md" />
               <div className="hero-data-stream absolute left-[11%] top-[47%] h-px w-[78%] rotate-[-14deg]" />
@@ -162,7 +186,9 @@ export function Hero3D({ hero }: Hero3DProps) {
           {particlePositions.map((position, index) => (
             <motion.span
               key={position}
-              className={`absolute z-40 h-1 w-1 rounded-full bg-cyan-100 shadow-[0_0_14px_rgba(103,232,249,0.9)] ${position}`}
+              className={`hero-particle absolute z-40 rounded-full ${
+                index % 3 === 0 ? "h-1.5 w-1.5" : "h-1 w-1"
+              } ${position}`}
               animate={
                 reduceMotion
                   ? undefined
@@ -182,22 +208,29 @@ export function Hero3D({ hero }: Hero3DProps) {
           {hero.nodes.map((node, index) => (
             <motion.div
               key={node.title}
-              className={`hero-business-node absolute z-50 ${nodePositions[index]} flex min-h-[58px] flex-col items-center justify-center px-2.5 py-2 text-center`}
+              className={`absolute z-50 ${nodePositions[index]} [transform-style:preserve-3d]`}
               whileTap={{ scale: 0.96 }}
-              animate={reduceMotion ? undefined : { y: [0, index % 2 ? -7 : 7, 0] }}
+              whileHover={{ scale: 1.025 }}
+              animate={reduceMotion ? undefined : nodeMotion[index]}
               transition={{
-                duration: 4.9 + index * 0.28,
+                duration: 5.6 + index * 0.32,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             >
-              <span className="hero-node-scan mb-1 h-px w-11 rounded-full" />
-              <span className="text-[11px] font-semibold leading-[1.18] text-white">
-                {node.title}
-              </span>
-              <span className="mt-1 text-[7px] font-semibold uppercase leading-3 tracking-[0.08em] text-cyan-100/64">
-                {node.subtitle}
-              </span>
+              <div
+                className="hero-business-node flex min-h-[78px] flex-col items-center justify-center px-2.5 py-2 text-center"
+                style={{
+                  transform: `rotate(${nodeTilts[index]}) translateZ(${nodeDepths[index]}px)`,
+                }}
+              >
+                <span className="hero-node-scan mb-1 h-px w-12 rounded-full" />
+                <span className="hero-node-title">{node.title}</span>
+                <span lang="th" className="hero-node-thai">
+                  {node.thai}
+                </span>
+                <span className="hero-node-en">{node.subtitle}</span>
+              </div>
             </motion.div>
           ))}
         </motion.div>
