@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, LockKeyhole, Mail, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
 import type { SiteContent } from "@/data/siteContent";
 
@@ -16,7 +16,6 @@ type HeaderProps = {
 export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "register">("login");
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
@@ -153,62 +152,22 @@ export function Header({ site }: HeaderProps) {
               </button>
             </div>
 
-            <div className="account-auth-switch mt-5 grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                className={authMode === "login" ? "is-active" : ""}
-                onClick={() => setAuthMode("login")}
-              >
-                邮箱登录
+            <div className="account-google-actions mt-6 space-y-3">
+              <button type="button" className="google-auth-button">
+                <span className="google-auth-mark">G</span>
+                <span className="flex-1 text-left">谷歌登录</span>
+                <ArrowRight size={18} strokeWidth={2} />
               </button>
-              <button
-                type="button"
-                className={authMode === "register" ? "is-active" : ""}
-                onClick={() => setAuthMode("register")}
-              >
-                邮箱注册
+              <button type="button" className="google-auth-button google-auth-register">
+                <span className="google-auth-mark">G</span>
+                <span className="flex-1 text-left">谷歌注册账户</span>
+                <ArrowRight size={18} strokeWidth={2} />
               </button>
             </div>
 
-            <form
-              className="mt-5 space-y-3"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label className="account-field">
-                <span>
-                  <Mail size={15} strokeWidth={2} />
-                  邮箱地址
-                </span>
-                <input type="email" placeholder="name@example.com" required />
-              </label>
-
-              <label className="account-field">
-                <span>
-                  <LockKeyhole size={15} strokeWidth={2} />
-                  登录密码
-                </span>
-                <input
-                  type="password"
-                  placeholder={authMode === "login" ? "输入密码" : "设置密码"}
-                  required
-                />
-              </label>
-
-              {authMode === "register" ? (
-                <label className="account-field">
-                  <span>
-                    <LockKeyhole size={15} strokeWidth={2} />
-                    确认密码
-                  </span>
-                  <input type="password" placeholder="再次输入密码" required />
-                </label>
-              ) : null}
-
-              <button type="submit" className="account-submit">
-                {authMode === "login" ? "登录账户" : "注册账户"}
-                <ArrowRight size={18} strokeWidth={2} />
-              </button>
-            </form>
+            <p className="account-modal-note">
+              账户入口已预留，后续可接入真实谷歌授权与会员功能。
+            </p>
           </section>
         </div>
       ) : null}
