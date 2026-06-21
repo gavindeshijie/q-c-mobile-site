@@ -13,7 +13,7 @@ type Hero3DProps = {
 const nodePositions = [
   "w-[164px]",
   "ml-2 w-[174px]",
-  "w-[170px]",
+  "w-[188px]",
   "ml-2 w-[184px]",
 ] as const;
 
@@ -23,7 +23,12 @@ const nodeDrift = [-2, 2, -2, 2] as const;
 
 const nodeNumbers = ["01", "02", "03", "04"] as const;
 
-const nodeTitleClasses = ["", "hero-node-title-nowrap", "", ""] as const;
+const nodeTitleClasses = [
+  "",
+  "hero-node-title-nowrap",
+  "hero-node-title-nowrap",
+  "",
+] as const;
 
 const particlePositions = [
   "left-[8%] top-[17%]",

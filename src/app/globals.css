@@ -1440,8 +1440,17 @@ svg {
 .hero-node-title {
   display: block;
   max-width: 100%;
-  background: linear-gradient(104deg, #ffffff 0%, #f8fbff 38%, #9eefff 68%, #d8b4fe 100%);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 33%,
+    #dffbff 42%,
+    #67e8f9 48%,
+    #ffffff 56%,
+    #ffffff 100%
+  );
   background-clip: text;
+  background-size: 230% 100%;
   color: #ffffff;
   font-size: clamp(15px, 4vw, 15.8px);
   font-weight: 900;
@@ -1454,6 +1463,7 @@ svg {
   text-wrap: balance;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: hero-title-water-shine 3.6s linear infinite;
 }
 
 .hero-hud-node .hero-node-title-nowrap {
@@ -1467,6 +1477,12 @@ svg {
   font-size: clamp(13.8px, 3.55vw, 14.5px);
   letter-spacing: -0.045em;
   text-wrap: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-node-title {
+    animation: none;
+  }
 }
 
 .hero-node-thai {
@@ -1490,6 +1506,16 @@ svg {
   letter-spacing: 0.08em;
   line-height: 1.1;
   overflow-wrap: anywhere;
+}
+
+@keyframes hero-title-water-shine {
+  0% {
+    background-position: 130% 50%;
+  }
+
+  100% {
+    background-position: -130% 50%;
+  }
 }
 
 @keyframes hero-halo-breathe {
