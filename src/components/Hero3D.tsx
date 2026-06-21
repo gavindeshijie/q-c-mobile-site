@@ -33,6 +33,9 @@ const particlePositions = [
   "left-[16%] top-[88%]",
 ] as const;
 
+// TODO: Replace with transparent character cutout for perfect layering.
+const characterImage = "/images/hero-character.png";
+
 export function Hero3D({ hero }: Hero3DProps) {
   const reduceMotion = useReducedMotion();
   const characterMotion = reduceMotion ? undefined : { y: [0, -3, 0] };
@@ -65,7 +68,7 @@ export function Hero3D({ hero }: Hero3DProps) {
           transition={characterTransition}
         >
           <Image
-            src="/images/hero-character.png"
+            src={characterImage}
             alt=""
             fill
             priority
@@ -74,9 +77,9 @@ export function Hero3D({ hero }: Hero3DProps) {
           />
         </motion.div>
 
-        <div className="hero-neon-triangle hero-neon-triangle-main absolute right-[-5%] top-[9%] z-20" />
-        <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-one absolute right-[18%] top-[19%] z-20" />
-        <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-two absolute right-[2%] top-[67%] z-20" />
+        <div className="hero-neon-triangle hero-neon-triangle-main absolute left-[94px] top-[128px] z-[34]" />
+        <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-one absolute right-[18%] top-[19%] z-[28]" />
+        <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-two absolute right-[2%] top-[67%] z-[28]" />
 
         <div className="hero-character-hud absolute right-[9%] top-[28%] z-[22] h-[28%] w-[45%]" />
         <div className="hero-scanline absolute inset-x-0 top-[29%] z-[22] h-px" />
@@ -103,12 +106,12 @@ export function Hero3D({ hero }: Hero3DProps) {
 
         <motion.div
           aria-hidden="true"
-          className="hero-character-foreground absolute inset-0 z-30"
+          className="hero-character-foreground absolute inset-0 z-[36]"
           animate={characterMotion}
           transition={characterTransition}
         >
           <Image
-            src="/images/hero-character.png"
+            src={characterImage}
             alt=""
             fill
             sizes="(max-width: 430px) 100vw, 430px"

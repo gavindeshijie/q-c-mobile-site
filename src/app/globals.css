@@ -422,24 +422,43 @@ svg {
 }
 
 .hero-neon-triangle {
-  width: min(88vw, 360px);
+  width: min(84vw, 340px);
   aspect-ratio: 1.08;
   pointer-events: none;
   background: linear-gradient(130deg, #f472b6, #7c3aed 48%, #22d3ee);
   clip-path: polygon(8% 7%, 96% 51%, 8% 93%, 8% 7%);
-  filter: drop-shadow(0 0 10px rgba(244, 114, 182, 0.48)) drop-shadow(0 0 20px rgba(124, 58, 237, 0.3));
-  opacity: 0.42;
-  transform: rotateY(-18deg) rotateZ(1deg);
+  filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.66)) drop-shadow(0 0 26px rgba(124, 58, 237, 0.38)) drop-shadow(0 0 18px rgba(34, 211, 238, 0.18));
+  mix-blend-mode: screen;
+  opacity: 0.66;
+  transform: rotateY(-18deg) rotateZ(-3deg);
   transform-style: preserve-3d;
   animation: hero-triangle-breathe 6.8s ease-in-out infinite;
+}
+
+.hero-neon-triangle-main {
+  -webkit-mask-image: radial-gradient(
+    ellipse at 57% 41%,
+    transparent 0%,
+    transparent 18%,
+    rgba(0, 0, 0, 0.36) 28%,
+    #000 42%
+  );
+  mask-image: radial-gradient(
+    ellipse at 57% 41%,
+    transparent 0%,
+    transparent 18%,
+    rgba(0, 0, 0, 0.36) 28%,
+    #000 42%
+  );
 }
 
 .hero-neon-triangle::after {
   position: absolute;
   inset: 4px;
   content: "";
-  background: rgba(2, 6, 23, 0.7);
+  background: rgba(2, 6, 23, 0.12);
   clip-path: inherit;
+  box-shadow: inset 0 0 18px rgba(103, 232, 249, 0.08);
 }
 
 .hero-neon-triangle-small {
@@ -498,7 +517,17 @@ svg {
 }
 
 .hero-character-cutout {
-  clip-path: inset(0 0 0 34%);
+  clip-path: none;
+  -webkit-mask-image:
+    radial-gradient(ellipse at 65% 37%, #000 0%, #000 20%, rgba(0, 0, 0, 0.55) 30%, transparent 43%),
+    radial-gradient(ellipse at 77% 66%, #000 0%, #000 30%, rgba(0, 0, 0, 0.58) 44%, transparent 60%),
+    radial-gradient(ellipse at 86% 85%, #000 0%, #000 24%, rgba(0, 0, 0, 0.48) 38%, transparent 56%);
+  mask-image:
+    radial-gradient(ellipse at 65% 37%, #000 0%, #000 20%, rgba(0, 0, 0, 0.55) 30%, transparent 43%),
+    radial-gradient(ellipse at 77% 66%, #000 0%, #000 30%, rgba(0, 0, 0, 0.58) 44%, transparent 60%),
+    radial-gradient(ellipse at 86% 85%, #000 0%, #000 24%, rgba(0, 0, 0, 0.48) 38%, transparent 56%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 .hero-character-fallback {
@@ -546,8 +575,8 @@ svg {
 .hero-fullscreen-shade {
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(2, 6, 23, 0.54) 0%, rgba(2, 6, 23, 0.34) 37%, rgba(2, 6, 23, 0.06) 72%),
-    linear-gradient(to bottom, rgba(2, 6, 23, 0.24), transparent 26%, rgba(2, 6, 23, 0.12) 64%, rgba(2, 6, 23, 0.54));
+    linear-gradient(90deg, rgba(2, 6, 23, 0.46) 0%, rgba(2, 6, 23, 0.24) 37%, rgba(2, 6, 23, 0.04) 72%),
+    linear-gradient(to bottom, rgba(2, 6, 23, 0.16), transparent 26%, rgba(2, 6, 23, 0.08) 64%, rgba(2, 6, 23, 0.5));
 }
 
 .hero-left-readability {
