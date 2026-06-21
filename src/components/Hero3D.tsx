@@ -145,9 +145,7 @@ export function Hero3D({ hero }: Hero3DProps) {
           transition={characterTransition}
         >
           <span className="hero-hair-aura" />
-          <span className="hero-hair-strand hero-hair-strand-one" />
-          <span className="hero-hair-strand hero-hair-strand-two" />
-          <span className="hero-hair-strand hero-hair-strand-three" />
+          <span className="hero-hair-sheen" />
           <span className="hero-visor-glow" />
         </motion.div>
 
