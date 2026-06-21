@@ -142,7 +142,7 @@ export function Hero3D({ hero }: Hero3DProps) {
             }}
           >
             <div
-              className="hero-hud-node relative min-h-[58px] px-2 py-2"
+              className="hero-hud-node relative px-2 py-[6px]"
               style={{ transform: `rotate(${nodeTilts[index]})` }}
             >
               <span className="hero-hud-index">{nodeNumbers[index]}</span>
