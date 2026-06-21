@@ -34,6 +34,12 @@ const particlePositions = [
 
 export function Hero3D({ hero }: Hero3DProps) {
   const reduceMotion = useReducedMotion();
+  const characterMotion = reduceMotion ? undefined : { y: [0, -3, 0] };
+  const characterTransition = {
+    duration: 9.5,
+    repeat: Infinity,
+    ease: "easeInOut" as const,
+  };
 
   return (
     <section
@@ -44,7 +50,7 @@ export function Hero3D({ hero }: Hero3DProps) {
       <p className="sr-only">{hero.eyebrow}</p>
       <p className="sr-only">{hero.subtitle}</p>
 
-      <div className="absolute right-4 top-10 z-20 text-[4.8rem] font-semibold leading-none text-white/[0.035]">
+      <div className="absolute right-4 top-10 z-[5] text-[4.8rem] font-semibold leading-none text-white/[0.035]">
         BKK
       </div>
 
@@ -54,8 +60,8 @@ export function Hero3D({ hero }: Hero3DProps) {
 
         <motion.div
           className="hero-character-wrap absolute inset-0 z-10"
-          animate={reduceMotion ? undefined : { y: [0, -3, 0] }}
-          transition={{ duration: 9.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={characterMotion}
+          transition={characterTransition}
         >
           <Image
             src="/images/hero-character.png"
@@ -63,21 +69,21 @@ export function Hero3D({ hero }: Hero3DProps) {
             fill
             priority
             sizes="(max-width: 430px) 100vw, 430px"
-            className="hero-character-image object-cover object-[63%_center]"
+            className="hero-character-image hero-character-backplate object-cover object-[78%_center]"
           />
         </motion.div>
 
-        <div className="hero-neon-triangle hero-neon-triangle-main absolute right-[-11%] top-[8%] z-20" />
+        <div className="hero-neon-triangle hero-neon-triangle-main absolute right-[-5%] top-[9%] z-20" />
         <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-one absolute right-[18%] top-[19%] z-20" />
         <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-two absolute right-[2%] top-[67%] z-20" />
 
-        <div className="hero-character-hud absolute right-[9%] top-[28%] z-30 h-[28%] w-[45%]" />
-        <div className="hero-scanline absolute inset-x-0 top-[29%] z-30 h-px" />
+        <div className="hero-character-hud absolute right-[9%] top-[28%] z-[22] h-[28%] w-[45%]" />
+        <div className="hero-scanline absolute inset-x-0 top-[29%] z-[22] h-px" />
 
         {particlePositions.map((position, index) => (
           <span
             key={position}
-            className={`hero-cyber-particle absolute z-30 rounded-full ${
+            className={`hero-cyber-particle absolute z-[12] rounded-full ${
               index % 2 === 0 ? "h-1.5 w-1.5" : "h-1 w-1"
             } ${position}`}
           />
@@ -86,13 +92,28 @@ export function Hero3D({ hero }: Hero3DProps) {
         <svg
           aria-hidden="true"
           viewBox="0 0 390 760"
-          className="absolute inset-0 z-30 h-full w-full overflow-visible"
+          className="absolute inset-0 z-[18] h-full w-full overflow-visible"
           preserveAspectRatio="none"
         >
           <path className="hero-hud-link" d="M160 92 C225 100 256 150 336 220" />
           <path className="hero-hud-link hero-hud-link-soft" d="M176 248 C226 244 268 282 342 346" />
           <path className="hero-hud-link" d="M154 405 C222 390 274 430 352 508" />
         </svg>
+
+        <motion.div
+          aria-hidden="true"
+          className="hero-character-foreground absolute inset-0 z-30"
+          animate={characterMotion}
+          transition={characterTransition}
+        >
+          <Image
+            src="/images/hero-character.png"
+            alt=""
+            fill
+            sizes="(max-width: 430px) 100vw, 430px"
+            className="hero-character-image hero-character-cutout object-cover object-[78%_center]"
+          />
+        </motion.div>
 
         <div className="hero-fullscreen-shade absolute inset-0 z-40" />
         <div className="hero-left-readability absolute inset-y-0 left-0 z-40 w-[66%]" />
