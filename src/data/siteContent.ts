@@ -16,10 +16,6 @@ export const siteContent = {
     title: "泰国市场一站式供应与技术服务平台",
     subtitle:
       "连接商品、技术、电商、软硬件与资源销售，帮助商家更快进入泰国市场。",
-    primaryAction: {
-      label: "了解合作",
-      href: "#contact",
-    },
     secondaryAction: {
       label: "查看业务",
       href: "#business",
