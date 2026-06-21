@@ -173,37 +173,51 @@ svg {
   transform-origin: 50% 100%;
 }
 
+.hero-fullscreen {
+  height: calc(100svh - 75px);
+  min-height: calc(100svh - 75px);
+  background: #020617;
+}
+
+@supports (height: 100dvh) {
+  .hero-fullscreen {
+    height: calc(100dvh - 75px - env(safe-area-inset-top));
+    min-height: calc(100dvh - 75px - env(safe-area-inset-top));
+  }
+}
+
 .hero-cyber-stage {
   border-radius: 0;
   background:
-    radial-gradient(circle at 76% 38%, rgba(244, 114, 182, 0.18), transparent 24%),
-    radial-gradient(circle at 72% 48%, rgba(124, 58, 237, 0.22), transparent 36%),
-    radial-gradient(circle at 92% 40%, rgba(34, 211, 238, 0.1), transparent 28%),
-    linear-gradient(140deg, rgba(2, 6, 23, 0.98), rgba(5, 8, 22, 0.94) 44%, rgba(8, 10, 26, 0.88));
+    radial-gradient(circle at 72% 32%, rgba(244, 114, 182, 0.2), transparent 28%),
+    radial-gradient(circle at 82% 54%, rgba(34, 211, 238, 0.12), transparent 30%),
+    radial-gradient(circle at 34% 38%, rgba(124, 58, 237, 0.18), transparent 36%),
+    linear-gradient(150deg, #020617 0%, #030712 46%, #080a1a 100%);
 }
 
 .hero-cyber-stage::after {
   position: absolute;
-  inset: auto 0 0;
-  height: 34%;
+  inset: 0;
   content: "";
   pointer-events: none;
-  background: linear-gradient(to bottom, transparent, rgba(5, 7, 13, 0.84) 74%, #05070d);
-  z-index: 45;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 23, 0.22), transparent 34%, rgba(2, 6, 23, 0.08)),
+    linear-gradient(to bottom, rgba(2, 6, 23, 0.12), transparent 32%, rgba(2, 6, 23, 0.24));
+  z-index: 25;
 }
 
 .hero-cyber-depth {
   background-image:
-    radial-gradient(circle, rgba(224, 242, 254, 0.5) 0 0.8px, transparent 1.6px),
-    linear-gradient(120deg, transparent 0 34%, rgba(34, 211, 238, 0.08) 35%, transparent 36%),
+    radial-gradient(circle, rgba(224, 242, 254, 0.34) 0 0.8px, transparent 1.6px),
+    linear-gradient(120deg, transparent 0 34%, rgba(34, 211, 238, 0.07) 35%, transparent 36%),
     linear-gradient(165deg, transparent 0 52%, rgba(244, 114, 182, 0.08) 53%, transparent 54%);
   background-size:
-    78px 78px,
-    210px 180px,
-    240px 210px;
-  opacity: 0.42;
-  -webkit-mask-image: radial-gradient(ellipse at 68% 42%, black 0%, rgba(0, 0, 0, 0.78) 52%, transparent 84%);
-  mask-image: radial-gradient(ellipse at 68% 42%, black 0%, rgba(0, 0, 0, 0.78) 52%, transparent 84%);
+    82px 82px,
+    230px 190px,
+    260px 220px;
+  opacity: 0.46;
+  -webkit-mask-image: radial-gradient(ellipse at 68% 42%, black 0%, rgba(0, 0, 0, 0.82) 58%, transparent 90%);
+  mask-image: radial-gradient(ellipse at 68% 42%, black 0%, rgba(0, 0, 0, 0.82) 58%, transparent 90%);
 }
 
 .hero-cyber-grid {
@@ -212,20 +226,20 @@ svg {
     linear-gradient(90deg, rgba(124, 58, 237, 0.08) 1px, transparent 1px);
   background-size: 34px 34px;
   opacity: 0.46;
-  transform: perspective(640px) rotateX(63deg) translateY(38px);
+  transform: perspective(640px) rotateX(64deg) translateY(30px);
   transform-origin: 50% 100%;
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 34%, transparent 92%);
   mask-image: linear-gradient(to bottom, transparent, black 34%, transparent 92%);
 }
 
 .hero-neon-triangle {
-  width: min(74vw, 318px);
+  width: min(88vw, 360px);
   aspect-ratio: 1.08;
   pointer-events: none;
   background: linear-gradient(130deg, #f472b6, #7c3aed 48%, #22d3ee);
   clip-path: polygon(8% 7%, 96% 51%, 8% 93%, 8% 7%);
-  filter: drop-shadow(0 0 13px rgba(244, 114, 182, 0.74)) drop-shadow(0 0 24px rgba(124, 58, 237, 0.44));
-  opacity: 0.92;
+  filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.62)) drop-shadow(0 0 24px rgba(124, 58, 237, 0.34));
+  opacity: 0.74;
   transform: rotateY(-18deg) rotateZ(1deg);
   transform-style: preserve-3d;
   animation: hero-triangle-breathe 6.8s ease-in-out infinite;
@@ -235,7 +249,7 @@ svg {
   position: absolute;
   inset: 4px;
   content: "";
-  background: rgba(2, 6, 23, 0.96);
+  background: rgba(2, 6, 23, 0.6);
   clip-path: inherit;
 }
 
@@ -260,29 +274,32 @@ svg {
 
 .hero-character-wrap::before {
   position: absolute;
-  inset: 20% 8% 6% 24%;
+  inset: 18% -5% 4% 38%;
   content: "";
   border-radius: 999px;
-  background: rgba(244, 114, 182, 0.24);
-  filter: blur(20px);
+  background: rgba(244, 114, 182, 0.22);
+  filter: blur(18px);
+  z-index: 2;
 }
 
 .hero-character-wrap::after {
   position: absolute;
-  inset: 33% 15% 6% 48%;
+  inset: 28% 2% 8% 52%;
   content: "";
   border-radius: 999px;
-  background: rgba(34, 211, 238, 0.2);
+  background: rgba(34, 211, 238, 0.16);
   filter: blur(16px);
+  z-index: 2;
 }
 
 .hero-character-image {
   filter:
-    saturate(1.1)
-    contrast(1.03)
-    drop-shadow(0 0 12px rgba(244, 114, 182, 0.22));
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 77%, transparent 98%);
-  mask-image: linear-gradient(to bottom, black 0%, black 77%, transparent 98%);
+    saturate(1.16)
+    contrast(1.06)
+    drop-shadow(0 0 10px rgba(244, 114, 182, 0.2));
+  transform: scale(1.08) translateX(-4%);
+  transform-origin: 60% 50%;
+  will-change: transform;
 }
 
 .hero-character-fallback {
@@ -327,6 +344,20 @@ svg {
   animation: hero-scanline-slide 7.5s ease-in-out infinite;
 }
 
+.hero-fullscreen-shade {
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 23, 0.54) 0%, rgba(2, 6, 23, 0.34) 37%, rgba(2, 6, 23, 0.06) 72%),
+    linear-gradient(to bottom, rgba(2, 6, 23, 0.24), transparent 26%, rgba(2, 6, 23, 0.12) 64%, rgba(2, 6, 23, 0.54));
+}
+
+.hero-left-readability {
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 22% 42%, rgba(2, 6, 23, 0.52), rgba(2, 6, 23, 0.28) 52%, transparent 76%),
+    linear-gradient(90deg, rgba(2, 6, 23, 0.46), transparent);
+}
+
 .hero-cyber-particle {
   background: rgba(224, 242, 254, 0.86);
   box-shadow: 0 0 12px rgba(103, 232, 249, 0.76);
@@ -346,16 +377,17 @@ svg {
 
 .hero-hud-node {
   overflow: hidden;
-  border: 1px solid rgba(103, 232, 249, 0.3);
-  border-left-color: rgba(244, 114, 182, 0.56);
+  border: 1px solid rgba(103, 232, 249, 0.34);
+  border-left-color: rgba(244, 114, 182, 0.62);
   border-radius: 12px 3px 12px 3px;
   background:
-    linear-gradient(110deg, rgba(8, 15, 35, 0.66), rgba(8, 15, 35, 0.2)),
-    radial-gradient(circle at 0% 0%, rgba(244, 114, 182, 0.16), transparent 44%);
+    linear-gradient(110deg, rgba(2, 6, 23, 0.68), rgba(8, 15, 35, 0.22)),
+    radial-gradient(circle at 0% 0%, rgba(244, 114, 182, 0.17), transparent 44%);
   box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.28),
+    0 10px 22px rgba(0, 0, 0, 0.32),
+    0 0 14px rgba(34, 211, 238, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.11);
-  backdrop-filter: blur(8px) saturate(145%);
+  backdrop-filter: blur(7px) saturate(135%);
   clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
 }
 
@@ -397,6 +429,19 @@ svg {
 .hero-hud-node .hero-node-en {
   padding-left: 15px;
   padding-right: 16px;
+}
+
+.hero-bottom-actions {
+  padding: 56px max(20px, env(safe-area-inset-right))
+    calc(env(safe-area-inset-bottom) + 18px)
+    max(20px, env(safe-area-inset-left));
+  background: linear-gradient(
+    to top,
+    rgba(2, 6, 23, 0.92) 0%,
+    rgba(2, 6, 23, 0.62) 46%,
+    transparent 100%
+  );
+  backdrop-filter: blur(3px);
 }
 
 .hero-void-depth {
