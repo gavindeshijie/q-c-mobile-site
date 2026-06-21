@@ -76,6 +76,12 @@ svg {
 }
 
 .site-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 9000;
+  width: min(100vw, 430px);
+  max-width: 430px;
   isolation: isolate;
   padding: calc(env(safe-area-inset-top) + 14px)
     max(18px, env(safe-area-inset-right)) 0
@@ -83,6 +89,7 @@ svg {
   background: transparent;
   border: 0;
   box-shadow: none;
+  transform: translate3d(-50%, 0, 0);
 }
 
 .site-header::before {

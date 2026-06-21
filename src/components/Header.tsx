@@ -136,7 +136,7 @@ export function Header({ site }: HeaderProps) {
 
   return (
     <>
-      <header className="site-header pointer-events-none fixed left-1/2 top-0 z-[80] w-full max-w-[430px] -translate-x-1/2">
+      <header className="site-header pointer-events-none">
         {isMenuOpen ? (
           <button
             type="button"
