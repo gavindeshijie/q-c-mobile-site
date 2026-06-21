@@ -3,6 +3,7 @@
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 import type { SiteContent } from "@/data/siteContent";
 
@@ -166,8 +167,9 @@ export function Hero3D({ hero }: Hero3DProps) {
               ease: "easeInOut",
             }}
           >
-            <div
-              className="hero-hud-node relative px-2 py-[6px]"
+            <Link
+              href={node.href}
+              className="hero-hud-node relative block px-2 py-[6px] outline-none transition active:scale-[0.99]"
               style={{ transform: `rotate(${nodeTilts[index]})` }}
             >
               <span
@@ -186,7 +188,7 @@ export function Hero3D({ hero }: Hero3DProps) {
                 {node.thai}
               </span>
               <span className="hero-node-en">{node.subtitle}</span>
-            </div>
+            </Link>
           </motion.div>
         ))}
       </div>

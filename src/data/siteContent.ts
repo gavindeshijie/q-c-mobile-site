@@ -6,6 +6,10 @@ export const siteContent = {
   fullTagline: "Thailand Market Supply & Technology Hub",
   chineseTagline: "泰国市场一站式供应与技术服务平台",
   menuLabel: "菜单",
+  entryLinks: {
+    brand: "/brand",
+    menu: "/menu",
+  },
   desktopNotice: "请使用手机浏览",
   hero: {
     eyebrow: "Thailand Market Supply & Technology Hub",
@@ -25,21 +29,25 @@ export const siteContent = {
         title: "网站与软件定制",
         thai: "รับทำเว็บไซต์และซอฟต์แวร์",
         subtitle: "WEB / SOFTWARE",
+        href: "/web-software",
       },
       {
         title: "潮流科技小商品供应",
         thai: "จัดหาสินค้าเทคโนโลยียอดนิยม",
         subtitle: "TREND TECH SUPPLY",
+        href: "/trend-tech-supply",
       },
       {
         title: "本地资源整合与销售",
         thai: "รวมทรัพยากรท้องถิ่นและการขาย",
         subtitle: "LOCAL RESOURCE / SALES",
+        href: "/local-resource-sales",
       },
       {
         title: "泰国本土网店一条龙服务",
         thai: "บริการครบวงจรร้านค้าออนไลน์ไทย",
         subtitle: "THAI SHOP FULL SERVICE",
+        href: "/thai-shop-service",
       },
     ],
     highlights: ["Thailand", "Supply", "Technology", "Sales"],
@@ -148,6 +156,44 @@ export const siteContent = {
     scope: "商品供应 / 定制开发 / 泰国网店 / 软硬件方案 / 资源整合",
     copyright: "© 2026 Q-C. All rights reserved.",
   },
+  placeholderPages: [
+    {
+      slug: "brand",
+      title: "品牌入口",
+      label: "Q-C Brand Entry",
+      description: "这里先作为左上角品牌入口页面，后续可替换为品牌介绍、公司信息或其他入口。",
+    },
+    {
+      slug: "menu",
+      title: "菜单入口",
+      label: "Navigation Entry",
+      description: "这里先作为右上角菜单按钮的入口页面，后续可扩展为完整导航、栏目入口或功能页。",
+    },
+    {
+      slug: "web-software",
+      title: "网站与软件定制",
+      label: "WEB / SOFTWARE",
+      description: "页面框架已创建，后续可放置网站、软件、系统开发相关内容。",
+    },
+    {
+      slug: "trend-tech-supply",
+      title: "潮流科技小商品供应",
+      label: "TREND TECH SUPPLY",
+      description: "页面框架已创建，后续可放置商品供应、选品、货源与销售支持内容。",
+    },
+    {
+      slug: "local-resource-sales",
+      title: "本地资源整合与销售",
+      label: "LOCAL RESOURCE / SALES",
+      description: "页面框架已创建，后续可放置泰国本地资源、渠道、销售和合作资源内容。",
+    },
+    {
+      slug: "thai-shop-service",
+      title: "泰国本土网店一条龙服务",
+      label: "THAI SHOP FULL SERVICE",
+      description: "页面框架已创建，后续可放置泰国本土网店开店、供货、运营与支持内容。",
+    },
+  ],
 } as const;
 
 export type SiteContent = typeof siteContent;
