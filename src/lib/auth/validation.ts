@@ -50,6 +50,8 @@ export type AuthUser = {
 export type AuthErrorCode =
   | "AUTH_NOT_CONFIGURED"
   | "INVALID_EMAIL"
+  | "OTP_RESEND_COOLDOWN"
+  | "EMAIL_PROVIDER_RATE_LIMIT"
   | "RATE_LIMITED"
   | "SUPABASE_ERROR"
   | "INVALID_OTP";
@@ -59,6 +61,7 @@ export type AuthJsonResponse = {
   code?: AuthErrorCode;
   message?: string;
   debug?: string;
+  retryAfterSeconds?: number;
   user?: AuthUser | null;
 };
 
@@ -122,4 +125,69 @@ export function isRateLimitError(message?: string, status?: number) {
   const source = message?.toLowerCase() ?? "";
 
   return status === 429 || source.includes("rate limit") || source.includes("too many");
+}
+
+export function parseRetryAfterSeconds(message?: string) {
+  const source = message?.toLowerCase() ?? "";
+  const afterMatch = source.match(/after\s+(\d+)\s*(second|seconds|sec|secs|s)\b/);
+  const secondsMatch = source.match(/(\d+)\s*(second|seconds|sec|secs|s)\b/);
+  const minutesMatch = source.match(/(\d+)\s*(minute|minutes|min|mins|m)\b/);
+
+  if (afterMatch?.[1]) {
+    return Number(afterMatch[1]);
+  }
+
+  if (secondsMatch?.[1]) {
+    return Number(secondsMatch[1]);
+  }
+
+  if (minutesMatch?.[1]) {
+    return Number(minutesMatch[1]) * 60;
+  }
+
+  return null;
+}
+
+export function classifyOtpSendRateLimit(message?: string, status?: number) {
+  const debug = sanitizeAuthErrorDetail(message);
+  const source = debug.toLowerCase();
+  const retryAfter = parseRetryAfterSeconds(debug);
+
+  if (
+    source.includes("email rate limit exceeded") ||
+    source.includes("over_email_send_rate_limit") ||
+    source.includes("email rate limit")
+  ) {
+    return {
+      code: "EMAIL_PROVIDER_RATE_LIMIT" as const,
+      message: "邮件发送额度暂时受限，请稍后再试。正式上线需要配置 SMTP 邮件服务。",
+      retryAfterSeconds: retryAfter ?? 3600,
+      debug,
+    };
+  }
+
+  if (
+    source.includes("over_request_rate_limit") ||
+    source.includes("only request") ||
+    source.includes("security purposes") ||
+    (source.includes("after") && source.includes("second"))
+  ) {
+    return {
+      code: "OTP_RESEND_COOLDOWN" as const,
+      message: "验证码发送过于频繁，请稍后再试。",
+      retryAfterSeconds: retryAfter ?? 60,
+      debug,
+    };
+  }
+
+  if (isRateLimitError(debug, status)) {
+    return {
+      code: "EMAIL_PROVIDER_RATE_LIMIT" as const,
+      message: "邮件发送额度暂时受限，请稍后再试。正式上线需要配置 SMTP 邮件服务。",
+      retryAfterSeconds: retryAfter ?? 3600,
+      debug,
+    };
+  }
+
+  return null;
 }

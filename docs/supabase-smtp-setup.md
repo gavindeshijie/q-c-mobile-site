@@ -17,7 +17,14 @@ q-c.hk 使用无密码邮箱验证码登录：
 - 项目整体 OTP 邮件发送次数达到 Supabase 限制。
 - 仍在使用 Supabase 默认邮件服务。
 
-测试阶段可以等待一段时间再发。正式上线不要依赖 Supabase 默认邮件服务。
+这不是 API 没接上。这个错误代表 Supabase Auth 已经收到请求，但拒绝继续发送邮件。
+
+需要区分两种限流：
+
+- 同一邮箱重复发送：通常是 60 秒冷却。
+- 邮件服务额度限制：可能需要更久恢复，默认按 1 小时处理；正式上线应配置 Custom SMTP。
+
+测试阶段可以等待更久再发，或者换一个测试邮箱。正式上线不要依赖 Supabase 默认邮件服务。
 
 ## Supabase 后台路径
 
@@ -35,6 +42,23 @@ Authentication
 Authentication
 → Rate Limits
 ```
+
+还需要检查：
+
+```text
+Authentication
+→ Logs
+```
+
+查看发送 OTP 的真实错误。
+
+```text
+Authentication
+→ Providers
+→ Email
+```
+
+确认 Email Provider 已开启。
 
 ## 需要准备的信息
 
@@ -54,6 +78,18 @@ Authentication
 - SendGrid
 - Postmark
 - AWS SES
+
+配置 SMTP 后，再回到 q-c.hk 测试验证码发送。
+
+## 开发阶段临时建议
+
+如果只是测试，可以：
+
+1. 等待更久，例如 1 小时后再试。
+2. 换一个测试邮箱。
+3. 不要连续反复点击获取验证码。
+4. 去 `Authentication → Logs` 查看真实错误。
+5. 尽早配置 Custom SMTP。
 
 ## 建议发件身份
 

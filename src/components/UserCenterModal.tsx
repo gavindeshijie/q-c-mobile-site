@@ -19,9 +19,104 @@ type UserCenterModalProps = {
 };
 
 type AuthMode = "entry" | "otp";
+type CooldownReason = "OTP_RESEND_COOLDOWN" | "EMAIL_PROVIDER_RATE_LIMIT";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const codePattern = /^\d{6}$/;
+const DEFAULT_OTP_COOLDOWN_SECONDS = 60;
+const DEFAULT_PROVIDER_LIMIT_SECONDS = 60 * 60;
+const COOLDOWN_STORAGE_PREFIX = "q-c-email-otp-cooldown:";
+
+function normalizeEmail(value: string) {
+  return value.trim().toLowerCase();
+}
+
+function getCooldownStorageKey(email: string) {
+  return `${COOLDOWN_STORAGE_PREFIX}${email}`;
+}
+
+function formatCooldownDuration(seconds: number) {
+  const safeSeconds = Math.max(0, seconds);
+
+  if (safeSeconds < 60) {
+    return `${safeSeconds} 秒`;
+  }
+
+  const minutes = Math.floor(safeSeconds / 60);
+  const remainingSeconds = safeSeconds % 60;
+
+  return `${minutes} 分 ${remainingSeconds} 秒`;
+}
+
+function getCooldownMessage(reason: CooldownReason, seconds: number) {
+  const duration = formatCooldownDuration(seconds);
+
+  if (reason === "EMAIL_PROVIDER_RATE_LIMIT") {
+    return `邮件发送额度暂时受限，请等待 ${duration}后再试。正式上线需要配置 SMTP 邮件服务。`;
+  }
+
+  return `验证码发送过于频繁，请等待 ${duration}后再试。`;
+}
+
+function readStoredCooldown(email: string) {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const raw = window.localStorage.getItem(getCooldownStorageKey(email));
+
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as {
+      until?: number;
+      reason?: CooldownReason;
+    };
+
+    if (
+      !parsed.until ||
+      parsed.until <= Date.now() ||
+      (parsed.reason !== "OTP_RESEND_COOLDOWN" &&
+        parsed.reason !== "EMAIL_PROVIDER_RATE_LIMIT")
+    ) {
+      window.localStorage.removeItem(getCooldownStorageKey(email));
+      return null;
+    }
+
+    return {
+      until: parsed.until,
+      reason: parsed.reason,
+    };
+  } catch {
+    window.localStorage.removeItem(getCooldownStorageKey(email));
+    return null;
+  }
+}
+
+function saveStoredCooldown(email: string, reason: CooldownReason, seconds: number) {
+  if (typeof window === "undefined") {
+    return Date.now() + seconds * 1000;
+  }
+
+  const until = Date.now() + seconds * 1000;
+
+  window.localStorage.setItem(
+    getCooldownStorageKey(email),
+    JSON.stringify({ until, reason }),
+  );
+
+  return until;
+}
+
+function clearStoredCooldown(email: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.removeItem(getCooldownStorageKey(email));
+}
 
 export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const auth = useAuth();
@@ -30,27 +125,104 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const [code, setCode] = useState("");
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
-  const [resendSeconds, setResendSeconds] = useState(0);
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const [cooldownReason, setCooldownReason] = useState<CooldownReason | null>(null);
   const [localError, setLocalError] = useState<string | null>(null);
   const [showRateLimitHint, setShowRateLimitHint] = useState(false);
   const sendingCodeRef = useRef(false);
 
   const isBusy = auth.action !== null;
-  const canRequestCode = !isBusy && resendSeconds <= 0;
+  const canRequestCode = !isBusy && cooldownSeconds <= 0;
   const canSubmitCode = !isBusy && codePattern.test(code.trim());
-  const feedbackError = localError ?? auth.error;
+  const feedbackError =
+    cooldownReason && cooldownSeconds > 0
+      ? getCooldownMessage(cooldownReason, cooldownSeconds)
+      : localError ?? auth.error;
 
   useEffect(() => {
-    if (resendSeconds <= 0) {
+    if (!cooldownUntil) {
       return;
     }
 
-    const timer = window.setTimeout(() => {
-      setResendSeconds((current) => Math.max(0, current - 1));
+    const updateCooldown = () => {
+      const remainingSeconds = Math.max(
+        0,
+        Math.ceil((cooldownUntil - Date.now()) / 1000),
+      );
+
+      setCooldownSeconds(remainingSeconds);
+
+      if (remainingSeconds <= 0) {
+        const normalizedEmail = normalizeEmail(email);
+
+        if (emailPattern.test(normalizedEmail)) {
+          clearStoredCooldown(normalizedEmail);
+        }
+
+        setCooldownUntil(null);
+        setCooldownReason(null);
+        setShowRateLimitHint(false);
+      }
+    };
+
+    const timer = window.setInterval(() => {
+      updateCooldown();
     }, 1000);
 
-    return () => window.clearTimeout(timer);
-  }, [resendSeconds]);
+    return () => window.clearInterval(timer);
+  }, [cooldownUntil, email]);
+
+  function startCooldown(emailValue: string, reason: CooldownReason, seconds: number) {
+    const safeSeconds = Math.max(1, seconds);
+    const until = saveStoredCooldown(emailValue, reason, safeSeconds);
+
+    setCooldownUntil(until);
+    setCooldownReason(reason);
+    setCooldownSeconds(safeSeconds);
+  }
+
+  function clearCooldownState() {
+    setCooldownUntil(null);
+    setCooldownSeconds(0);
+    setCooldownReason(null);
+  }
+
+  function applyStoredCooldown(emailValue: string) {
+    const normalizedEmail = normalizeEmail(emailValue);
+
+    if (!emailPattern.test(normalizedEmail)) {
+      clearCooldownState();
+      return null;
+    }
+
+    const storedCooldown = readStoredCooldown(normalizedEmail);
+
+    if (!storedCooldown) {
+      clearCooldownState();
+      return null;
+    }
+
+    const remainingSeconds = Math.max(
+      0,
+      Math.ceil((storedCooldown.until - Date.now()) / 1000),
+    );
+
+    if (remainingSeconds <= 0) {
+      clearStoredCooldown(normalizedEmail);
+      clearCooldownState();
+      return null;
+    }
+
+    setCooldownUntil(storedCooldown.until);
+    setCooldownReason(storedCooldown.reason);
+    setCooldownSeconds(remainingSeconds);
+
+    return {
+      ...storedCooldown,
+      remainingSeconds,
+    };
+  }
 
   function switchMode(nextMode: AuthMode) {
     setMode(nextMode);
@@ -71,6 +243,10 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
 
   async function handleSendCode() {
     if (!canRequestCode || sendingCodeRef.current) {
+      if (cooldownReason && cooldownSeconds > 0) {
+        setShowRateLimitHint(true);
+      }
+
       return;
     }
 
@@ -87,16 +263,42 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
       return;
     }
 
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = normalizeEmail(email);
+
+    const storedCooldown = applyStoredCooldown(normalizedEmail);
+
+    if (storedCooldown) {
+      setShowRateLimitHint(true);
+      sendingCodeRef.current = false;
+      return;
+    }
+
     const result = await auth.sendCode(normalizedEmail);
 
     if (result.ok) {
       setCode("");
       setCodeSentTo(normalizedEmail);
-      setResendSeconds(60);
-    } else if (result.code === "RATE_LIMITED") {
+      startCooldown(
+        normalizedEmail,
+        "OTP_RESEND_COOLDOWN",
+        result.retryAfterSeconds ?? DEFAULT_OTP_COOLDOWN_SECONDS,
+      );
+    } else if (
+      result.code === "OTP_RESEND_COOLDOWN" ||
+      result.code === "EMAIL_PROVIDER_RATE_LIMIT" ||
+      result.code === "RATE_LIMITED"
+    ) {
+      const reason =
+        result.code === "OTP_RESEND_COOLDOWN"
+          ? "OTP_RESEND_COOLDOWN"
+          : "EMAIL_PROVIDER_RATE_LIMIT";
+      const fallbackSeconds =
+        reason === "OTP_RESEND_COOLDOWN"
+          ? DEFAULT_OTP_COOLDOWN_SECONDS
+          : DEFAULT_PROVIDER_LIMIT_SECONDS;
+
       setShowRateLimitHint(true);
-      setResendSeconds(60);
+      startCooldown(normalizedEmail, reason, result.retryAfterSeconds ?? fallbackSeconds);
     }
 
     sendingCodeRef.current = false;
@@ -120,7 +322,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
     }
 
     const result = await auth.verifyCode(
-      email.trim().toLowerCase(),
+      normalizeEmail(email),
       code.trim(),
       keepSignedIn,
     );
@@ -242,11 +444,14 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
               placeholder="请输入邮箱地址"
               value={email}
               onChange={(event) => {
-                setEmail(event.target.value);
+                const nextEmail = event.target.value;
+
+                setEmail(nextEmail);
                 setLocalError(null);
                 setShowRateLimitHint(false);
                 setCodeSentTo(null);
                 auth.clearFeedback();
+                applyStoredCooldown(nextEmail);
               }}
             />
           </label>
@@ -265,8 +470,8 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
             <span>
               {auth.action === "send-code"
                 ? "发送中..."
-                : resendSeconds > 0
-                  ? `${resendSeconds} 秒后重新发送`
+                : cooldownSeconds > 0
+                  ? `${formatCooldownDuration(cooldownSeconds)}后重新发送`
                   : "获取验证码"}
             </span>
           </button>

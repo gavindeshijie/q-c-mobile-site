@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 import {
+  classifyOtpSendRateLimit,
   firstZodMessage,
   formatSupabaseAuthError,
-  isRateLimitError,
   sanitizeAuthErrorDetail,
   sendOtpSchema,
 } from "@/lib/auth/validation";
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
   if (error) {
     const debug = sanitizeAuthErrorDetail(error.message);
-    const rateLimited = isRateLimitError(error.message, error.status);
+    const rateLimit = classifyOtpSendRateLimit(error.message, error.status);
 
     console.error("[auth/send-otp] Supabase error", {
       message: debug,
@@ -68,15 +68,12 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
-        code: rateLimited ? "RATE_LIMITED" : "SUPABASE_ERROR",
-        message: rateLimited
-          ? "验证码发送过于频繁，请稍后再试。"
-          : "验证码发送失败，请稍后重试。",
-        debug: rateLimited
-          ? debug
-          : formatSupabaseAuthError("Supabase", error.message),
+        code: rateLimit?.code ?? "SUPABASE_ERROR",
+        message: rateLimit?.message ?? "验证码发送失败，请稍后重试。",
+        retryAfterSeconds: rateLimit?.retryAfterSeconds,
+        debug: rateLimit?.debug ?? formatSupabaseAuthError("Supabase", error.message),
       },
-      { status: rateLimited ? 429 : error.status || 400 },
+      { status: rateLimit ? 429 : error.status || 400 },
     );
   }
 
