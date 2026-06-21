@@ -256,12 +256,184 @@ svg {
   opacity: 1;
 }
 
+.header-account-entry {
+  border-color: rgba(244, 114, 182, 0.22);
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.16) 0 2px, transparent 2px),
+    radial-gradient(circle at 12% 20%, rgba(244, 114, 182, 0.18), transparent 46%),
+    radial-gradient(circle at 90% 88%, rgba(34, 211, 238, 0.12), transparent 44%),
+    rgba(255, 255, 255, 0.052);
+}
+
 .header-menu-index {
   color: rgba(103, 232, 249, 0.76);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
+}
+
+.account-modal-layer {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(244, 114, 182, 0.16), transparent 32%),
+    radial-gradient(circle at 70% 62%, rgba(34, 211, 238, 0.13), transparent 30%),
+    rgba(2, 6, 23, 0.68);
+  backdrop-filter: blur(8px) saturate(126%);
+}
+
+.account-modal-panel {
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.32);
+  border-radius: 28px 8px 28px 8px;
+  padding: 20px;
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.18) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(34, 211, 238, 0.16) 0 2px, transparent 2px),
+    linear-gradient(145deg, rgba(3, 7, 18, 0.86), rgba(15, 23, 42, 0.62)),
+    radial-gradient(circle at 12% 0%, rgba(244, 114, 182, 0.22), transparent 48%),
+    radial-gradient(circle at 92% 96%, rgba(34, 211, 238, 0.16), transparent 46%);
+  box-shadow:
+    0 0 34px rgba(34, 211, 238, 0.14),
+    0 30px 90px rgba(0, 0, 0, 0.58),
+    inset 0 0 0 1px rgba(224, 242, 254, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.account-modal-panel::before {
+  position: absolute;
+  inset: 6px;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(224, 242, 254, 0.08);
+  border-radius: 22px 5px 22px 5px;
+  box-shadow:
+    inset 0 0 24px rgba(34, 211, 238, 0.05),
+    inset 10px 0 20px rgba(244, 114, 182, 0.06);
+}
+
+.account-modal-panel::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(224, 242, 254, 0.13), transparent),
+    repeating-linear-gradient(180deg, transparent 0 12px, rgba(103, 232, 249, 0.035) 13px 14px);
+  opacity: 0.56;
+}
+
+.account-modal-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.account-modal-kicker {
+  margin: 0;
+  color: rgba(103, 232, 249, 0.72);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.account-modal-title {
+  margin: 6px 0 0;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow:
+    0 0 12px rgba(103, 232, 249, 0.22),
+    0 0 18px rgba(244, 114, 182, 0.18);
+}
+
+.account-modal-close {
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  border-radius: 15px 5px 15px 5px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(224, 242, 254, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.account-auth-switch button,
+.account-field,
+.account-submit {
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  background: rgba(255, 255, 255, 0.052);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px) saturate(125%);
+}
+
+.account-auth-switch button {
+  min-height: 42px;
+  border-radius: 15px 5px 15px 5px;
+  color: rgba(224, 242, 254, 0.72);
+  font-size: 13px;
+  font-weight: 800;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.account-auth-switch button.is-active {
+  border-color: rgba(103, 232, 249, 0.46);
+  background:
+    radial-gradient(circle at 16% 16%, rgba(34, 211, 238, 0.18), transparent 42%),
+    rgba(34, 211, 238, 0.08);
+  color: #ffffff;
+}
+
+.account-field {
+  display: block;
+  border-radius: 18px 6px 18px 6px;
+  padding: 10px 12px;
+}
+
+.account-field span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(165, 243, 252, 0.72);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.account-field input {
+  width: 100%;
+  min-height: 34px;
+  margin-top: 4px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.account-field input::placeholder {
+  color: rgba(226, 232, 240, 0.35);
+}
+
+.account-submit {
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-color: rgba(244, 114, 182, 0.34);
+  border-radius: 18px 6px 18px 6px;
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.18) 0 2px, transparent 2px),
+    radial-gradient(circle at 18% 18%, rgba(244, 114, 182, 0.2), transparent 44%),
+    radial-gradient(circle at 90% 86%, rgba(34, 211, 238, 0.16), transparent 48%),
+    rgba(255, 255, 255, 0.055);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  text-shadow: 0 0 12px rgba(103, 232, 249, 0.22);
 }
 
 .mobile-frame {
