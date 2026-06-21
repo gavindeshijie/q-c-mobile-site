@@ -302,28 +302,17 @@ svg {
 }
 
 .account-modal-layer {
-  top: calc(env(safe-area-inset-top) + 88px);
-  bottom: calc(env(safe-area-inset-bottom) + 104px);
-  left: 50%;
-  width: min(398px, calc(100vw - 28px));
-  max-width: calc(430px - 28px);
-  overflow: hidden;
-  border: 1px solid rgba(124, 58, 237, 0.22);
-  border-radius: 30px 10px 30px 10px;
+  inset: 0;
   background:
-    radial-gradient(circle at 48% 28%, rgba(124, 58, 237, 0.28), transparent 34%),
-    radial-gradient(circle at 58% 62%, rgba(244, 114, 182, 0.16), transparent 32%),
-    radial-gradient(circle at 76% 40%, rgba(34, 211, 238, 0.1), transparent 30%),
-    rgba(2, 3, 12, 0.56);
-  box-shadow:
-    0 0 34px rgba(124, 58, 237, 0.12),
-    0 28px 90px rgba(0, 0, 0, 0.38),
-    inset 0 0 0 1px rgba(224, 242, 254, 0.045);
-  backdrop-filter: blur(10px) saturate(132%);
-  transform: translateX(-50%);
+    radial-gradient(circle at 50% 44%, rgba(124, 58, 237, 0.22), transparent 34%),
+    radial-gradient(circle at 58% 55%, rgba(244, 114, 182, 0.1), transparent 30%),
+    radial-gradient(circle at 76% 38%, rgba(34, 211, 238, 0.07), transparent 28%),
+    rgba(2, 3, 12, 0.28);
+  backdrop-filter: blur(4px) saturate(120%);
 }
 
 .account-modal-panel {
+  max-height: min(78svh, 520px);
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.32);
   border-radius: 28px 8px 28px 8px;
