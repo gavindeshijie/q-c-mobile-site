@@ -3,6 +3,18 @@ import { createServerClient } from "@supabase/ssr";
 
 import { authConfigMissingMessage } from "@/lib/auth/validation";
 
+function normalizeSupabaseUrl(value: string) {
+  const trimmed = value.trim();
+
+  try {
+    const url = new URL(trimmed);
+
+    return url.origin;
+  } catch {
+    return trimmed;
+  }
+}
+
 export async function createSupabaseServerClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -18,7 +30,7 @@ export async function createSupabaseServerClient() {
 
   return {
     ok: true as const,
-    supabase: createServerClient(supabaseUrl, supabaseAnonKey, {
+    supabase: createServerClient(normalizeSupabaseUrl(supabaseUrl), supabaseAnonKey, {
       cookies: {
         getAll() {
           return cookieStore.getAll();

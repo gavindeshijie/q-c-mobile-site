@@ -19,10 +19,29 @@ export const loginSchema = z.object({
   email: emailSchema,
 });
 
+export const sendOtpSchema = z.object({
+  email: emailSchema,
+});
+
 export const verifyCodeSchema = z.object({
   email: emailSchema,
   code: otpCodeSchema,
 });
+
+export const verifyOtpSchema = z
+  .object({
+    email: emailSchema,
+    token: otpCodeSchema.optional(),
+    code: otpCodeSchema.optional(),
+  })
+  .refine((value) => value.token ?? value.code, {
+    message: "请输入 6 位邮箱验证码",
+    path: ["token"],
+  })
+  .transform((value) => ({
+    email: value.email,
+    token: value.token ?? value.code ?? "",
+  }));
 
 export type AuthUser = {
   email: string;
@@ -73,4 +92,19 @@ export function normalizeAuthError(message?: string, fallback = "操作失败，
   }
 
   return fallback;
+}
+
+export function sanitizeAuthErrorDetail(message?: string) {
+  if (!message) {
+    return "未知错误";
+  }
+
+  return message
+    .replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g, "[token]")
+    .replace(/[A-Za-z0-9_-]{96,}/g, "[secret]")
+    .slice(0, 240);
+}
+
+export function formatSupabaseAuthError(prefix: string, message?: string) {
+  return `${prefix}：${sanitizeAuthErrorDetail(message)}`;
 }

@@ -125,7 +125,7 @@ export function useAuth() {
     setError(null);
     setMessage(null);
 
-    const result = await requestAuth("/api/auth/login", {
+    const result = await requestAuth("/api/auth/send-otp", {
       method: "POST",
       body: JSON.stringify({ email }),
     });
@@ -133,7 +133,7 @@ export function useAuth() {
     if (result.ok) {
       setMessage(result.message ?? "验证码已发送，请查收邮箱。");
     } else {
-      setError(result.message ?? "验证码发送失败，请稍后重试。");
+      setError(result.message ?? "验证码发送失败：未知错误");
     }
 
     setAction(null);
@@ -146,9 +146,9 @@ export function useAuth() {
       setError(null);
       setMessage(null);
 
-      const result = await requestAuth("/api/auth/verify-code", {
+      const result = await requestAuth("/api/auth/verify-otp", {
         method: "POST",
-        body: JSON.stringify({ email, code }),
+        body: JSON.stringify({ email, token: code }),
       });
 
       if (result.ok && result.user) {
@@ -156,7 +156,7 @@ export function useAuth() {
         setUser(result.user);
         setMessage(result.message ?? "登录成功");
       } else {
-        setError(result.message ?? "验证码不正确或已过期，请重新获取。");
+        setError(result.message ?? "验证码登录失败：未知错误");
       }
 
       setAction(null);

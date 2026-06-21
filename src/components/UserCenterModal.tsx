@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -30,10 +30,24 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const [code, setCode] = useState("");
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [resendSeconds, setResendSeconds] = useState(0);
   const [localError, setLocalError] = useState<string | null>(null);
 
   const isBusy = auth.action !== null;
+  const canRequestCode = !isBusy && resendSeconds <= 0;
   const feedbackError = localError ?? auth.error;
+
+  useEffect(() => {
+    if (resendSeconds <= 0) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setResendSeconds((current) => Math.max(0, current - 1));
+    }, 1000);
+
+    return () => window.clearTimeout(timer);
+  }, [resendSeconds]);
 
   function switchMode(nextMode: AuthMode) {
     setMode(nextMode);
@@ -52,6 +66,10 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   }
 
   async function handleSendCode() {
+    if (!canRequestCode) {
+      return;
+    }
+
     setLocalError(null);
     auth.clearFeedback();
 
@@ -68,6 +86,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
     if (result.ok) {
       setCode("");
       setCodeSentTo(normalizedEmail);
+      setResendSeconds(60);
     }
   }
 
@@ -217,7 +236,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           <button
             type="button"
             className="auth-secondary-button"
-            disabled={isBusy}
+            disabled={!canRequestCode}
             onClick={handleSendCode}
           >
             {auth.action === "send-code" ? (
@@ -225,7 +244,13 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
             ) : (
               <Mail size={16} strokeWidth={2} />
             )}
-            <span>{auth.action === "send-code" ? "发送中..." : "获取验证码"}</span>
+            <span>
+              {auth.action === "send-code"
+                ? "发送中..."
+                : resendSeconds > 0
+                  ? `重新获取 ${resendSeconds}s`
+                  : "获取验证码"}
+            </span>
           </button>
 
           {codeSentTo ? (
