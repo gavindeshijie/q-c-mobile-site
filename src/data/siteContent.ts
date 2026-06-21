@@ -29,7 +29,7 @@ export const siteContent = {
       { label: "技术", shortLabel: "Tech" },
       { label: "电商", shortLabel: "Shop" },
       { label: "硬件", shortLabel: "Device" },
-      { label: "资源", shortLabel: "Sales" },
+      { label: "资源", shortLabel: "Resource" },
     ],
     highlights: ["Thailand", "Supply", "Technology", "Sales"],
   },
