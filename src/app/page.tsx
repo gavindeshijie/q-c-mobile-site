@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Hero3D } from "@/components/Hero3D";
 import { ProcessSection } from "@/components/ProcessSection";
 import { ScrollToTopOnLoad } from "@/components/ScrollToTopOnLoad";
+import { SupportChatWidget } from "@/components/SupportChatWidget";
 import { siteContent } from "@/data/siteContent";
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
         />
         <CTASection cta={siteContent.cta} />
         <Footer footer={siteContent.footer} domain={siteContent.domain} />
+        <SupportChatWidget />
       </main>
     </div>
   );
