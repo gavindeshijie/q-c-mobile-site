@@ -719,7 +719,7 @@ svg {
 .hero-hud-node {
   --hero-hud-dot-left: clamp(11px, 3vw, 13px);
   --hero-hud-dot-size: clamp(7px, 1.95vw, 8px);
-  --hero-hud-dot-top: clamp(10px, 2.85vw, 12px);
+  --hero-hud-dot-top: clamp(13px, 3.55vw, 15px);
   isolation: isolate;
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.26);
@@ -815,6 +815,7 @@ svg {
 }
 
 .hero-hud-node .hero-node-title {
+  padding-top: 3px;
   padding-left: calc(var(--hero-hud-dot-left) + var(--hero-hud-dot-size) + 5px);
   padding-right: 6px;
 }
@@ -851,17 +852,17 @@ svg {
   position: relative;
   isolation: isolate;
   display: flex;
-  min-height: 50px;
+  min-height: 56px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.28);
   border-radius: 17px 5px 17px 5px;
   padding: 0 14px;
   color: rgba(240, 249, 255, 0.94);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: clamp(19px, 5.15vw, 21px);
+  font-weight: 900;
   letter-spacing: 0.02em;
   line-height: 1;
   text-decoration: none;

@@ -200,14 +200,14 @@ export function Hero3D({ hero }: Hero3DProps) {
             className="hero-action-button hero-action-primary"
           >
             <span>{hero.primaryAction.label}</span>
-            <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
+            <ArrowRight size={25} strokeWidth={2} aria-hidden="true" />
           </a>
           <a
             href={hero.secondaryAction.href}
             className="hero-action-button hero-action-secondary"
           >
             <span>{hero.secondaryAction.label}</span>
-            <ChevronDown size={17} strokeWidth={2} aria-hidden="true" />
+            <ChevronDown size={25} strokeWidth={2} aria-hidden="true" />
           </a>
         </div>
       </div>
