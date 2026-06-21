@@ -27,14 +27,9 @@ export const siteContent = {
         subtitle: "WEB / SOFTWARE",
       },
       {
-        title: "软硬件结合开发",
+        title: "软件与硬件结合开发",
         thai: "พัฒนาซอฟต์แวร์และฮาร์ดแวร์",
-        subtitle: "SOFT / HARDWARE",
-      },
-      {
-        title: "本地资源整合与销售",
-        thai: "รวมทรัพยากรท้องถิ่นและการขาย",
-        subtitle: "LOCAL RESOURCE / SALES",
+        subtitle: "SOFTWARE / HARDWARE",
       },
       {
         title: "潮流科技小商品供应",
@@ -42,9 +37,14 @@ export const siteContent = {
         subtitle: "TREND TECH SUPPLY",
       },
       {
-        title: "泰国本土网店开店协助与商品供应",
-        thai: "ช่วยเปิดร้านค้าออนไลน์ไทยและจัดหาสินค้า",
-        subtitle: "THAI SHOP / SUPPLY",
+        title: "本地资源整合与销售",
+        thai: "รวมทรัพยากรท้องถิ่นและการขาย",
+        subtitle: "LOCAL RESOURCE / SALES",
+      },
+      {
+        title: "泰国本土网店一条龙服务",
+        thai: "บริการครบวงจรร้านค้าออนไลน์ไทย",
+        subtitle: "THAI SHOP FULL SERVICE",
       },
     ],
     highlights: ["Thailand", "Supply", "Technology", "Sales"],

@@ -1178,6 +1178,19 @@ svg {
   text-wrap: balance;
 }
 
+.hero-hud-node .hero-node-title-nowrap {
+  padding-left: 13px;
+  padding-right: 10px;
+}
+
+.hero-node-title-nowrap {
+  overflow-wrap: normal;
+  white-space: nowrap;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  text-wrap: nowrap;
+}
+
 .hero-node-thai {
   display: block;
   max-width: 100%;
