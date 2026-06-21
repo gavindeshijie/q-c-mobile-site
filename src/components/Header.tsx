@@ -95,13 +95,13 @@ export function Header({ site }: HeaderProps) {
         <div className="space-y-2">
           <button
             type="button"
-            className="header-menu-item header-account-entry group flex min-h-12 w-full items-center gap-3 rounded-2xl px-3.5 py-2 text-left text-sm font-semibold text-white/90 transition active:scale-[0.98]"
+            className="header-menu-item header-account-entry group flex min-h-12 w-full items-center justify-center rounded-2xl px-3.5 py-2 text-center transition active:scale-[0.98]"
             onClick={() => {
               setIsMenuOpen(false);
               setIsAccountOpen(true);
             }}
           >
-            <span className="min-w-0 flex-1 leading-snug">个人中心</span>
+            <span className="header-account-label">个人中心</span>
           </button>
 
           {menuItems.map((item) => (
@@ -137,9 +137,9 @@ export function Header({ site }: HeaderProps) {
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="account-modal-kicker">Q-C ACCOUNT</p>
+                <p className="account-modal-kicker">个人中心</p>
                 <h2 id="account-dialog-title" className="account-modal-title">
-                  个人中心
+                  登录界面
                 </h2>
               </div>
               <button
