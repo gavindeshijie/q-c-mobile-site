@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
 
+import { UserCenterModal } from "@/components/UserCenterModal";
 import type { SiteContent } from "@/data/siteContent";
 
 type HeaderProps = {
@@ -89,41 +90,7 @@ export function Header({ site }: HeaderProps) {
               className="absolute inset-0 cursor-default bg-transparent"
               onClick={() => setIsAccountOpen(false)}
             />
-            <section
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="account-dialog-title"
-              className="account-modal-panel relative z-10 w-full max-w-[330px]"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="account-modal-kicker">个人中心</p>
-                  <h2 id="account-dialog-title" className="account-modal-title">
-                    登录界面
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  aria-label="关闭"
-                  className="account-modal-close grid size-10 place-items-center"
-                  onClick={() => setIsAccountOpen(false)}
-                >
-                  <X size={18} strokeWidth={2} />
-                </button>
-              </div>
-
-              <div className="account-google-actions mt-6 space-y-3">
-                <button type="button" className="google-auth-button">
-                  <span className="google-auth-mark">@</span>
-                  <span className="flex-1 text-left">邮箱登录</span>
-                  <ArrowRight size={18} strokeWidth={2} />
-                </button>
-              </div>
-
-              <p className="account-modal-note">
-                账户入口已预留，后续可接入真实邮箱登录与会员功能。
-              </p>
-            </section>
+            <UserCenterModal onClose={() => setIsAccountOpen(false)} />
           </div>,
           document.body,
         )
