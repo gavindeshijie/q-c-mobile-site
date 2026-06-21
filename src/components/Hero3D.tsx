@@ -119,7 +119,7 @@ export function Hero3D({ hero }: Hero3DProps) {
         <div className="hero-left-readability absolute inset-y-0 left-0 z-40 w-[66%]" />
       </div>
 
-      <div className="absolute left-[max(18px,env(safe-area-inset-left))] top-[clamp(20px,5dvh,44px)] z-50 flex max-w-[calc(100%_-_36px)] flex-col gap-[clamp(6px,1.2dvh,10px)]">
+      <div className="absolute left-[max(18px,env(safe-area-inset-left))] top-[clamp(96px,14dvh,124px)] z-50 flex max-w-[calc(100%_-_36px)] flex-col gap-[clamp(6px,1.2dvh,10px)]">
         {hero.nodes.map((node, index) => (
           <motion.div
             key={node.title}

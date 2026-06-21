@@ -75,6 +75,175 @@ svg {
   padding-bottom: calc(28px + env(safe-area-inset-bottom));
 }
 
+.site-header {
+  isolation: isolate;
+  padding: calc(env(safe-area-inset-top) + 14px)
+    max(18px, env(safe-area-inset-right)) 0
+    max(18px, env(safe-area-inset-left));
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.site-header::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 86px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(2, 6, 23, 0.28), transparent);
+}
+
+.header-brand,
+.header-menu-button,
+.header-menu-panel {
+  border: 1px solid rgba(103, 232, 249, 0.34);
+  background:
+    linear-gradient(145deg, rgba(3, 7, 18, 0.34), rgba(3, 7, 18, 0.14)),
+    radial-gradient(circle at 8% 0%, rgba(244, 114, 182, 0.15), transparent 48%),
+    radial-gradient(circle at 92% 100%, rgba(34, 211, 238, 0.12), transparent 44%);
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.12),
+    0 12px 34px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(10px) saturate(132%);
+}
+
+.header-brand {
+  position: relative;
+  max-width: calc(100vw - 90px);
+  overflow: hidden;
+  border-radius: 18px 7px 18px 7px;
+  padding: 4px 12px 4px 5px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.header-brand::before,
+.header-menu-button::before,
+.header-menu-panel::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.38), transparent 24%),
+    linear-gradient(180deg, rgba(244, 114, 182, 0.28), transparent 24%);
+  opacity: 0.4;
+}
+
+.header-brand::after,
+.header-menu-button::after {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  width: 16px;
+  height: 1px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(103, 232, 249, 0.72));
+}
+
+.header-logo-mark {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.38);
+  border-radius: 15px 5px 15px 5px;
+  background:
+    linear-gradient(145deg, rgba(224, 242, 254, 0.12), rgba(3, 7, 18, 0.16)),
+    radial-gradient(circle at 20% 12%, rgba(244, 114, 182, 0.22), transparent 42%),
+    radial-gradient(circle at 82% 88%, rgba(34, 211, 238, 0.2), transparent 48%);
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.header-logo-mark::after {
+  position: absolute;
+  inset: 4px;
+  content: "";
+  border-top: 1px solid rgba(224, 242, 254, 0.28);
+  border-left: 1px solid rgba(244, 114, 182, 0.22);
+  border-radius: 10px 3px 10px 3px;
+  pointer-events: none;
+}
+
+.header-menu-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 17px 6px 17px 6px;
+  color: rgba(224, 242, 254, 0.94);
+}
+
+.header-menu-button svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px rgba(103, 232, 249, 0.38));
+}
+
+.header-menu-panel {
+  z-index: 20;
+  top: calc(env(safe-area-inset-top) + 76px);
+  width: min(300px, calc(100vw - 36px));
+  max-height: calc(100svh - 104px);
+  overflow-y: auto;
+  border-radius: 22px 8px 22px 8px;
+  padding: 12px;
+  transform-origin: 100% 0%;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+@supports (height: 100dvh) {
+  .header-menu-panel {
+    max-height: calc(100dvh - 104px);
+  }
+}
+
+.header-menu-panel::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(224, 242, 254, 0.06),
+    inset 0 0 28px rgba(34, 211, 238, 0.04);
+}
+
+.header-menu-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.header-menu-item::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(103, 232, 249, 0.1), transparent 52%, rgba(244, 114, 182, 0.08));
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.header-menu-item:active::before,
+.header-menu-item:hover::before {
+  opacity: 1;
+}
+
+.header-menu-index {
+  color: rgba(103, 232, 249, 0.76);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 .mobile-frame {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22rem),
@@ -174,15 +343,15 @@ svg {
 }
 
 .hero-fullscreen {
-  height: calc(100svh - 75px);
-  min-height: calc(100svh - 75px);
+  height: 100svh;
+  min-height: 100svh;
   background: #020617;
 }
 
 @supports (height: 100dvh) {
   .hero-fullscreen {
-    height: calc(100dvh - 75px - env(safe-area-inset-top));
-    min-height: calc(100dvh - 75px - env(safe-area-inset-top));
+    height: 100dvh;
+    min-height: 100dvh;
   }
 }
 
