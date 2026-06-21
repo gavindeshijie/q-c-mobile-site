@@ -11,9 +11,9 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "w-[176px]",
+  "w-[166px]",
   "w-[188px]",
-  "w-[196px]",
+  "w-[174px]",
   "ml-1 w-[214px]",
 ] as const;
 
@@ -25,7 +25,7 @@ const nodeTitleClasses = [
   "",
   "hero-node-title-nowrap",
   "hero-node-title-nowrap",
-  "",
+  "hero-node-title-nowrap",
 ] as const;
 
 const particlePositions = [
@@ -126,7 +126,7 @@ export function Hero3D({ hero }: Hero3DProps) {
         <div className="hero-left-readability absolute inset-y-0 left-0 z-40 w-[66%]" />
       </div>
 
-      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)+184px)] left-[max(18px,env(safe-area-inset-left))] top-[clamp(150px,20dvh,170px)] z-50 flex max-w-[calc(100%_-_36px)] flex-col justify-between gap-2">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)+184px)] left-[max(4px,env(safe-area-inset-left))] top-[clamp(150px,20dvh,170px)] z-50 flex max-w-[calc(100%_-_8px)] flex-col justify-between gap-2">
         {hero.nodes.map((node, index) => (
           <motion.div
             key={node.title}

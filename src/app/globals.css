@@ -699,17 +699,17 @@ svg {
 }
 
 .hero-hud-node .hero-node-title {
-  padding-left: 23px;
+  padding-left: 20px;
   padding-right: 6px;
 }
 
 .hero-hud-alert-dot {
   position: absolute;
-  top: 17px;
-  left: 11px;
+  top: 11px;
+  left: 5px;
   z-index: 4;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
   background: #ff2d55;
   box-shadow:
@@ -1526,8 +1526,8 @@ svg {
 }
 
 .hero-hud-node .hero-node-title-nowrap {
-  padding-left: 12px;
-  padding-right: 8px;
+  padding-left: 18px;
+  padding-right: 5px;
 }
 
 .hero-node-title-nowrap {
