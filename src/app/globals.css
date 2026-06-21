@@ -607,6 +607,110 @@ svg {
   color: rgba(204, 251, 241, 0.95);
 }
 
+.auth-remember-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 16px 5px 16px 5px;
+  padding: 10px 11px;
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.1) 0 1px, transparent 1px),
+    radial-gradient(circle at 12% 12%, rgba(124, 58, 237, 0.2), transparent 42%),
+    rgba(2, 6, 23, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 26px rgba(0, 0, 0, 0.2);
+  color: rgba(224, 242, 254, 0.88);
+  cursor: pointer;
+  user-select: none;
+}
+
+.auth-remember-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.auth-remember-check {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  width: 21px;
+  height: 21px;
+  margin-top: 2px;
+  place-items: center;
+  border: 1px solid rgba(103, 232, 249, 0.42);
+  border-radius: 8px 3px 8px 3px;
+  background:
+    radial-gradient(circle at 32% 18%, rgba(255, 255, 255, 0.18), transparent 38%),
+    rgba(3, 7, 18, 0.54);
+  box-shadow:
+    0 0 14px rgba(34, 211, 238, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.auth-remember-check::after {
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 7px;
+  height: 12px;
+  content: "";
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0.55);
+  transform-origin: center;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.auth-remember-input:checked + .auth-remember-check {
+  border-color: rgba(244, 114, 182, 0.68);
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.28), transparent 38%),
+    linear-gradient(135deg, rgba(244, 114, 182, 0.86), rgba(34, 211, 238, 0.68));
+  box-shadow:
+    0 0 18px rgba(244, 114, 182, 0.28),
+    0 0 18px rgba(34, 211, 238, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.auth-remember-input:checked + .auth-remember-check::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+}
+
+.auth-remember-input:focus-visible + .auth-remember-check {
+  outline: 2px solid rgba(103, 232, 249, 0.72);
+  outline-offset: 3px;
+}
+
+.auth-remember-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.auth-remember-title {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.auth-remember-text {
+  color: rgba(224, 242, 254, 0.66);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
 .auth-form-links {
   display: flex;
   flex-wrap: wrap;

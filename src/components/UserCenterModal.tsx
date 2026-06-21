@@ -29,6 +29,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
+  const [keepSignedIn, setKeepSignedIn] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
   const isBusy = auth.action !== null;
@@ -87,7 +88,11 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
       return;
     }
 
-    const result = await auth.verifyCode(email.trim().toLowerCase(), code.trim());
+    const result = await auth.verifyCode(
+      email.trim().toLowerCase(),
+      code.trim(),
+      keepSignedIn,
+    );
 
     if (result.ok) {
       setCode("");
@@ -250,6 +255,23 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           {auth.message ? (
             <p className="auth-feedback auth-feedback-success">{auth.message}</p>
           ) : null}
+
+          <label className="auth-remember-option">
+            <input
+              type="checkbox"
+              className="auth-remember-input"
+              checked={keepSignedIn}
+              onChange={(event) => setKeepSignedIn(event.target.checked)}
+            />
+            <span className="auth-remember-check" aria-hidden="true" />
+            <span className="auth-remember-copy">
+              <span className="auth-remember-title">保持登录</span>
+              <span className="auth-remember-text">
+                开启后，本设备会尽量保持个人中心登录状态；未开启时，登录约 24
+                小时后刷新会自动退出。
+              </span>
+            </span>
+          </label>
 
           <button type="submit" className="auth-primary-button" disabled={isBusy}>
             {isBusy ? (
