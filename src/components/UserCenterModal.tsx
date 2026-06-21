@@ -196,7 +196,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           ) : null}
 
           <p className="account-modal-note">
-            邮箱仅作为 q-c.hk 账号标识，密码为本站账号密码。
+            邮箱仅作为 q-c.hk 网站账号标识，密码为本站账号密码。
           </p>
         </div>
       ) : (
@@ -206,8 +206,8 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
         >
           <p className="auth-form-subtitle">
             {mode === "login"
-              ? "使用邮箱和 q-c.hk 账号密码登录。"
-              : "创建你的 q-c.hk 账号。"}
+              ? "使用邮箱和 q-c.hk 网站账号密码登录。"
+              : "创建你的 q-c.hk 网站账号。"}
           </p>
 
           <label className="auth-field">
@@ -334,7 +334,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
 
           <p className="account-modal-note">
             支持 Gmail、163、QQ、Outlook、企业邮箱等常见邮箱地址。邮箱仅作为 q-c.hk
-            账号标识，密码为本站账号密码。
+            网站账号标识，密码为本站账号密码。
           </p>
         </form>
       )}
