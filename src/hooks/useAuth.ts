@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import type { AuthJsonResponse, AuthUser } from "@/lib/auth/validation";
 
-type AuthAction = "login" | "register" | "logout" | null;
+type AuthAction = "send-code" | "verify-code" | "logout" | null;
 
 async function requestAuth(
   url: string,
@@ -64,43 +64,41 @@ export function useAuth() {
     return () => window.clearTimeout(timer);
   }, [refresh]);
 
-  const login = useCallback(async (email: string, password: string) => {
-    setAction("login");
+  const sendCode = useCallback(async (email: string) => {
+    setAction("send-code");
     setError(null);
     setMessage(null);
 
     const result = await requestAuth("/api/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email }),
     });
 
-    if (result.ok && result.user) {
-      setUser(result.user);
-      setMessage(result.message ?? "登录成功");
+    if (result.ok) {
+      setMessage(result.message ?? "验证码已发送，请查收邮箱。");
     } else {
-      setError(result.message ?? "邮箱或密码不正确。");
+      setError(result.message ?? "验证码发送失败，请稍后重试。");
     }
 
     setAction(null);
     return result;
   }, []);
 
-  const register = useCallback(async (email: string, password: string) => {
-    setAction("register");
+  const verifyCode = useCallback(async (email: string, code: string) => {
+    setAction("verify-code");
     setError(null);
     setMessage(null);
 
-    const result = await requestAuth("/api/auth/register", {
+    const result = await requestAuth("/api/auth/verify-code", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, code }),
     });
 
-    if (result.ok) {
-      setMessage(result.message ?? "注册成功");
-      const current = await requestAuth("/api/auth/me");
-      setUser(current.ok && current.user ? current.user : null);
+    if (result.ok && result.user) {
+      setUser(result.user);
+      setMessage(result.message ?? "登录成功");
     } else {
-      setError(result.message ?? "注册失败，请稍后重试。");
+      setError(result.message ?? "验证码不正确或已过期，请重新获取。");
     }
 
     setAction(null);
@@ -138,8 +136,8 @@ export function useAuth() {
     action,
     error,
     message,
-    login,
-    register,
+    sendCode,
+    verifyCode,
     logout,
     refresh,
     clearFeedback,

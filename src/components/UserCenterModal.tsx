@@ -4,8 +4,6 @@ import { FormEvent, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
-  Eye,
-  EyeOff,
   LoaderCircle,
   LogOut,
   Mail,
@@ -20,18 +18,17 @@ type UserCenterModalProps = {
   onClose: () => void;
 };
 
-type AuthMode = "entry" | "login" | "register";
+type AuthMode = "entry" | "otp";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const codePattern = /^\d{6}$/;
 
 export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const auth = useAuth();
   const [mode, setMode] = useState<AuthMode>("entry");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [code, setCode] = useState("");
+  const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [localError, setLocalError] = useState<string | null>(null);
 
   const isBusy = auth.action !== null;
@@ -43,72 +40,64 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
     auth.clearFeedback();
   }
 
-  function validateEmailPassword() {
+  function validateEmail() {
     const normalizedEmail = email.trim().toLowerCase();
 
     if (!emailPattern.test(normalizedEmail)) {
       return "请输入正确的邮箱地址。";
     }
 
-    if (password.length < 8) {
-      return "密码至少需要 8 位。";
-    }
-
     return null;
   }
 
-  async function handleLogin(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleSendCode() {
     setLocalError(null);
     auth.clearFeedback();
 
-    const validationError = validateEmailPassword();
+    const validationError = validateEmail();
 
     if (validationError) {
       setLocalError(validationError);
       return;
     }
 
-    const result = await auth.login(email.trim().toLowerCase(), password);
+    const normalizedEmail = email.trim().toLowerCase();
+    const result = await auth.sendCode(normalizedEmail);
 
     if (result.ok) {
-      setPassword("");
+      setCode("");
+      setCodeSentTo(normalizedEmail);
     }
   }
 
-  async function handleRegister(event: FormEvent<HTMLFormElement>) {
+  async function handleVerifyCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLocalError(null);
     auth.clearFeedback();
 
-    const validationError = validateEmailPassword();
+    const validationError = validateEmail();
 
     if (validationError) {
       setLocalError(validationError);
       return;
     }
 
-    if (password !== confirmPassword) {
-      setLocalError("两次输入的密码不一致。");
+    if (!codePattern.test(code.trim())) {
+      setLocalError("请输入 6 位邮箱验证码。");
       return;
     }
 
-    const result = await auth.register(email.trim().toLowerCase(), password);
+    const result = await auth.verifyCode(email.trim().toLowerCase(), code.trim());
 
     if (result.ok) {
-      setPassword("");
-      setConfirmPassword("");
-
-      if (!result.user) {
-        setMode("login");
-      }
+      setCode("");
     }
   }
 
   async function handleLogout() {
     await auth.logout();
-    setPassword("");
-    setConfirmPassword("");
+    setCode("");
+    setCodeSentTo(null);
     setMode("entry");
   }
 
@@ -123,7 +112,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
         <div>
           <p className="account-modal-kicker">个人中心</p>
           <h2 id="account-dialog-title" className="account-modal-title">
-            {auth.user ? "账号状态" : mode === "register" ? "邮箱注册" : mode === "login" ? "邮箱登录" : "登录界面"}
+            {auth.user ? "账号状态" : mode === "otp" ? "邮箱验证码登录" : "登录界面"}
           </h2>
         </div>
         <button
@@ -182,7 +171,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           <button
             type="button"
             className="email-auth-button"
-            onClick={() => switchMode("login")}
+            onClick={() => switchMode("otp")}
           >
             <span className="email-auth-mark">
               <Mail size={18} strokeWidth={2} />
@@ -196,18 +185,16 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           ) : null}
 
           <p className="account-modal-note">
-            邮箱仅作为 q-c.hk 网站账号标识，密码为本站账号密码。
+            邮箱仅作为 q-c.hk 网站账号标识，本次使用邮箱验证码登录。
           </p>
         </div>
       ) : (
         <form
           className="auth-form"
-          onSubmit={mode === "login" ? handleLogin : handleRegister}
+          onSubmit={handleVerifyCode}
         >
           <p className="auth-form-subtitle">
-            {mode === "login"
-              ? "使用邮箱和 q-c.hk 网站账号密码登录。"
-              : "创建你的 q-c.hk 网站账号。"}
+            输入邮箱获取验证码，再使用验证码登录 q-c.hk 网站账号。
           </p>
 
           <label className="auth-field">
@@ -222,55 +209,40 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
             />
           </label>
 
-          <label className="auth-field">
-            <span>{mode === "login" ? "登录密码" : "设置密码"}</span>
-            <span className="auth-password-shell">
-              <input
-                type={showPassword ? "text" : "password"}
-                autoComplete={mode === "login" ? "current-password" : "new-password"}
-                placeholder={mode === "login" ? "请输入登录密码" : "请设置登录密码"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <button
-                type="button"
-                aria-label={showPassword ? "隐藏密码" : "显示密码"}
-                onClick={() => setShowPassword((current) => !current)}
-              >
-                {showPassword ? (
-                  <EyeOff size={16} strokeWidth={2} />
-                ) : (
-                  <Eye size={16} strokeWidth={2} />
-                )}
-              </button>
-            </span>
-          </label>
+          <button
+            type="button"
+            className="auth-secondary-button"
+            disabled={isBusy}
+            onClick={handleSendCode}
+          >
+            {auth.action === "send-code" ? (
+              <LoaderCircle size={16} strokeWidth={2} className="animate-spin" />
+            ) : (
+              <Mail size={16} strokeWidth={2} />
+            )}
+            <span>{auth.action === "send-code" ? "发送中..." : "获取验证码"}</span>
+          </button>
 
-          {mode === "register" ? (
-            <label className="auth-field">
-              <span>确认密码</span>
-              <span className="auth-password-shell">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  placeholder="请再次输入密码"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                />
-                <button
-                  type="button"
-                  aria-label={showConfirmPassword ? "隐藏确认密码" : "显示确认密码"}
-                  onClick={() => setShowConfirmPassword((current) => !current)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff size={16} strokeWidth={2} />
-                  ) : (
-                    <Eye size={16} strokeWidth={2} />
-                  )}
-                </button>
-              </span>
-            </label>
+          {codeSentTo ? (
+            <p className="auth-feedback auth-feedback-success">
+              验证码已发送至 {codeSentTo}，请查收邮箱。
+            </p>
           ) : null}
+
+          <label className="auth-field">
+            <span>邮箱验证码</span>
+            <input
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="请输入 6 位验证码"
+              maxLength={6}
+              value={code}
+              onChange={(event) => {
+                setCode(event.target.value.replace(/\D/g, "").slice(0, 6));
+              }}
+            />
+          </label>
 
           {feedbackError ? (
             <p className="auth-feedback auth-feedback-error">{feedbackError}</p>
@@ -282,46 +254,13 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           <button type="submit" className="auth-primary-button" disabled={isBusy}>
             {isBusy ? (
               <LoaderCircle size={17} strokeWidth={2} className="animate-spin" />
-            ) : mode === "login" ? (
-              <UserRound size={17} strokeWidth={2} />
             ) : (
-              <ShieldCheck size={17} strokeWidth={2} />
+              <UserRound size={17} strokeWidth={2} />
             )}
             <span>
-              {mode === "login"
-                ? auth.action === "login"
-                  ? "登录中..."
-                  : "登录"
-                : auth.action === "register"
-                  ? "注册中..."
-                  : "注册账号"}
+              {auth.action === "verify-code" ? "登录中..." : "登录"}
             </span>
           </button>
-
-          <div className="auth-form-links">
-            {mode === "login" ? (
-              <>
-                <button type="button" onClick={() => switchMode("register")}>
-                  没有账号？立即注册
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLocalError(null);
-                    auth.clearFeedback();
-                    // Password reset can be connected to Supabase later without changing this UI.
-                    setLocalError("忘记密码功能即将开放。");
-                  }}
-                >
-                  忘记密码？
-                </button>
-              </>
-            ) : (
-              <button type="button" onClick={() => switchMode("login")}>
-                已有账号？返回登录
-              </button>
-            )}
-          </div>
 
           <button
             type="button"
@@ -334,7 +273,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
 
           <p className="account-modal-note">
             支持 Gmail、163、QQ、Outlook、企业邮箱等常见邮箱地址。邮箱仅作为 q-c.hk
-            网站账号标识，密码为本站账号密码。
+            网站账号标识，本次使用邮箱验证码登录。
           </p>
         </form>
       )}

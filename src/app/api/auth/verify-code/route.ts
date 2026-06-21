@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 import {
   firstZodMessage,
   normalizeAuthError,
-  registerSchema,
   toAuthUser,
+  verifyCodeSchema,
 } from "@/lib/auth/validation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const parsed = registerSchema.safeParse(body);
+  const parsed = verifyCodeSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -38,30 +38,25 @@ export async function POST(request: Request) {
     );
   }
 
-  const { data, error } = await clientResult.supabase.auth.signUp(parsed.data);
+  const { data, error } = await clientResult.supabase.auth.verifyOtp({
+    email: parsed.data.email,
+    token: parsed.data.code,
+    type: "email",
+  });
 
   if (error) {
     return NextResponse.json(
       {
         ok: false,
-        message: normalizeAuthError(error.message, "注册失败，请稍后重试。"),
+        message: normalizeAuthError(error.message, "验证码不正确或已过期，请重新获取。"),
       },
-      { status: 400 },
-    );
-  }
-
-  if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-    return NextResponse.json(
-      { ok: false, message: "该邮箱已注册，请直接登录。" },
-      { status: 409 },
+      { status: 401 },
     );
   }
 
   return NextResponse.json({
     ok: true,
-    message: data.session
-      ? "注册成功"
-      : "注册成功，请到邮箱点击验证链接后再登录。",
+    message: "登录成功",
     user: toAuthUser(data.user?.email),
   });
 }

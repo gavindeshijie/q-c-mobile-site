@@ -413,76 +413,6 @@ svg {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.google-auth-button {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  width: 100%;
-  min-height: 56px;
-  align-items: center;
-  gap: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(103, 232, 249, 0.18);
-  border-radius: 19px 6px 19px 6px;
-  padding: 0 14px;
-  background:
-    linear-gradient(90deg, rgba(124, 58, 237, 0.18) 0 2px, transparent 2px),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
-    radial-gradient(circle at 12% 20%, rgba(124, 58, 237, 0.24), transparent 46%),
-    radial-gradient(circle at 92% 88%, rgba(34, 211, 238, 0.13), transparent 44%);
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 900;
-  text-shadow: 0 0 12px rgba(103, 232, 249, 0.22);
-  box-shadow:
-    0 16px 38px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 0 18px rgba(124, 58, 237, 0.08);
-  backdrop-filter: blur(10px) saturate(125%);
-  transition: transform 160ms ease, border-color 160ms ease;
-}
-
-.google-auth-button::before {
-  position: absolute;
-  inset: 4px;
-  z-index: -1;
-  content: "";
-  border: 1px solid rgba(224, 242, 254, 0.08);
-  border-radius: 15px 4px 15px 4px;
-}
-
-.google-auth-button:active {
-  transform: scale(0.975);
-}
-
-.google-auth-register {
-  border-color: rgba(244, 114, 182, 0.28);
-  background:
-    linear-gradient(90deg, rgba(244, 114, 182, 0.18) 0 2px, transparent 2px),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
-    radial-gradient(circle at 14% 18%, rgba(244, 114, 182, 0.22), transparent 46%),
-    radial-gradient(circle at 92% 88%, rgba(124, 58, 237, 0.16), transparent 44%);
-}
-
-.google-auth-mark {
-  display: grid;
-  flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid rgba(224, 242, 254, 0.18);
-  border-radius: 12px 4px 12px 4px;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.18), transparent 42%),
-    rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 950;
-  box-shadow:
-    0 0 14px rgba(124, 58, 237, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-
 .account-auth-actions {
   position: relative;
   z-index: 1;
@@ -490,6 +420,7 @@ svg {
 
 .email-auth-button,
 .auth-primary-button,
+.auth-secondary-button,
 .auth-logout-button,
 .auth-back-button {
   position: relative;
@@ -539,6 +470,7 @@ svg {
 
 .email-auth-button:active,
 .auth-primary-button:active,
+.auth-secondary-button:active,
 .auth-logout-button:active,
 .auth-back-button:active {
   transform: scale(0.975);
@@ -546,6 +478,7 @@ svg {
 
 .email-auth-button:disabled,
 .auth-primary-button:disabled,
+.auth-secondary-button:disabled,
 .auth-logout-button:disabled {
   cursor: not-allowed;
   opacity: 0.62;
@@ -693,6 +626,7 @@ svg {
 }
 
 .auth-back-button,
+.auth-secondary-button,
 .auth-logout-button {
   min-height: 46px;
   border-radius: 17px 5px 17px 5px;
@@ -706,6 +640,14 @@ svg {
 
 .auth-back-button {
   color: rgba(224, 242, 254, 0.76);
+}
+
+.auth-secondary-button {
+  border-color: rgba(103, 232, 249, 0.28);
+  color: rgba(224, 242, 254, 0.9);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .auth-logout-button {

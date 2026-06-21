@@ -9,19 +9,19 @@ export const emailSchema = z
   .toLowerCase()
   .email("请输入正确的邮箱地址");
 
-export const passwordSchema = z
+export const otpCodeSchema = z
   .string()
-  .min(1, "请输入登录密码")
-  .min(8, "密码至少需要 8 位");
+  .trim()
+  .min(1, "请输入邮箱验证码")
+  .regex(/^\d{6}$/, "请输入 6 位邮箱验证码");
 
 export const loginSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
 });
 
-export const registerSchema = z.object({
+export const verifyCodeSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
+  code: otpCodeSchema,
 });
 
 export type AuthUser = {
@@ -50,21 +50,18 @@ export function normalizeAuthError(message?: string, fallback = "操作失败，
   }
 
   if (source.includes("already registered") || source.includes("user already")) {
-    return "该邮箱已注册，请直接登录。";
+    return "该邮箱可直接获取验证码登录。";
+  }
+
+  if (source.includes("otp") || source.includes("token")) {
+    return "验证码不正确或已过期，请重新获取。";
   }
 
   if (
     source.includes("invalid login credentials") ||
-    source.includes("invalid credentials") ||
-    source.includes("email not confirmed")
+    source.includes("invalid credentials")
   ) {
-    return source.includes("email not confirmed")
-      ? "请先到邮箱点击验证链接后再登录。"
-      : "邮箱或密码不正确。";
-  }
-
-  if (source.includes("password")) {
-    return "密码至少需要 8 位。";
+    return "验证码不正确或已过期，请重新获取。";
   }
 
   if (source.includes("email")) {

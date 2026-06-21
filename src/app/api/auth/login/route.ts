@@ -4,7 +4,6 @@ import {
   firstZodMessage,
   loginSchema,
   normalizeAuthError,
-  toAuthUser,
 } from "@/lib/auth/validation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -38,23 +37,26 @@ export async function POST(request: Request) {
     );
   }
 
-  const { data, error } = await clientResult.supabase.auth.signInWithPassword(
-    parsed.data,
-  );
+  const { error } = await clientResult.supabase.auth.signInWithOtp({
+    email: parsed.data.email,
+    options: {
+      shouldCreateUser: true,
+    },
+  });
 
   if (error) {
     return NextResponse.json(
       {
         ok: false,
-        message: normalizeAuthError(error.message, "邮箱或密码不正确。"),
+        message: normalizeAuthError(error.message, "验证码发送失败，请稍后重试。"),
       },
-      { status: 401 },
+      { status: 400 },
     );
   }
 
   return NextResponse.json({
     ok: true,
-    message: "登录成功",
-    user: toAuthUser(data.user?.email),
+    message: "验证码已发送，请查收邮箱。",
+    user: null,
   });
 }
