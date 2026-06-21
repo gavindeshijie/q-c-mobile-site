@@ -145,6 +145,14 @@ export function Hero3D({ hero }: Hero3DProps) {
               className="hero-hud-node relative px-2 py-[6px]"
               style={{ transform: `rotate(${nodeTilts[index]})` }}
             >
+              <span
+                aria-hidden="true"
+                className="hero-hud-frame-line hero-hud-frame-line-top"
+              />
+              <span
+                aria-hidden="true"
+                className="hero-hud-frame-line hero-hud-frame-line-bottom"
+              />
               <span className="hero-hud-index">{nodeNumbers[index]}</span>
               <span className={`hero-node-title ${nodeTitleClasses[index]}`}>
                 {node.title}
