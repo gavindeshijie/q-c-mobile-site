@@ -19,13 +19,23 @@ type UserCenterModalProps = {
 };
 
 type AuthMode = "entry" | "otp";
+type AccountPanel = "home" | "settings";
 type CooldownReason = "OTP_RESEND_COOLDOWN" | "EMAIL_PROVIDER_RATE_LIMIT";
+type AccountProfile = {
+  personalIp?: string;
+  websiteName?: string;
+  boundEmail?: string;
+  boundPhone?: string;
+};
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^\+?\d[\d\s-]{5,20}$/;
+const personalIpPattern = /^\d{4,18}$/;
 const codePattern = /^\d{8}$/;
 const DEFAULT_OTP_COOLDOWN_SECONDS = 60;
 const DEFAULT_PROVIDER_LIMIT_SECONDS = 60 * 60;
 const COOLDOWN_STORAGE_PREFIX = "q-c-email-otp-cooldown:";
+const PROFILE_STORAGE_PREFIX = "q-c-account-profile:";
 
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
@@ -118,13 +128,60 @@ function clearStoredCooldown(email: string) {
   window.localStorage.removeItem(getCooldownStorageKey(email));
 }
 
+function getProfileStorageKey(email: string) {
+  return `${PROFILE_STORAGE_PREFIX}${normalizeEmail(email)}`;
+}
+
+function readAccountProfile(email: string): AccountProfile {
+  if (typeof window === "undefined" || !email) {
+    return {};
+  }
+
+  const raw = window.localStorage.getItem(getProfileStorageKey(email));
+
+  if (!raw) {
+    return {
+      boundEmail: normalizeEmail(email),
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as AccountProfile;
+
+    return {
+      ...parsed,
+      boundEmail: parsed.boundEmail || normalizeEmail(email),
+    };
+  } catch {
+    return {
+      boundEmail: normalizeEmail(email),
+    };
+  }
+}
+
+function writeAccountProfile(email: string, profile: AccountProfile) {
+  if (typeof window === "undefined" || !email) {
+    return;
+  }
+
+  window.localStorage.setItem(getProfileStorageKey(email), JSON.stringify(profile));
+}
+
 export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const auth = useAuth();
   const [mode, setMode] = useState<AuthMode>("entry");
+  const [accountPanel, setAccountPanel] = useState<AccountPanel>("home");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [profile, setProfile] = useState<AccountProfile>({});
+  const [personalIpInput, setPersonalIpInput] = useState("");
+  const [websiteNameInput, setWebsiteNameInput] = useState("");
+  const [boundPhoneInput, setBoundPhoneInput] = useState("");
+  const [boundEmailInput, setBoundEmailInput] = useState("");
+  const [settingsMessage, setSettingsMessage] = useState<string | null>(null);
+  const [settingsError, setSettingsError] = useState<string | null>(null);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
   const [cooldownReason, setCooldownReason] = useState<CooldownReason | null>(null);
@@ -172,6 +229,34 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
 
     return () => window.clearInterval(timer);
   }, [cooldownUntil, email]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (!auth.user?.email) {
+        setAccountPanel("home");
+        setProfile({});
+        setPersonalIpInput("");
+        setWebsiteNameInput("");
+        setBoundPhoneInput("");
+        setBoundEmailInput("");
+        setSettingsMessage(null);
+        setSettingsError(null);
+        return;
+      }
+
+      const nextProfile = readAccountProfile(auth.user.email);
+
+      setProfile(nextProfile);
+      setPersonalIpInput("");
+      setWebsiteNameInput(nextProfile.websiteName || "");
+      setBoundPhoneInput(nextProfile.boundPhone || "");
+      setBoundEmailInput(nextProfile.boundEmail || normalizeEmail(auth.user.email));
+      setSettingsMessage(null);
+      setSettingsError(null);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [auth.user?.email]);
 
   function startCooldown(emailValue: string, reason: CooldownReason, seconds: number) {
     const safeSeconds = Math.max(1, seconds);
@@ -337,7 +422,107 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
     setCode("");
     setCodeSentTo(null);
     setMode("entry");
+    setAccountPanel("home");
   }
+
+  function saveProfile(nextProfile: AccountProfile, message: string) {
+    if (!auth.user?.email) {
+      return;
+    }
+
+    const normalizedProfile = {
+      ...nextProfile,
+      boundEmail: nextProfile.boundEmail || normalizeEmail(auth.user.email),
+    };
+
+    writeAccountProfile(auth.user.email, normalizedProfile);
+    setProfile(normalizedProfile);
+    setSettingsError(null);
+    setSettingsMessage(message);
+  }
+
+  function handleSavePersonalIp(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (profile.personalIp) {
+      setSettingsMessage(null);
+      setSettingsError("个人IP号码已经锁定，不能再次更改。");
+      return;
+    }
+
+    const nextPersonalIp = personalIpInput.trim();
+
+    if (!personalIpPattern.test(nextPersonalIp)) {
+      setSettingsMessage(null);
+      setSettingsError("请输入 4 到 18 位数字作为个人IP号码。");
+      return;
+    }
+
+    saveProfile(
+      {
+        ...profile,
+        personalIp: nextPersonalIp,
+      },
+      "个人IP号码已设置，后续不能更改。",
+    );
+    setPersonalIpInput("");
+  }
+
+  function handleSaveWebsiteName(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const nextWebsiteName = websiteNameInput.trim();
+
+    if (nextWebsiteName.length < 2 || nextWebsiteName.length > 20) {
+      setSettingsMessage(null);
+      setSettingsError("网站名字请输入 2 到 20 个字符。");
+      return;
+    }
+
+    saveProfile(
+      {
+        ...profile,
+        websiteName: nextWebsiteName,
+      },
+      "网站名字已保存。",
+    );
+  }
+
+  function handleSaveBindings(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const nextEmail = normalizeEmail(boundEmailInput || auth.user?.email || "");
+    const nextPhone = boundPhoneInput.trim();
+
+    if (!emailPattern.test(nextEmail)) {
+      setSettingsMessage(null);
+      setSettingsError("请输入正确的绑定邮箱。");
+      return;
+    }
+
+    if (nextPhone && !phonePattern.test(nextPhone)) {
+      setSettingsMessage(null);
+      setSettingsError("请输入正确的手机号。");
+      return;
+    }
+
+    saveProfile(
+      {
+        ...profile,
+        boundEmail: nextEmail,
+        boundPhone: nextPhone,
+      },
+      "账号绑定信息已保存。手机号和邮箱会作为同一个账号身份。",
+    );
+  }
+
+  const accountTitle = auth.user
+    ? accountPanel === "settings"
+      ? "账号设置"
+      : "账号状态"
+    : mode === "otp"
+      ? "邮箱验证码登录"
+      : "登录界面";
 
   return (
     <section
@@ -350,7 +535,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
         <div>
           <p className="account-modal-kicker">个人中心</p>
           <h2 id="account-dialog-title" className="account-modal-title">
-            {auth.user ? "账号状态" : mode === "otp" ? "邮箱验证码登录" : "登录界面"}
+            {accountTitle}
           </h2>
         </div>
         <button
@@ -376,21 +561,114 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
             </span>
             <span>
               <span className="auth-status-label">已登录</span>
-              <span className="auth-status-email">{auth.user.email}</span>
+              <span className="auth-status-email">
+                {profile.websiteName || auth.user.email}
+              </span>
+              {profile.websiteName ? (
+                <span className="auth-status-subemail">{auth.user.email}</span>
+              ) : null}
             </span>
           </div>
 
-          <div className="auth-placeholder-list">
-            <span>资料</span>
-            <span>聊天记录</span>
-            <span>账号设置</span>
-          </div>
+          {accountPanel === "settings" ? (
+            <div className="auth-settings-panel">
+              <button
+                type="button"
+                className="auth-back-button"
+                onClick={() => {
+                  setAccountPanel("home");
+                  setSettingsMessage(null);
+                  setSettingsError(null);
+                }}
+              >
+                <ArrowLeft size={16} strokeWidth={2} />
+                返回账号状态
+              </button>
+
+              <form className="auth-setting-card" onSubmit={handleSavePersonalIp}>
+                <div>
+                  <strong>个人IP设置</strong>
+                  <span>个人IP号码只能设置一次，确认后永久不能更改。</span>
+                </div>
+                {profile.personalIp ? (
+                  <p className="auth-locked-value">{profile.personalIp}</p>
+                ) : (
+                  <div className="auth-setting-action">
+                    <input
+                      inputMode="numeric"
+                      placeholder="输入个人IP号码"
+                      value={personalIpInput}
+                      onChange={(event) => setPersonalIpInput(event.target.value)}
+                    />
+                    <button type="submit">锁定</button>
+                  </div>
+                )}
+              </form>
+
+              <form className="auth-setting-card" onSubmit={handleSaveWebsiteName}>
+                <div>
+                  <strong>网站名字</strong>
+                  <span>登录后优先显示这个名字，方便识别当前账号。</span>
+                </div>
+                <div className="auth-setting-action">
+                  <input
+                    placeholder="设置网站名字"
+                    value={websiteNameInput}
+                    onChange={(event) => setWebsiteNameInput(event.target.value)}
+                  />
+                  <button type="submit">保存</button>
+                </div>
+              </form>
+
+              <form className="auth-setting-card" onSubmit={handleSaveBindings}>
+                <div>
+                  <strong>账号绑定</strong>
+                  <span>手机号和邮箱互通，后续任一方式登录都会显示同一个名字。</span>
+                </div>
+                <label className="auth-setting-field">
+                  <span>手机号绑定</span>
+                  <input
+                    inputMode="tel"
+                    placeholder="输入手机号"
+                    value={boundPhoneInput}
+                    onChange={(event) => setBoundPhoneInput(event.target.value)}
+                  />
+                </label>
+                <label className="auth-setting-field">
+                  <span>邮箱绑定</span>
+                  <input
+                    inputMode="email"
+                    placeholder="输入邮箱"
+                    value={boundEmailInput}
+                    onChange={(event) => setBoundEmailInput(event.target.value)}
+                  />
+                </label>
+                <button type="submit" className="auth-setting-save">
+                  保存绑定
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="auth-placeholder-list">
+              <button type="button">资料</button>
+              <button type="button">聊天记录</button>
+              <button type="button" onClick={() => setAccountPanel("settings")}>
+                账号设置
+              </button>
+            </div>
+          )}
 
           {auth.message ? (
             <p className="auth-feedback auth-feedback-success">{auth.message}</p>
           ) : null}
           {auth.error ? (
             <p className="auth-feedback auth-feedback-error">{auth.error}</p>
+          ) : null}
+          {settingsMessage ? (
+            <p className="auth-feedback auth-feedback-success">{settingsMessage}</p>
+          ) : null}
+          {settingsError ? (
+            <p className="auth-feedback auth-feedback-error">{settingsError}</p>
           ) : null}
 
           <button

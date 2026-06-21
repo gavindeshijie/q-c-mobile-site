@@ -769,7 +769,8 @@ svg {
 }
 
 .auth-status-label,
-.auth-status-email {
+.auth-status-email,
+.auth-status-subemail {
   display: block;
 }
 
@@ -789,26 +790,150 @@ svg {
   font-weight: 900;
 }
 
+.auth-status-subemail {
+  margin-top: 3px;
+  max-width: 212px;
+  overflow-wrap: anywhere;
+  color: rgba(224, 242, 254, 0.48);
+  font-size: 10px;
+  font-weight: 700;
+}
+
 .auth-placeholder-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-.auth-placeholder-list span {
+.auth-placeholder-list span,
+.auth-placeholder-list button {
   min-height: 38px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px 4px 14px 4px;
   padding: 10px 8px;
   background: rgba(255, 255, 255, 0.045);
   color: rgba(226, 232, 240, 0.58);
+  font: inherit;
   font-size: 11px;
   font-weight: 800;
   text-align: center;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
+.auth-placeholder-list button:active {
+  transform: scale(0.975);
+}
+
+.auth-placeholder-list button:last-child:nth-child(odd),
 .auth-placeholder-list span:last-child:nth-child(odd) {
   grid-column: 1 / -1;
+}
+
+.auth-settings-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.auth-setting-card {
+  display: grid;
+  gap: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: 18px 5px 18px 5px;
+  padding: 12px;
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.1) 0 1px, transparent 1px),
+    radial-gradient(circle at 12% 8%, rgba(34, 211, 238, 0.12), transparent 44%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.auth-setting-card strong,
+.auth-setting-card span {
+  display: block;
+}
+
+.auth-setting-card strong {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1.2;
+}
+
+.auth-setting-card span {
+  margin-top: 3px;
+  color: rgba(224, 242, 254, 0.58);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.auth-setting-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 58px;
+  gap: 8px;
+}
+
+.auth-setting-field {
+  display: grid;
+  gap: 6px;
+}
+
+.auth-setting-field span {
+  margin: 0;
+  color: rgba(224, 242, 254, 0.7);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.auth-setting-card input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 15px 5px 15px 5px;
+  padding: 0 11px;
+  outline: none;
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.1) 0 1px, transparent 1px),
+    rgba(2, 6, 23, 0.36);
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.auth-setting-card input::placeholder {
+  color: rgba(226, 232, 240, 0.34);
+}
+
+.auth-setting-card button,
+.auth-setting-save {
+  min-height: 42px;
+  border: 1px solid rgba(103, 232, 249, 0.26);
+  border-radius: 15px 5px 15px 5px;
+  background:
+    linear-gradient(135deg, rgba(244, 114, 182, 0.62), rgba(34, 211, 238, 0.5)),
+    rgba(255, 255, 255, 0.06);
+  color: #05020a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.auth-setting-save {
+  width: 100%;
+}
+
+.auth-locked-value {
+  margin: 0;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-radius: 15px 5px 15px 5px;
+  padding: 11px;
+  background: rgba(20, 184, 166, 0.1);
+  color: rgba(204, 251, 241, 0.95);
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
 }
 
 .account-modal-note {
