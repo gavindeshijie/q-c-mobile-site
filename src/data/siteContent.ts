@@ -45,45 +45,42 @@ export const siteContent = {
     highlights: ["Thailand", "Supply", "Technology", "Sales"],
   },
   businessesIntro: {
-    title: "五大核心业务",
-    subtitle: "围绕泰国市场，提供从商品、技术到渠道资源的一站式支持。",
+    title: "四大核心业务",
+    subtitle: "围绕泰国市场，提供从网站技术、潮流商品、本地资源到网店服务的一站式支持。",
   },
   businesses: [
     {
-      icon: "shoppingBag",
-      title: "潮流商品供应",
-      english: "Trend Products Supply",
-      description: "精选市面热门商品，提供稳定货源、批量供货与销售支持。",
-      accent: "cyan",
-    },
-    {
       icon: "code",
       title: "网站与软件定制",
-      english: "Web & Software Development",
-      description: "根据业务需求开发网站、商城系统、管理后台、小程序与自动化工具。",
+      english: "WEB & SOFTWARE",
+      description:
+        "根据业务需求定制官网、商城系统、管理后台、小程序与自动化工具，帮助项目快速完成线上化搭建。",
       accent: "violet",
     },
     {
-      icon: "store",
-      title: "泰国网店协助",
-      english: "Thailand E-Commerce Support",
-      description: "协助商家进入泰国本地电商平台，提供开店指导、商品供货与运营支持。",
-      accent: "gold",
-    },
-    {
-      icon: "cpu",
-      title: "软硬件定制开发",
-      english: "Software & Hardware Solutions",
-      description: "提供软件系统、智能设备、硬件方案、数据采集与行业工具定制。",
-      accent: "blue",
+      icon: "shoppingBag",
+      title: "潮流科技小商品供应",
+      english: "TREND TECH SUPPLY",
+      description:
+        "精选市面热门科技小商品，提供稳定货源、批量供货、商品组合与销售支持。",
+      accent: "cyan",
     },
     {
       icon: "network",
-      title: "资源整合与销售",
-      english: "Resources Integration & Sales",
+      title: "本地资源整合与销售",
+      english: "LOCAL RESOURCE & SALES",
       description:
-        "整合泰国本地渠道、商品资源、达人资源、商家资源与推广资源，提升成交效率。",
+        "整合泰国本地渠道、商品资源、商家资源、达人资源与推广资源，提升对接与成交效率。",
       accent: "silver",
+      featured: true,
+    },
+    {
+      icon: "store",
+      title: "泰国本土网店一条龙服务",
+      english: "THAI SHOP FULL SERVICE",
+      description:
+        "协助商家进入泰国本土网店市场，提供开店协助、商品供应、页面搭建、基础运营与销售支持。",
+      accent: "gold",
       featured: true,
     },
   ],

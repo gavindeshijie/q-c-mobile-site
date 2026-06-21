@@ -11,12 +11,11 @@ type HeaderProps = {
 
 const menuItems = [
   { label: "首页", href: "#top" },
-  { label: "五大业务", href: "#business" },
+  { label: "核心业务", href: "#business" },
   { label: "网站与软件定制", href: "#business" },
-  { label: "软硬件结合开发", href: "#business" },
-  { label: "本地资源整合与销售", href: "#business" },
   { label: "潮流科技小商品供应", href: "#business" },
-  { label: "泰国本土网店开店协助与商品供应", href: "#business" },
+  { label: "本地资源整合与销售", href: "#business" },
+  { label: "泰国本土网店一条龙服务", href: "#business" },
   { label: "合作咨询", href: "#contact" },
 ] as const;
 
