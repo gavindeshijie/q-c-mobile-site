@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, LockKeyhole, Mail, Menu, User, X } from "lucide-react";
+import { ArrowRight, LockKeyhole, Mail, Menu, X } from "lucide-react";
 
 import type { SiteContent } from "@/data/siteContent";
 
@@ -20,7 +20,6 @@ export function Header({ site }: HeaderProps) {
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
-    subtitle: node.subtitle,
   }));
 
   useEffect(() => {
@@ -103,26 +102,19 @@ export function Header({ site }: HeaderProps) {
               setIsAccountOpen(true);
             }}
           >
-            <span className="header-menu-index">USER</span>
             <span className="min-w-0 flex-1 leading-snug">个人中心</span>
-            <User size={16} strokeWidth={2} />
           </button>
 
-          {menuItems.map((item, index) => (
+          {menuItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className="header-menu-item group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 py-2 text-sm font-semibold text-white/86 transition active:scale-[0.98]"
               onClick={() => setIsMenuOpen(false)}
             >
-              <span className="header-menu-index">
-                {(index + 2).toString().padStart(2, "0")}
-              </span>
+              <span className="header-menu-alert-dot" aria-hidden="true" />
               <span className="min-w-0 flex-1 leading-tight">
                 <span className="block truncate">{item.label}</span>
-                <span className="mt-0.5 block truncate text-[9px] font-bold tracking-[0.12em] text-cyan-100/52">
-                  {item.subtitle}
-                </span>
               </span>
               <ArrowRight size={15} strokeWidth={2} />
             </Link>

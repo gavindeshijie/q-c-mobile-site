@@ -273,6 +273,19 @@ svg {
   letter-spacing: 0.08em;
 }
 
+.header-menu-alert-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-left: 2px;
+  border-radius: 999px;
+  background: #ff2d55;
+  box-shadow:
+    0 0 8px rgba(255, 45, 85, 0.82),
+    0 0 14px rgba(244, 63, 94, 0.44);
+  animation: hero-hud-alert-blink 1s steps(1, end) infinite;
+}
+
 .account-modal-layer {
   background:
     radial-gradient(circle at 50% 30%, rgba(244, 114, 182, 0.16), transparent 32%),
