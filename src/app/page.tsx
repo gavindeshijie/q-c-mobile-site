@@ -15,9 +15,10 @@ export default function Home() {
         {siteContent.desktopNotice}
       </div>
 
+      <Header site={siteContent} />
+
       <main className="page-enter mobile-frame relative mx-auto min-h-svh w-full max-w-[430px] overflow-hidden bg-[#05070d] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_36px_120px_rgba(0,0,0,0.55)]">
         <ScrollToTopOnLoad />
-        <Header site={siteContent} />
         <Hero3D hero={siteContent.hero} />
         <BusinessCards
           intro={siteContent.businessesIntro}
