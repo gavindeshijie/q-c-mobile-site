@@ -604,6 +604,9 @@ svg {
 }
 
 .hero-hud-node {
+  --hero-hud-dot-left: clamp(11px, 3vw, 13px);
+  --hero-hud-dot-size: clamp(7px, 1.95vw, 8px);
+  --hero-hud-dot-top: clamp(10px, 2.85vw, 12px);
   isolation: isolate;
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.26);
@@ -699,17 +702,17 @@ svg {
 }
 
 .hero-hud-node .hero-node-title {
-  padding-left: 20px;
+  padding-left: calc(var(--hero-hud-dot-left) + var(--hero-hud-dot-size) + 5px);
   padding-right: 6px;
 }
 
 .hero-hud-alert-dot {
   position: absolute;
-  top: 11px;
-  left: 5px;
+  top: var(--hero-hud-dot-top);
+  left: var(--hero-hud-dot-left);
   z-index: 4;
-  width: 8px;
-  height: 8px;
+  width: var(--hero-hud-dot-size);
+  height: var(--hero-hud-dot-size);
   border-radius: 999px;
   background: #ff2d55;
   box-shadow:
@@ -1526,7 +1529,7 @@ svg {
 }
 
 .hero-hud-node .hero-node-title-nowrap {
-  padding-left: 18px;
+  padding-left: calc(var(--hero-hud-dot-left) + var(--hero-hud-dot-size) + 4px);
   padding-right: 5px;
 }
 
