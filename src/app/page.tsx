@@ -1,4 +1,5 @@
 import { BusinessCards } from "@/components/BusinessCards";
+import { BusinessDetailSections } from "@/components/BusinessDetailSections";
 import { CapabilitySection } from "@/components/CapabilitySection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
@@ -24,6 +25,7 @@ export default function Home() {
           intro={siteContent.businessesIntro}
           businesses={siteContent.businesses}
         />
+        <BusinessDetailSections details={siteContent.businessDetails} />
         <CapabilitySection
           intro={siteContent.capabilitiesIntro}
           capabilities={siteContent.capabilities}
