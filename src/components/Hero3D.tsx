@@ -81,6 +81,22 @@ export function Hero3D({ hero }: Hero3DProps) {
         </motion.div>
 
         <div className="hero-neon-triangle hero-neon-triangle-main absolute left-[94px] top-[128px] z-[34]" />
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 340 315"
+          className="hero-triangle-runner absolute left-[94px] top-[128px] z-[35]"
+        >
+          <path
+            className="hero-triangle-runner-glow"
+            pathLength="100"
+            d="M27 22 L326 158 L27 293 Z"
+          />
+          <path
+            className="hero-triangle-runner-core"
+            pathLength="100"
+            d="M27 22 L326 158 L27 293 Z"
+          />
+        </svg>
         <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-one absolute right-[18%] top-[19%] z-[28]" />
         <div className="hero-neon-triangle hero-neon-triangle-small hero-triangle-chip-two absolute right-[2%] top-[67%] z-[28]" />
 
@@ -120,6 +136,19 @@ export function Hero3D({ hero }: Hero3DProps) {
             sizes="(max-width: 430px) 100vw, 430px"
             className="hero-character-image hero-character-cutout object-cover object-[78%_center]"
           />
+        </motion.div>
+
+        <motion.div
+          aria-hidden="true"
+          className="hero-character-effects absolute inset-0 z-[37]"
+          animate={characterMotion}
+          transition={characterTransition}
+        >
+          <span className="hero-hair-aura" />
+          <span className="hero-hair-strand hero-hair-strand-one" />
+          <span className="hero-hair-strand hero-hair-strand-two" />
+          <span className="hero-hair-strand hero-hair-strand-three" />
+          <span className="hero-visor-glow" />
         </motion.div>
 
         <div className="hero-fullscreen-shade absolute inset-0 z-40" />
