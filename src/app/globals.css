@@ -943,6 +943,23 @@ svg {
     radial-gradient(circle at 88% 90%, rgba(103, 232, 249, 0.12), transparent 50%);
 }
 
+.hero-action-single {
+  width: min(268px, 78vw);
+  min-height: 58px;
+  border-color: rgba(103, 232, 249, 0.42);
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.18) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(34, 211, 238, 0.16) 0 2px, transparent 2px),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.58), rgba(3, 7, 18, 0.24)),
+    radial-gradient(circle at 16% 18%, rgba(244, 114, 182, 0.2), transparent 46%),
+    radial-gradient(circle at 84% 86%, rgba(103, 232, 249, 0.18), transparent 50%);
+  box-shadow:
+    0 0 24px rgba(34, 211, 238, 0.14),
+    0 18px 46px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(224, 242, 254, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
 .business-tech-section {
   background:
     linear-gradient(180deg, rgba(2, 6, 23, 0.82), rgba(3, 7, 18, 0.94) 20%, rgba(5, 8, 22, 0.98)),

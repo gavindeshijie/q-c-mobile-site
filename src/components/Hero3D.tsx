@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -194,17 +194,10 @@ export function Hero3D({ hero }: Hero3DProps) {
       </div>
 
       <div className="hero-bottom-actions absolute inset-x-0 bottom-0 z-[60]">
-        <div className="grid w-full grid-cols-2 gap-3">
-          <a
-            href={hero.primaryAction.href}
-            className="hero-action-button hero-action-primary"
-          >
-            <span>{hero.primaryAction.label}</span>
-            <ArrowRight size={25} strokeWidth={2} aria-hidden="true" />
-          </a>
+        <div className="flex w-full justify-center">
           <a
             href={hero.secondaryAction.href}
-            className="hero-action-button hero-action-secondary"
+            className="hero-action-button hero-action-secondary hero-action-single"
           >
             <span>{hero.secondaryAction.label}</span>
             <ChevronDown size={25} strokeWidth={2} aria-hidden="true" />
