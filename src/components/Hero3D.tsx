@@ -10,28 +10,30 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "left-[1%] top-[42%]",
-  "left-[20%] top-[8%]",
-  "right-[2%] top-[30%]",
-  "left-[10%] bottom-[9%]",
-  "right-[8%] bottom-[8%]",
+  "left-[calc(50%_-_75px)] top-0 w-[150px]",
+  "right-0 top-[27%] w-[126px]",
+  "left-0 top-[30%] w-[126px]",
+  "left-[3%] bottom-[4%] w-[138px]",
+  "right-[3%] bottom-[4%] w-[138px]",
 ] as const;
 
 const nodeAnchors = [
-  { x: 18, y: 53 },
-  { x: 34, y: 25 },
-  { x: 80, y: 41 },
-  { x: 29, y: 78 },
-  { x: 75, y: 79 },
+  { x: 50, y: 20 },
+  { x: 82, y: 43 },
+  { x: 18, y: 46 },
+  { x: 27, y: 78 },
+  { x: 73, y: 78 },
 ] as const;
 
 const particlePositions = [
-  "left-[27%] top-[34%]",
-  "left-[61%] top-[22%]",
-  "left-[73%] top-[56%]",
-  "left-[40%] top-[73%]",
-  "left-[21%] top-[61%]",
-  "left-[55%] top-[42%]",
+  "left-[22%] top-[23%]",
+  "left-[62%] top-[17%]",
+  "left-[79%] top-[52%]",
+  "left-[43%] top-[80%]",
+  "left-[14%] top-[59%]",
+  "left-[53%] top-[36%]",
+  "left-[33%] top-[50%]",
+  "left-[70%] top-[70%]",
 ] as const;
 
 export function Hero3D({ hero }: Hero3DProps) {
@@ -45,18 +47,20 @@ export function Hero3D({ hero }: Hero3DProps) {
       <div className="hero-aurora absolute inset-x-[-28%] top-[-15%] -z-10 h-[34rem]" />
       <div className="hero-space-field absolute inset-x-[-8%] top-4 -z-10 h-[68%]" />
       <div className="ambient-grid absolute inset-x-0 top-8 -z-10 h-[62%] opacity-30" />
+      <div className="hero-perspective-haze absolute inset-x-[-12%] top-0 -z-10 h-[24rem]" />
       <div className="absolute right-5 top-24 -z-10 text-[4.8rem] font-semibold leading-none text-white/[0.025]">
         BKK
       </div>
 
       <div
-        className="relative mx-auto flex h-[min(74vw,318px)] w-[min(74vw,318px)] items-center justify-center [perspective:900px]"
+        className="relative mx-auto flex h-[min(88vw,342px)] w-full max-w-[390px] items-center justify-center [perspective:1080px]"
       >
         <motion.div
-          className="absolute inset-[-10%] rounded-full bg-[radial-gradient(circle_at_50%_46%,rgba(120,106,255,0.3),rgba(34,211,238,0.18)_30%,rgba(245,190,92,0.08)_48%,transparent_72%)] blur-2xl"
-          animate={reduceMotion ? undefined : { opacity: [0.38, 0.72, 0.38] }}
-          transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+          className="hero-hub-glow absolute inset-[-14%]"
+          animate={reduceMotion ? undefined : { opacity: [0.58, 0.98, 0.58] }}
+          transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
         />
+        <div className="hero-depth-disc absolute left-1/2 top-[53%] h-[42%] w-[72%] -translate-x-1/2 rounded-full" />
 
         <motion.div
           className="relative h-full w-full will-change-transform [transform-style:preserve-3d]"
@@ -65,66 +69,93 @@ export function Hero3D({ hero }: Hero3DProps) {
               ? undefined
               : {
                   y: [0, -11, 0],
-                  rotateX: [0, 2, 0],
-                  rotateY: [-4, 4, -4],
+                  rotateX: [0, 3, 0],
+                  rotateY: [-6, 6, -6],
                 }
           }
-          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 8.2, repeat: Infinity, ease: "easeInOut" }}
         >
           <div className="hero-core-backlight absolute inset-[9%] rounded-full" />
 
           <svg
             aria-hidden="true"
             viewBox="0 0 100 100"
-            className="absolute inset-0 z-10 overflow-visible opacity-75"
+            className="absolute inset-0 z-10 overflow-visible opacity-80"
           >
             <defs>
               <linearGradient id="hero-connection-line" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0%" stopColor="rgba(103,232,249,0)" />
-                <stop offset="48%" stopColor="rgba(103,232,249,0.72)" />
-                <stop offset="100%" stopColor="rgba(250,204,21,0.1)" />
+                <stop offset="48%" stopColor="rgba(103,232,249,0.86)" />
+                <stop offset="100%" stopColor="rgba(250,204,21,0.16)" />
               </linearGradient>
+              <filter id="hero-line-glow" x="-35%" y="-35%" width="170%" height="170%">
+                <feGaussianBlur stdDeviation="0.85" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
             {nodeAnchors.map((anchor) => (
-              <line
-                key={`${anchor.x}-${anchor.y}`}
-                x1="50"
-                y1="50"
-                x2={anchor.x}
-                y2={anchor.y}
-                stroke="url(#hero-connection-line)"
-                strokeLinecap="round"
-                strokeWidth="0.45"
-              />
+              <g key={`${anchor.x}-${anchor.y}`} filter="url(#hero-line-glow)">
+                <line
+                  x1="50"
+                  y1="50"
+                  x2={anchor.x}
+                  y2={anchor.y}
+                  stroke="url(#hero-connection-line)"
+                  strokeLinecap="round"
+                  strokeWidth="0.42"
+                />
+                <circle
+                  cx={anchor.x}
+                  cy={anchor.y}
+                  r="1.15"
+                  fill="rgba(165,243,252,0.9)"
+                />
+              </g>
             ))}
           </svg>
 
-          <div className="hero-orbit hero-orbit-one absolute inset-[15%] z-20 rounded-full" />
-          <div className="hero-orbit hero-orbit-two absolute inset-[19%] z-20 rounded-full" />
-          <div className="hero-orbit hero-orbit-three absolute inset-[25%] z-20 rounded-full" />
+          <div className="hero-far-orbit absolute inset-[4%] z-10 rounded-full" />
+          <div className="hero-orbit hero-orbit-one absolute inset-[13%] z-20 rounded-full" />
+          <div className="hero-orbit hero-orbit-two absolute inset-[18%] z-20 rounded-full" />
+          <div className="hero-orbit hero-orbit-three absolute inset-[24%] z-20 rounded-full" />
+          <div className="hero-orbit hero-orbit-four absolute inset-[30%] z-20 rounded-full" />
 
-          <div className="absolute left-1/2 top-1/2 z-30 h-[48%] w-[48%] -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 z-30 h-[42%] w-[42%] -translate-x-1/2 -translate-y-1/2">
             <motion.div
-              className="relative h-full w-full"
+              className="hero-core-stage relative h-full w-full"
               animate={
                 reduceMotion
                   ? undefined
                   : {
                       y: [0, -7, 0],
-                      rotateX: [0, 3, 0],
-                      rotateY: [-5, 5, -5],
+                      rotateX: [58, 63, 58],
+                      rotateY: [-12, 12, -12],
                     }
               }
-              transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 7.6, repeat: Infinity, ease: "easeInOut" }}
             >
+              <div className="hero-core-shadow absolute inset-[12%] rounded-full" />
               <div className="hero-glass-core absolute inset-0 rounded-full" />
               <div className="hero-core-lattice absolute inset-[10%] rounded-full" />
+              <div className="hero-inner-world absolute inset-[22%] rounded-full" />
+              <div className="hero-core-cube absolute left-1/2 top-1/2">
+                <span className="hero-cube-face hero-cube-front" />
+                <span className="hero-cube-face hero-cube-back" />
+                <span className="hero-cube-face hero-cube-right" />
+                <span className="hero-cube-face hero-cube-left" />
+                <span className="hero-cube-face hero-cube-top" />
+                <span className="hero-cube-face hero-cube-bottom" />
+              </div>
               <div className="absolute inset-[28%] rounded-full bg-cyan-200/45 blur-xl" />
               <div className="absolute left-[19%] top-[17%] h-[22%] w-[22%] rounded-full bg-white/45 blur-md" />
               <div className="hero-data-stream absolute left-[11%] top-[47%] h-px w-[78%] rotate-[-14deg]" />
               <div className="hero-data-stream hero-data-stream-delay absolute left-[15%] top-[54%] h-px w-[70%] rotate-[22deg]" />
-              <div className="absolute left-1/2 top-[12%] h-[76%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-amber-100/45 to-transparent" />
-              <div className="absolute left-[13%] top-1/2 h-px w-[74%] -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-100/45 to-transparent" />
+              <div className="hero-data-stream hero-data-stream-third absolute left-[18%] top-[36%] h-px w-[64%] rotate-[42deg]" />
+              <div className="absolute left-1/2 top-[12%] h-[76%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-amber-100/50 to-transparent" />
+              <div className="absolute left-[13%] top-1/2 h-px w-[74%] -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-100/56 to-transparent" />
             </motion.div>
           </div>
 
@@ -150,22 +181,22 @@ export function Hero3D({ hero }: Hero3DProps) {
 
           {hero.nodes.map((node, index) => (
             <motion.div
-              key={node.label}
-              className={`absolute z-50 ${nodePositions[index]} flex min-h-[48px] w-[68px] flex-col items-center justify-center rounded-2xl border border-cyan-100/[0.18] bg-white/[0.07] px-2 text-center shadow-[0_14px_36px_rgba(0,0,0,0.3),0_0_22px_rgba(34,211,238,0.1),inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-xl`}
+              key={node.title}
+              className={`hero-business-node absolute z-50 ${nodePositions[index]} flex min-h-[58px] flex-col items-center justify-center px-2.5 py-2 text-center`}
               whileTap={{ scale: 0.96 }}
-              animate={reduceMotion ? undefined : { y: [0, index % 2 ? -6 : 6, 0] }}
+              animate={reduceMotion ? undefined : { y: [0, index % 2 ? -7 : 7, 0] }}
               transition={{
-                duration: 4.8 + index * 0.25,
+                duration: 4.9 + index * 0.28,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             >
-              <span className="mb-1 h-1 w-7 rounded-full bg-gradient-to-r from-transparent via-cyan-100 to-transparent shadow-[0_0_16px_rgba(103,232,249,0.7)]" />
-              <span className="text-[11px] font-semibold leading-4 text-white">
-                {node.label}
+              <span className="hero-node-scan mb-1 h-px w-11 rounded-full" />
+              <span className="text-[11px] font-semibold leading-[1.18] text-white">
+                {node.title}
               </span>
-              <span className="mt-0.5 text-[7px] uppercase leading-3 tracking-[0.12em] text-cyan-100/58">
-                {node.shortLabel}
+              <span className="mt-1 text-[7px] font-semibold uppercase leading-3 tracking-[0.08em] text-cyan-100/64">
+                {node.subtitle}
               </span>
             </motion.div>
           ))}
