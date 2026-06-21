@@ -11,17 +11,15 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "w-[164px]",
-  "ml-2 w-[174px]",
-  "w-[188px]",
-  "ml-2 w-[184px]",
+  "w-[190px]",
+  "ml-1 w-[206px]",
+  "w-[206px]",
+  "ml-1 w-[214px]",
 ] as const;
 
 const nodeTilts = ["-1.2deg", "1deg", "-1.4deg", "1.1deg"] as const;
 
 const nodeDrift = [-2, 2, -2, 2] as const;
-
-const nodeNumbers = ["01", "02", "03", "04"] as const;
 
 const nodeTitleClasses = [
   "",
@@ -153,7 +151,6 @@ export function Hero3D({ hero }: Hero3DProps) {
                 aria-hidden="true"
                 className="hero-hud-frame-line hero-hud-frame-line-bottom"
               />
-              <span className="hero-hud-index">{nodeNumbers[index]}</span>
               <span className={`hero-node-title ${nodeTitleClasses[index]}`}>
                 {node.title}
               </span>
