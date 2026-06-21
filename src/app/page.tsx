@@ -37,8 +37,8 @@ export default function Home() {
         />
         <CTASection cta={siteContent.cta} />
         <Footer footer={siteContent.footer} domain={siteContent.domain} />
-        <SupportChatWidget />
       </main>
+      <SupportChatWidget />
     </div>
   );
 }

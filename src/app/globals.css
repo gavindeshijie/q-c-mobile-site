@@ -2033,9 +2033,10 @@ svg {
 .support-chat-widget {
   position: fixed;
   right: max(16px, calc((100vw - 430px) / 2 + 16px));
-  bottom: calc(env(safe-area-inset-bottom) + 86px);
-  z-index: 8900;
+  bottom: calc(env(safe-area-inset-bottom) + 172px);
+  z-index: 9200;
   pointer-events: none;
+  touch-action: none;
 }
 
 .support-chat-entry,
@@ -2060,16 +2061,17 @@ svg {
 .support-chat-entry {
   pointer-events: auto;
   display: grid;
-  width: 62px;
-  min-height: 62px;
+  width: 66px;
+  min-height: 66px;
   place-items: center;
   gap: 1px;
   overflow: hidden;
   border-radius: 20px 6px 20px 6px;
   color: rgba(224, 242, 254, 0.98);
-  cursor: pointer;
+  cursor: grab;
   font: inherit;
   font-weight: 950;
+  touch-action: none;
   transition: transform 170ms ease, border-color 170ms ease;
 }
 
@@ -2121,13 +2123,14 @@ svg {
 }
 
 .support-chat-entry:active {
+  cursor: grabbing;
   transform: scale(0.96);
 }
 
 .support-chat-panel {
-  position: absolute;
-  right: 0;
-  bottom: 76px;
+  position: fixed;
+  right: max(12px, calc((100vw - 430px) / 2 + 12px));
+  bottom: calc(env(safe-area-inset-bottom) + 154px);
   pointer-events: auto;
   display: grid;
   width: min(354px, calc(100vw - 24px));
@@ -2146,6 +2149,13 @@ svg {
   gap: 12px;
   padding: 14px;
   border-bottom: 1px solid rgba(103, 232, 249, 0.14);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.support-chat-head:active {
+  cursor: grabbing;
 }
 
 .support-chat-title {

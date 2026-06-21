@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Headphones, Languages, Send, X } from "lucide-react";
 
@@ -16,6 +17,11 @@ type SupportConversation = {
   id: string;
   language: string;
   status: string;
+};
+
+type FloatingPosition = {
+  left: number;
+  top: number;
 };
 
 const conversationKey = "q-c-support-conversation-id";
@@ -58,8 +64,11 @@ export function SupportChatWidget() {
   const [draft, setDraft] = useState("");
   const [statusText, setStatusText] = useState("客服在线");
   const [isSending, setIsSending] = useState(false);
+  const [entryPosition, setEntryPosition] = useState<FloatingPosition | null>(null);
+  const [panelPosition, setPanelPosition] = useState<FloatingPosition | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const visitorIdRef = useRef("");
+  const entryMovedRef = useRef(false);
 
   const currentVisitorId = useCallback(() => {
     if (!visitorIdRef.current) {
@@ -129,6 +138,106 @@ export function SupportChatWidget() {
     messagesEndRef.current?.scrollIntoView({ block: "end" });
   }, [messages, isOpen]);
 
+  function clampFloatingPosition(
+    nextLeft: number,
+    nextTop: number,
+    width: number,
+    height: number,
+  ) {
+    const margin = 8;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    return {
+      left: Math.min(Math.max(margin, nextLeft), viewportWidth - width - margin),
+      top: Math.min(Math.max(margin, nextTop), viewportHeight - height - margin),
+    };
+  }
+
+  function startFloatingDrag(
+    event: ReactPointerEvent<HTMLElement>,
+    target: "entry" | "panel",
+  ) {
+    if (event.button && event.button !== 0) return;
+    if (target === "panel" && event.target instanceof Element) {
+      if (event.target.closest("button, textarea, input, select, a")) return;
+    }
+
+    const rect =
+      target === "entry"
+        ? event.currentTarget.getBoundingClientRect()
+        : event.currentTarget
+            .closest(".support-chat-panel")
+            ?.getBoundingClientRect();
+
+    if (!rect) return;
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+    const startLeft = rect.left;
+    const startTop = rect.top;
+    const width = rect.width;
+    const height = rect.height;
+    let moved = false;
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      const deltaY = moveEvent.clientY - startY;
+
+      if (Math.abs(deltaX) + Math.abs(deltaY) > 5) {
+        moved = true;
+        if (target === "entry") {
+          entryMovedRef.current = true;
+        }
+      }
+
+      const nextPosition = clampFloatingPosition(
+        startLeft + deltaX,
+        startTop + deltaY,
+        width,
+        height,
+      );
+
+      if (target === "entry") {
+        setEntryPosition(nextPosition);
+      } else {
+        setPanelPosition(nextPosition);
+      }
+    };
+
+    const handlePointerUp = () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+
+      if (target === "entry" && moved) {
+        window.setTimeout(() => {
+          entryMovedRef.current = false;
+        }, 180);
+      }
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+  }
+
+  const entryStyle: CSSProperties | undefined = entryPosition
+    ? {
+        left: entryPosition.left,
+        top: entryPosition.top,
+        right: "auto",
+        bottom: "auto",
+      }
+    : undefined;
+
+  const panelStyle: CSSProperties | undefined = panelPosition
+    ? {
+        left: panelPosition.left,
+        top: panelPosition.top,
+        right: "auto",
+        bottom: "auto",
+      }
+    : undefined;
+
   async function sendMessage() {
     const body = draft.trim();
     if (!body || isSending) return;
@@ -171,14 +280,18 @@ export function SupportChatWidget() {
   }
 
   return (
-    <div className="support-chat-widget">
+    <div className="support-chat-widget" style={entryStyle}>
       {isOpen ? (
         <section
           className="support-chat-panel"
           role="dialog"
           aria-label="Q-C 客服聊天"
+          style={panelStyle}
         >
-          <header className="support-chat-head">
+          <header
+            className="support-chat-head"
+            onPointerDown={(event) => startFloatingDrag(event, "panel")}
+          >
             <div className="support-chat-title">
               <span className="support-chat-mark">
                 <Headphones size={24} strokeWidth={1.8} />
@@ -262,15 +375,25 @@ export function SupportChatWidget() {
         </section>
       ) : null}
 
-      <button
-        type="button"
-        className="support-chat-entry"
-        aria-label="打开客服聊天"
-        onClick={() => setIsOpen(true)}
-      >
-        <Headphones size={27} strokeWidth={1.8} />
-        <span>客服</span>
-      </button>
+      {!isOpen ? (
+        <button
+          type="button"
+          className="support-chat-entry"
+          aria-label="打开客服聊天"
+          onPointerDown={(event) => startFloatingDrag(event, "entry")}
+          onClick={() => {
+            if (entryMovedRef.current) {
+              entryMovedRef.current = false;
+              return;
+            }
+
+            setIsOpen(true);
+          }}
+        >
+          <Headphones size={27} strokeWidth={1.8} />
+          <span>客服</span>
+        </button>
+      ) : null}
     </div>
   );
 }
