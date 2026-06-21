@@ -1490,9 +1490,9 @@ svg {
   max-width: 100%;
   margin-top: 8px;
   color: rgba(207, 250, 254, 0.78);
-  font-size: 7.4px;
+  font-size: 11px;
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.04;
   overflow-wrap: anywhere;
 }
 
@@ -1501,10 +1501,10 @@ svg {
   max-width: 100%;
   margin-top: 2px;
   color: rgba(165, 243, 252, 0.72);
-  font-size: 6.8px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.1;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
