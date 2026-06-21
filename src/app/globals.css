@@ -123,8 +123,8 @@ svg {
       rgba(167, 139, 250, 0.14),
       transparent 38%
     );
-  filter: blur(18px);
-  animation: hero-halo-breathe 8s ease-in-out infinite;
+  filter: blur(16px);
+  opacity: 0.86;
 }
 
 .hero-space-field {
@@ -155,7 +155,7 @@ svg {
     rgba(0, 0, 0, 0.72) 42%,
     transparent 78%
   );
-  animation: hero-space-drift 16s ease-in-out infinite alternate;
+  opacity: 0.78;
 }
 
 .hero-perspective-haze {
@@ -187,7 +187,8 @@ svg {
     radial-gradient(circle at 50% 46%, rgba(34, 211, 238, 0.34), transparent 46%),
     radial-gradient(circle at 50% 58%, rgba(124, 58, 237, 0.22), transparent 62%),
     radial-gradient(ellipse at 50% 74%, rgba(37, 99, 235, 0.18), transparent 66%);
-  filter: blur(24px);
+  filter: blur(18px);
+  opacity: 0.82;
 }
 
 .hero-deep-space {
@@ -218,7 +219,7 @@ svg {
   transform-origin: 50% 70%;
   -webkit-mask-image: radial-gradient(ellipse at 50% 48%, black 0%, rgba(0, 0, 0, 0.62) 48%, transparent 76%);
   mask-image: radial-gradient(ellipse at 50% 48%, black 0%, rgba(0, 0, 0, 0.62) 48%, transparent 76%);
-  animation: hero-grid-drift 15s ease-in-out infinite alternate;
+  will-change: auto;
 }
 
 .hero-energy-ribbon {
@@ -227,11 +228,10 @@ svg {
   background:
     linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.24), rgba(224, 242, 254, 0.14), rgba(124, 58, 237, 0.24), transparent);
   background-size: 220% 100%;
-  filter: blur(0.2px) drop-shadow(0 0 16px rgba(34, 211, 238, 0.25));
-  opacity: 0.62;
+  filter: none;
+  opacity: 0.44;
   -webkit-mask-image: radial-gradient(ellipse at center, transparent 58%, black 60%, transparent 64%);
   mask-image: radial-gradient(ellipse at center, transparent 58%, black 60%, transparent 64%);
-  animation: hero-ribbon-flow 9s ease-in-out infinite;
 }
 
 .hero-energy-ribbon-one {
@@ -279,8 +279,8 @@ svg {
       rgba(124, 58, 237, 0.16) 64%,
       transparent 78%
     );
-  filter: blur(16px);
-  animation: hero-halo-breathe 6.2s ease-in-out infinite;
+  filter: blur(12px);
+  opacity: 0.82;
 }
 
 .hero-far-orbit {
@@ -292,9 +292,10 @@ svg {
 .hero-orbit {
   border: 1px solid rgba(165, 243, 252, 0.28);
   box-shadow:
-    0 0 32px rgba(34, 211, 238, 0.22),
+    0 0 18px rgba(34, 211, 238, 0.18),
     inset 0 0 18px rgba(255, 255, 255, 0.04);
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hero-orbit::before {
@@ -347,7 +348,8 @@ svg {
     inset 0 0 18px rgba(124, 58, 237, 0.12);
   opacity: 0.58;
   transform-style: preserve-3d;
-  animation: hero-pulse-expand 5.8s ease-in-out infinite;
+  animation: hero-pulse-expand 8.2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .hero-pulse-ring-two {
@@ -357,13 +359,15 @@ svg {
 
 .hero-core-stage {
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hero-core-rim {
   border: 1px solid rgba(186, 230, 253, 0.2);
   box-shadow:
-    0 0 24px rgba(34, 211, 238, 0.18),
+    0 0 16px rgba(34, 211, 238, 0.15),
     inset 0 0 18px rgba(167, 139, 250, 0.12);
+  will-change: transform;
 }
 
 .hero-core-rim::before {
@@ -406,9 +410,50 @@ svg {
 }
 
 .hero-core-shadow {
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.4), rgba(79, 70, 229, 0.26) 48%, transparent 72%);
-  filter: blur(20px);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.35), rgba(79, 70, 229, 0.24) 48%, transparent 72%);
+  filter: blur(12px);
   transform: translateZ(-40px) scale(1.22);
+}
+
+.hero-quantum-shell {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.68), transparent 13%),
+    radial-gradient(circle at 50% 45%, rgba(103, 232, 249, 0.48), transparent 29%),
+    radial-gradient(circle at 63% 65%, rgba(124, 58, 237, 0.5), transparent 48%),
+    radial-gradient(circle, rgba(2, 6, 23, 0.02), rgba(2, 6, 23, 0.34) 72%, rgba(37, 99, 235, 0.2));
+  border: 1px solid rgba(224, 242, 254, 0.48);
+  box-shadow:
+    0 0 42px rgba(34, 211, 238, 0.36),
+    0 18px 58px rgba(79, 70, 229, 0.32),
+    inset 0 0 24px rgba(255, 255, 255, 0.16),
+    inset -18px -18px 34px rgba(2, 6, 23, 0.38);
+  transform-style: preserve-3d;
+  transform: translateZ(26px);
+}
+
+.hero-quantum-shell::before {
+  position: absolute;
+  inset: 13%;
+  content: "";
+  border-radius: inherit;
+  background-image:
+    linear-gradient(rgba(224, 242, 254, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 232, 249, 0.1) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.46;
+  transform: rotateX(64deg) rotateZ(-18deg) scale(1.15);
+  -webkit-mask-image: radial-gradient(circle, black 48%, transparent 72%);
+  mask-image: radial-gradient(circle, black 48%, transparent 72%);
+}
+
+.hero-quantum-shell::after {
+  position: absolute;
+  inset: 22%;
+  content: "";
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(224, 242, 254, 0.32), rgba(34, 211, 238, 0.2) 38%, transparent 68%);
+  transform: translateZ(30px);
 }
 
 .hero-glass-core {
@@ -477,19 +522,20 @@ svg {
 }
 
 .hero-core-prism {
-  width: clamp(64px, 17vw, 78px);
+  width: clamp(72px, 18.5vw, 86px);
   aspect-ratio: 1;
-  border: 1px solid rgba(186, 230, 253, 0.3);
+  border: 1px solid rgba(186, 230, 253, 0.36);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(34, 211, 238, 0.06)),
-    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.44), transparent 68%);
+    radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.5), transparent 68%);
   box-shadow:
     inset 0 0 18px rgba(255, 255, 255, 0.13),
-    0 0 28px rgba(34, 211, 238, 0.28);
+    0 0 26px rgba(34, 211, 238, 0.24);
   clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
   transform: translate(-50%, -50%) rotateX(-24deg) rotateY(34deg) translateZ(38px);
   transform-style: preserve-3d;
-  animation: hero-prism-pulse 6.8s ease-in-out infinite;
+  animation: hero-prism-pulse 11s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .hero-core-prism::before,
@@ -507,8 +553,30 @@ svg {
 
 .hero-core-prism::after {
   background: rgba(103, 232, 249, 0.22);
-  filter: blur(8px);
+  filter: blur(4px);
   transform: translateZ(-16px) scale(0.9);
+}
+
+.hero-quantum-crystal {
+  width: clamp(42px, 11vw, 52px);
+  aspect-ratio: 0.82;
+  background:
+    linear-gradient(150deg, rgba(224, 242, 254, 0.36), rgba(34, 211, 238, 0.13) 42%, rgba(124, 58, 237, 0.28)),
+    radial-gradient(circle at 48% 45%, rgba(103, 232, 249, 0.55), transparent 56%);
+  border: 1px solid rgba(224, 242, 254, 0.38);
+  box-shadow:
+    inset 0 0 14px rgba(255, 255, 255, 0.16),
+    0 0 24px rgba(34, 211, 238, 0.34);
+  clip-path: polygon(50% 0, 90% 23%, 80% 82%, 50% 100%, 20% 82%, 10% 23%);
+  transform: translate(-50%, -50%) rotateX(-18deg) rotateY(32deg) translateZ(60px);
+}
+
+.hero-quantum-crystal::before {
+  position: absolute;
+  inset: 18% 46%;
+  content: "";
+  background: rgba(224, 242, 254, 0.68);
+  box-shadow: 0 0 16px rgba(103, 232, 249, 0.58);
 }
 
 .hero-core-cube {
@@ -566,8 +634,8 @@ svg {
     transparent
   );
   background-size: 190% 100%;
-  filter: drop-shadow(0 0 10px rgba(103, 232, 249, 0.65));
-  animation: hero-data-flow 4.8s ease-in-out infinite;
+  filter: none;
+  opacity: 0.72;
 }
 
 .hero-data-stream-delay {
@@ -578,29 +646,20 @@ svg {
   animation-delay: -3.1s;
 }
 
-.hero-connection-base,
-.hero-connection-flow {
+.hero-connection-base {
   fill: none;
   stroke-linecap: round;
 }
 
 .hero-connection-base {
-  stroke-width: 0.38;
-  opacity: 0.58;
-}
-
-.hero-connection-flow {
-  stroke: rgba(103, 232, 249, 0.9);
-  stroke-width: 0.58;
-  stroke-dasharray: 3 12;
-  filter: drop-shadow(0 0 7px rgba(103, 232, 249, 0.8));
-  animation: hero-connection-drift 3.8s linear infinite;
+  stroke-width: 0.42;
+  opacity: 0.54;
 }
 
 .hero-connection-dot {
   fill: rgba(165, 243, 252, 0.92);
-  filter: drop-shadow(0 0 8px rgba(103, 232, 249, 0.92));
-  animation: hero-dot-pulse 4s ease-in-out infinite;
+  filter: none;
+  opacity: 0.82;
 }
 
 .hero-particle {
@@ -620,12 +679,11 @@ svg {
     radial-gradient(circle at 50% 0%, rgba(103, 232, 249, 0.18), transparent 58%),
     radial-gradient(circle at 0% 100%, rgba(124, 58, 237, 0.12), transparent 56%);
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.34),
-    0 0 16px rgba(34, 211, 238, 0.16),
+    0 10px 22px rgba(0, 0, 0, 0.32),
+    0 0 12px rgba(34, 211, 238, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px) saturate(155%);
+  backdrop-filter: blur(9px) saturate(145%);
   transform-style: preserve-3d;
-  animation: hero-node-border 5.8s ease-in-out infinite;
 }
 
 .hero-business-node::before {
@@ -634,7 +692,7 @@ svg {
   content: "";
   background: linear-gradient(100deg, transparent 35%, rgba(224, 242, 254, 0.18), transparent 62%);
   transform: translateX(-38%) rotate(8deg);
-  animation: hero-node-shine 7s ease-in-out infinite;
+  opacity: 0.42;
 }
 
 .hero-business-node::after {
@@ -662,10 +720,11 @@ svg {
   display: block;
   max-width: 100%;
   color: rgba(255, 255, 255, 0.96);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.14;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.12;
   overflow-wrap: anywhere;
+  text-shadow: 0 0 10px rgba(103, 232, 249, 0.18);
   text-wrap: balance;
 }
 
@@ -674,7 +733,7 @@ svg {
   max-width: 100%;
   margin-top: 1px;
   color: rgba(207, 250, 254, 0.78);
-  font-size: 7.8px;
+  font-size: 7.6px;
   font-weight: 500;
   line-height: 1.14;
   overflow-wrap: anywhere;
@@ -685,7 +744,7 @@ svg {
   max-width: 100%;
   margin-top: 2px;
   color: rgba(165, 243, 252, 0.72);
-  font-size: 6.4px;
+  font-size: 6.8px;
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.1;

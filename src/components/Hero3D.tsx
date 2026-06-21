@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ChevronDown, CircleDot } from "lucide-react";
-import { motion, type TargetAndTransition, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import type { SiteContent } from "@/data/siteContent";
 
@@ -10,11 +10,11 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "left-[calc(50%_-_64px)] top-[2%] w-[128px]",
-  "right-[1%] top-[20%] w-[124px]",
-  "left-[1%] top-[22%] w-[124px]",
-  "left-[4%] bottom-[10%] w-[118px]",
-  "right-[2%] bottom-[7%] w-[146px]",
+  "left-[calc(50%_-_72px)] top-[1%] w-[144px]",
+  "right-[1%] top-[19%] w-[138px]",
+  "left-[1%] top-[21%] w-[138px]",
+  "left-[3%] bottom-[8%] w-[136px]",
+  "right-[1%] bottom-[5%] w-[154px]",
 ] as const;
 
 const nodeTilts = ["-3.5deg", "3deg", "-4deg", "2.6deg", "-2.4deg"] as const;
@@ -25,13 +25,7 @@ const nodeYaw = ["-7deg", "-13deg", "12deg", "10deg", "-10deg"] as const;
 
 const nodeDepths = [18, 34, 32, 16, 22] as const;
 
-const nodeMotion: TargetAndTransition[] = [
-  { x: [0, 2, -2, 0], y: [0, -6, 2, 0], rotateX: [0, 2, -1, 0] },
-  { x: [0, -3, 2, 0], y: [0, 5, -5, 0], rotateY: [0, -3, 2, 0] },
-  { x: [0, 3, -2, 0], y: [0, -4, 6, 0], rotateY: [0, 3, -2, 0] },
-  { x: [0, -2, 3, 0], y: [0, 7, -3, 0], rotateX: [0, -2, 1, 0] },
-  { x: [0, 3, -3, 0], y: [0, -5, 6, 0], rotateX: [0, 1, -2, 0] },
-];
+const nodeDrift = [-4, 3, -3, 4, -4] as const;
 
 const connectionPaths = [
   { d: "M50 52 C50 41 49 29 50 16", x: 50, y: 16 },
@@ -47,13 +41,6 @@ const particlePositions = [
   "left-[79%] top-[52%]",
   "left-[43%] top-[80%]",
   "left-[14%] top-[59%]",
-  "left-[53%] top-[36%]",
-  "left-[33%] top-[50%]",
-  "left-[70%] top-[70%]",
-  "left-[48%] top-[11%]",
-  "left-[84%] top-[32%]",
-  "left-[8%] top-[36%]",
-  "left-[58%] top-[86%]",
 ] as const;
 
 export function Hero3D({ hero }: Hero3DProps) {
@@ -77,17 +64,12 @@ export function Hero3D({ hero }: Hero3DProps) {
       >
         <div className="hero-void-depth absolute inset-[-18%]" />
         <div className="hero-deep-space absolute inset-[-10%]" />
-        <motion.div
+        <div
           className="hero-hub-glow absolute inset-[-14%]"
-          animate={reduceMotion ? undefined : { opacity: [0.58, 0.98, 0.58] }}
-          transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="hero-signal-grid absolute inset-[1%]" />
         <div className="hero-energy-ribbon hero-energy-ribbon-one absolute left-[3%] top-[23%] h-[38%] w-[94%]" />
-        <div className="hero-energy-ribbon hero-energy-ribbon-two absolute left-[7%] top-[45%] h-[32%] w-[86%]" />
         <div className="hero-depth-disc absolute left-1/2 top-[53%] h-[42%] w-[72%] -translate-x-1/2 rounded-full" />
-        <div className="hero-foreground-flare hero-foreground-flare-one absolute left-[9%] top-[65%]" />
-        <div className="hero-foreground-flare hero-foreground-flare-two absolute right-[12%] top-[18%]" />
 
         <motion.div
           className="relative h-full w-full will-change-transform [transform-style:preserve-3d]"
@@ -95,12 +77,10 @@ export function Hero3D({ hero }: Hero3DProps) {
             reduceMotion
               ? undefined
               : {
-                  y: [0, -11, 0],
-                  rotateX: [0, 3, 0],
-                  rotateY: [-6, 6, -6],
+                  y: [0, -6, 0],
                 }
           }
-          transition={{ duration: 8.2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 9.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <div className="hero-core-backlight absolute inset-[9%] rounded-full" />
 
@@ -123,17 +103,12 @@ export function Hero3D({ hero }: Hero3DProps) {
                 </feMerge>
               </filter>
             </defs>
-            {connectionPaths.map((path, index) => (
+            {connectionPaths.map((path) => (
               <g key={path.d} filter="url(#hero-line-glow)">
                 <path
                   className="hero-connection-base"
                   d={path.d}
                   stroke="url(#hero-connection-line)"
-                />
-                <path
-                  className="hero-connection-flow"
-                  d={path.d}
-                  style={{ animationDelay: `${index * -0.42}s` }}
                 />
                 <circle
                   className="hero-connection-dot"
@@ -149,9 +124,7 @@ export function Hero3D({ hero }: Hero3DProps) {
           <div className="hero-orbit hero-orbit-one absolute inset-[13%] z-20 rounded-full" />
           <div className="hero-orbit hero-orbit-two absolute inset-[18%] z-20 rounded-full" />
           <div className="hero-orbit hero-orbit-three absolute inset-[24%] z-20 rounded-full" />
-          <div className="hero-orbit hero-orbit-four absolute inset-[30%] z-20 rounded-full" />
           <div className="hero-pulse-ring hero-pulse-ring-one absolute left-1/2 top-1/2 z-20 h-[58%] w-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full" />
-          <div className="hero-pulse-ring hero-pulse-ring-two absolute left-1/2 top-1/2 z-20 h-[45%] w-[45%] -translate-x-1/2 -translate-y-1/2 rounded-full" />
 
           <div className="absolute left-1/2 top-1/2 z-30 h-[48%] w-[48%] -translate-x-1/2 -translate-y-1/2">
             <motion.div
@@ -160,57 +133,31 @@ export function Hero3D({ hero }: Hero3DProps) {
                 reduceMotion
                   ? undefined
                   : {
-                      y: [0, -7, 0],
-                      rotateX: [58, 63, 58],
-                      rotateY: [-12, 12, -12],
+                      y: [0, -4, 0],
+                      rotateY: [-8, 8, -8],
                     }
               }
-              transition={{ duration: 7.6, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="hero-core-shadow absolute inset-[12%] rounded-full" />
-              <div className="hero-core-rim hero-core-rim-back absolute inset-[-20%] rounded-full" />
-              <div className="hero-glass-core absolute inset-0 rounded-full" />
-              <div className="hero-core-lattice absolute inset-[10%] rounded-full" />
-              <div className="hero-inner-world absolute inset-[22%] rounded-full" />
+              <div className="hero-core-shadow absolute inset-[13%] rounded-full" />
+              <div className="hero-core-rim hero-core-rim-back absolute inset-[-16%] rounded-full" />
+              <div className="hero-quantum-shell absolute inset-0 rounded-full" />
               <div className="hero-core-prism absolute left-1/2 top-1/2" />
-              <div className="hero-core-cube absolute left-1/2 top-1/2">
-                <span className="hero-cube-face hero-cube-front" />
-                <span className="hero-cube-face hero-cube-back" />
-                <span className="hero-cube-face hero-cube-right" />
-                <span className="hero-cube-face hero-cube-left" />
-                <span className="hero-cube-face hero-cube-top" />
-                <span className="hero-cube-face hero-cube-bottom" />
-              </div>
-              <div className="hero-core-rim hero-core-rim-front absolute inset-[-15%] rounded-full" />
-              <div className="absolute inset-[28%] rounded-full bg-cyan-200/45 blur-xl" />
-              <div className="absolute left-[19%] top-[17%] h-[22%] w-[22%] rounded-full bg-white/45 blur-md" />
-              <div className="hero-data-stream absolute left-[11%] top-[47%] h-px w-[78%] rotate-[-14deg]" />
-              <div className="hero-data-stream hero-data-stream-delay absolute left-[15%] top-[54%] h-px w-[70%] rotate-[22deg]" />
-              <div className="hero-data-stream hero-data-stream-third absolute left-[18%] top-[36%] h-px w-[64%] rotate-[42deg]" />
+              <div className="hero-quantum-crystal absolute left-1/2 top-1/2" />
+              <div className="hero-core-rim hero-core-rim-front absolute inset-[-10%] rounded-full" />
+              <div className="hero-data-stream absolute left-[14%] top-[48%] h-px w-[72%] rotate-[-14deg]" />
+              <div className="hero-data-stream hero-data-stream-delay absolute left-[18%] top-[55%] h-px w-[64%] rotate-[22deg]" />
               <div className="absolute left-1/2 top-[12%] h-[76%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-violet-200/45 to-transparent" />
               <div className="absolute left-[13%] top-1/2 h-px w-[74%] -translate-y-1/2 bg-gradient-to-r from-transparent via-cyan-100/56 to-transparent" />
             </motion.div>
           </div>
 
           {particlePositions.map((position, index) => (
-            <motion.span
+            <span
               key={position}
               className={`hero-particle absolute z-40 rounded-full ${
                 index % 3 === 0 ? "h-1.5 w-1.5" : "h-1 w-1"
               } ${position}`}
-              animate={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: [0, index % 2 ? -10 : 8, 0],
-                      opacity: [0.28, 0.82, 0.28],
-                    }
-              }
-              transition={{
-                duration: 5.2 + index * 0.45,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
             />
           ))}
 
@@ -220,15 +167,15 @@ export function Hero3D({ hero }: Hero3DProps) {
               className={`absolute z-50 ${nodePositions[index]} [transform-style:preserve-3d]`}
               whileTap={{ scale: 0.96 }}
               whileHover={{ scale: 1.025 }}
-              animate={reduceMotion ? undefined : nodeMotion[index]}
+              animate={reduceMotion ? undefined : { y: [0, nodeDrift[index], 0] }}
               transition={{
-                duration: 5.6 + index * 0.32,
+                duration: 7.5 + index * 0.35,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             >
               <div
-                className="hero-business-node flex min-h-[54px] flex-col items-center justify-center px-2 py-1.5 text-center"
+                className="hero-business-node flex min-h-[64px] flex-col items-center justify-center px-2 py-1.5 text-center"
                 style={{
                   transform: `perspective(800px) rotateX(${nodePitch[index]}) rotateY(${nodeYaw[index]}) rotate(${nodeTilts[index]}) translateZ(${nodeDepths[index]}px)`,
                 }}
