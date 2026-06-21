@@ -2191,11 +2191,21 @@ svg {
   place-items: center;
   gap: 1px;
   overflow: hidden;
-  border-radius: 20px 6px 20px 6px;
+  border: 1px solid transparent;
+  border-radius: 20px 7px 20px 7px;
+  background:
+    linear-gradient(145deg, rgba(3, 7, 18, 0.76), rgba(35, 14, 48, 0.5)) padding-box,
+    linear-gradient(135deg, rgba(255, 42, 109, 0.92), rgba(168, 85, 247, 0.78), rgba(103, 232, 249, 0.44)) border-box;
   color: rgba(224, 242, 254, 0.98);
   cursor: grab;
   font: inherit;
   font-weight: 950;
+  box-shadow:
+    0 0 22px rgba(244, 63, 94, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.16),
+    0 16px 42px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 18px rgba(103, 232, 249, 0.1);
   touch-action: none;
   transition: transform 170ms ease, border-color 170ms ease;
 }
@@ -2214,18 +2224,34 @@ svg {
 
 .support-chat-entry::after {
   position: absolute;
-  inset: -40%;
+  inset: -2px;
   content: "";
   pointer-events: none;
-  background: conic-gradient(
-    from 160deg,
-    transparent,
-    rgba(103, 232, 249, 0.18),
-    transparent 24%,
-    rgba(244, 114, 182, 0.18),
-    transparent 56%
-  );
-  animation: support-chat-ring 8s linear infinite;
+  border-radius: inherit;
+  padding: 2px;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 286deg,
+      rgba(255, 255, 255, 0.22) 292deg,
+      rgba(255, 255, 255, 0.98) 298deg,
+      rgba(255, 255, 255, 0.48) 304deg,
+      transparent 314deg,
+      transparent 360deg
+    );
+  filter:
+    drop-shadow(0 0 5px rgba(255, 255, 255, 0.8))
+    drop-shadow(0 0 9px rgba(244, 63, 94, 0.5));
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  animation: support-chat-ring 5.8s linear infinite;
 }
 
 .support-chat-entry svg,
