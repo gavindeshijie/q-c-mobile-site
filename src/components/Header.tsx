@@ -114,19 +114,14 @@ export function Header({ site }: HeaderProps) {
 
               <div className="account-google-actions mt-6 space-y-3">
                 <button type="button" className="google-auth-button">
-                  <span className="google-auth-mark">G</span>
-                  <span className="flex-1 text-left">谷歌登录</span>
-                  <ArrowRight size={18} strokeWidth={2} />
-                </button>
-                <button type="button" className="google-auth-button google-auth-register">
-                  <span className="google-auth-mark">G</span>
-                  <span className="flex-1 text-left">谷歌注册账户</span>
+                  <span className="google-auth-mark">@</span>
+                  <span className="flex-1 text-left">邮箱登录</span>
                   <ArrowRight size={18} strokeWidth={2} />
                 </button>
               </div>
 
               <p className="account-modal-note">
-                账户入口已预留，后续可接入真实谷歌授权与会员功能。
+                账户入口已预留，后续可接入真实邮箱登录与会员功能。
               </p>
             </section>
           </div>,
