@@ -11,20 +11,19 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "w-[178px]",
-  "ml-4 w-[200px]",
-  "ml-1 w-[210px]",
-  "ml-5 w-[194px]",
-  "ml-2 w-[214px]",
+  "w-[164px]",
+  "ml-2 w-[174px]",
+  "w-[170px]",
+  "ml-2 w-[184px]",
 ] as const;
 
-const nodeTilts = ["-1.4deg", "1.1deg", "-1.8deg", "1.5deg", "-1deg"] as const;
+const nodeTilts = ["-1.2deg", "1deg", "-1.4deg", "1.1deg"] as const;
 
-const nodeDrift = [-3, 2, -2, 3, -3] as const;
+const nodeDrift = [-2, 2, -2, 2] as const;
 
-const nodeNumbers = ["01", "02", "03", "04", "05"] as const;
+const nodeNumbers = ["01", "02", "03", "04"] as const;
 
-const nodeTitleClasses = ["", "", "hero-node-title-nowrap", "", ""] as const;
+const nodeTitleClasses = ["", "hero-node-title-nowrap", "", ""] as const;
 
 const particlePositions = [
   "left-[8%] top-[17%]",
@@ -121,7 +120,7 @@ export function Hero3D({ hero }: Hero3DProps) {
         <div className="hero-left-readability absolute inset-y-0 left-0 z-40 w-[66%]" />
       </div>
 
-      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)+144px)] left-[max(18px,env(safe-area-inset-left))] top-[clamp(128px,17dvh,156px)] z-50 flex max-w-[calc(100%_-_36px)] flex-col justify-between gap-2">
+      <div className="absolute bottom-[calc(env(safe-area-inset-bottom)+184px)] left-[max(18px,env(safe-area-inset-left))] top-[clamp(150px,20dvh,170px)] z-50 flex max-w-[calc(100%_-_36px)] flex-col justify-between gap-2">
         {hero.nodes.map((node, index) => (
           <motion.div
             key={node.title}
@@ -135,7 +134,7 @@ export function Hero3D({ hero }: Hero3DProps) {
             }}
           >
             <div
-              className="hero-hud-node relative min-h-[58px] px-2.5 py-2"
+              className="hero-hud-node relative min-h-[58px] px-2 py-2"
               style={{ transform: `rotate(${nodeTilts[index]})` }}
             >
               <span className="hero-hud-index">{nodeNumbers[index]}</span>

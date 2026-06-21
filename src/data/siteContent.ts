@@ -27,11 +27,6 @@ export const siteContent = {
         subtitle: "WEB / SOFTWARE",
       },
       {
-        title: "软件与硬件结合开发",
-        thai: "พัฒนาซอฟต์แวร์และฮาร์ดแวร์",
-        subtitle: "SOFTWARE / HARDWARE",
-      },
-      {
         title: "潮流科技小商品供应",
         thai: "จัดหาสินค้าเทคโนโลยียอดนิยม",
         subtitle: "TREND TECH SUPPLY",
