@@ -11,9 +11,9 @@ type Hero3DProps = {
 };
 
 const nodePositions = [
-  "w-[190px]",
-  "ml-1 w-[206px]",
-  "w-[206px]",
+  "w-[176px]",
+  "w-[188px]",
+  "w-[196px]",
   "ml-1 w-[214px]",
 ] as const;
 
@@ -151,6 +151,7 @@ export function Hero3D({ hero }: Hero3DProps) {
                 aria-hidden="true"
                 className="hero-hud-frame-line hero-hud-frame-line-bottom"
               />
+              <span aria-hidden="true" className="hero-hud-alert-dot" />
               <span className={`hero-node-title ${nodeTitleClasses[index]}`}>
                 {node.title}
               </span>
