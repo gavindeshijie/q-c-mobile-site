@@ -197,17 +197,17 @@ export function Hero3D({ hero }: Hero3DProps) {
         <div className="grid w-full grid-cols-2 gap-3">
           <a
             href={hero.primaryAction.href}
-            className="flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-cyan-100 px-4 text-sm font-semibold text-[#041018] shadow-[0_18px_42px_rgba(36,213,255,0.24)] transition active:scale-[0.97]"
+            className="hero-action-button hero-action-primary"
           >
-            {hero.primaryAction.label}
-            <ArrowRight size={17} strokeWidth={2} />
+            <span>{hero.primaryAction.label}</span>
+            <ArrowRight size={17} strokeWidth={2} aria-hidden="true" />
           </a>
           <a
             href={hero.secondaryAction.href}
-            className="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/[0.16] bg-white/[0.08] px-4 text-sm font-semibold text-white/[0.9] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md transition active:scale-[0.97]"
+            className="hero-action-button hero-action-secondary"
           >
-            {hero.secondaryAction.label}
-            <ChevronDown size={17} strokeWidth={2} />
+            <span>{hero.secondaryAction.label}</span>
+            <ChevronDown size={17} strokeWidth={2} aria-hidden="true" />
           </a>
         </div>
       </div>

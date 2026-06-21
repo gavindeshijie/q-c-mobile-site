@@ -847,6 +847,101 @@ svg {
   backdrop-filter: blur(3px);
 }
 
+.hero-action-button {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.28);
+  border-radius: 17px 5px 17px 5px;
+  padding: 0 14px;
+  color: rgba(240, 249, 255, 0.94);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 0 0 12px rgba(103, 232, 249, 0.28);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    inset 0 0 18px rgba(103, 232, 249, 0.06);
+  backdrop-filter: blur(12px) saturate(128%);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.hero-action-button::before {
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
+  content: "";
+  border: 1px solid rgba(224, 242, 254, 0.08);
+  border-radius: 13px 3px 13px 3px;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.02), transparent 42%),
+    radial-gradient(circle at 10% 18%, rgba(244, 114, 182, 0.16), transparent 45%),
+    radial-gradient(circle at 92% 85%, rgba(34, 211, 238, 0.14), transparent 46%);
+}
+
+.hero-action-button::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent, rgba(224, 242, 254, 0.18), transparent),
+    linear-gradient(135deg, rgba(3, 7, 18, 0.54), rgba(15, 23, 42, 0.18));
+  opacity: 0.78;
+  transform: translateX(-48%);
+  animation: hero-action-sheen 6.4s ease-in-out infinite;
+}
+
+.hero-action-button span,
+.hero-action-button svg {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-action-button svg {
+  flex: 0 0 auto;
+  color: rgba(165, 243, 252, 0.92);
+  filter: drop-shadow(0 0 8px rgba(103, 232, 249, 0.42));
+}
+
+.hero-action-button:active {
+  transform: scale(0.975);
+}
+
+.hero-action-primary {
+  border-color: rgba(103, 232, 249, 0.48);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, 0.14) 0 2px, transparent 2px),
+    linear-gradient(135deg, rgba(8, 47, 73, 0.56), rgba(15, 23, 42, 0.24)),
+    radial-gradient(circle at 12% 18%, rgba(103, 232, 249, 0.24), transparent 48%),
+    radial-gradient(circle at 90% 92%, rgba(244, 114, 182, 0.18), transparent 50%);
+  box-shadow:
+    0 0 22px rgba(34, 211, 238, 0.16),
+    0 16px 42px rgba(0, 0, 0, 0.36),
+    inset 0 0 0 1px rgba(224, 242, 254, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.hero-action-secondary {
+  border-color: rgba(244, 114, 182, 0.32);
+  background:
+    linear-gradient(90deg, rgba(244, 114, 182, 0.16) 0 2px, transparent 2px),
+    linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(3, 7, 18, 0.24)),
+    radial-gradient(circle at 14% 20%, rgba(244, 114, 182, 0.18), transparent 46%),
+    radial-gradient(circle at 88% 90%, rgba(103, 232, 249, 0.12), transparent 50%);
+}
+
 .business-tech-section {
   background:
     linear-gradient(180deg, rgba(2, 6, 23, 0.82), rgba(3, 7, 18, 0.94) 20%, rgba(5, 8, 22, 0.98)),
@@ -1709,6 +1804,20 @@ svg {
   50%,
   100% {
     opacity: 0.22;
+  }
+}
+
+@keyframes hero-action-sheen {
+  0%,
+  64%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-58%);
+  }
+
+  78% {
+    opacity: 0.88;
+    transform: translateX(58%);
   }
 }
 
