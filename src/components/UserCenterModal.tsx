@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -32,9 +32,12 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const [keepSignedIn, setKeepSignedIn] = useState(false);
   const [resendSeconds, setResendSeconds] = useState(0);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [showRateLimitHint, setShowRateLimitHint] = useState(false);
+  const sendingCodeRef = useRef(false);
 
   const isBusy = auth.action !== null;
   const canRequestCode = !isBusy && resendSeconds <= 0;
+  const canSubmitCode = !isBusy && codePattern.test(code.trim());
   const feedbackError = localError ?? auth.error;
 
   useEffect(() => {
@@ -52,6 +55,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   function switchMode(nextMode: AuthMode) {
     setMode(nextMode);
     setLocalError(null);
+    setShowRateLimitHint(false);
     auth.clearFeedback();
   }
 
@@ -66,17 +70,20 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   }
 
   async function handleSendCode() {
-    if (!canRequestCode) {
+    if (!canRequestCode || sendingCodeRef.current) {
       return;
     }
 
+    sendingCodeRef.current = true;
     setLocalError(null);
+    setShowRateLimitHint(false);
     auth.clearFeedback();
 
     const validationError = validateEmail();
 
     if (validationError) {
       setLocalError(validationError);
+      sendingCodeRef.current = false;
       return;
     }
 
@@ -87,7 +94,12 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
       setCode("");
       setCodeSentTo(normalizedEmail);
       setResendSeconds(60);
+    } else if (result.code === "RATE_LIMITED") {
+      setShowRateLimitHint(true);
+      setResendSeconds(60);
     }
+
+    sendingCodeRef.current = false;
   }
 
   async function handleVerifyCode(event: FormEvent<HTMLFormElement>) {
@@ -229,7 +241,13 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
               autoComplete="email"
               placeholder="请输入邮箱地址"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                setLocalError(null);
+                setShowRateLimitHint(false);
+                setCodeSentTo(null);
+                auth.clearFeedback();
+              }}
             />
           </label>
 
@@ -248,7 +266,7 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
               {auth.action === "send-code"
                 ? "发送中..."
                 : resendSeconds > 0
-                  ? `重新获取 ${resendSeconds}s`
+                  ? `${resendSeconds} 秒后重新发送`
                   : "获取验证码"}
             </span>
           </button>
@@ -277,6 +295,11 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           {feedbackError ? (
             <p className="auth-feedback auth-feedback-error">{feedbackError}</p>
           ) : null}
+          {showRateLimitHint ? (
+            <p className="auth-feedback-hint">
+              为了保护账号安全，请不要连续重复发送验证码。
+            </p>
+          ) : null}
           {auth.message ? (
             <p className="auth-feedback auth-feedback-success">{auth.message}</p>
           ) : null}
@@ -298,7 +321,11 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
             </span>
           </label>
 
-          <button type="submit" className="auth-primary-button" disabled={isBusy}>
+          <button
+            type="submit"
+            className="auth-primary-button"
+            disabled={!canSubmitCode}
+          >
             {isBusy ? (
               <LoaderCircle size={17} strokeWidth={2} className="animate-spin" />
             ) : (

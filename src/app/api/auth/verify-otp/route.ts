@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   firstZodMessage,
   formatSupabaseAuthError,
+  sanitizeAuthErrorDetail,
   toAuthUser,
   verifyOtpSchema,
 } from "@/lib/auth/validation";
@@ -24,7 +25,11 @@ export async function POST(request: Request) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, message: firstZodMessage(parsed.error) },
+      {
+        ok: false,
+        code: "INVALID_OTP",
+        message: firstZodMessage(parsed.error),
+      },
       { status: 400 },
     );
   }
@@ -33,7 +38,12 @@ export async function POST(request: Request) {
 
   if (!clientResult.ok) {
     return NextResponse.json(
-      { ok: false, message: `验证码登录失败：${clientResult.message}` },
+      {
+        ok: false,
+        code: "AUTH_NOT_CONFIGURED",
+        message: "认证服务暂未配置，请检查 Supabase 环境变量。",
+        debug: clientResult.message,
+      },
       { status: 503 },
     );
   }
@@ -45,8 +55,10 @@ export async function POST(request: Request) {
   });
 
   if (error) {
+    const debug = sanitizeAuthErrorDetail(error.message);
+
     console.error("[auth/verify-otp] Supabase error", {
-      message: error.message,
+      message: debug,
       name: error.name,
       status: error.status,
     });
@@ -54,7 +66,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
+        code: "INVALID_OTP",
         message: formatSupabaseAuthError("验证码登录失败", error.message),
+        debug,
       },
       { status: error.status || 401 },
     );

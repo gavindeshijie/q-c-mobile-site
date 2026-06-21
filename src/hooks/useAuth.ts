@@ -29,7 +29,17 @@ async function requestAuth(
   }
 
   try {
-    return (await response.json()) as AuthJsonResponse;
+    const payload = (await response.json()) as AuthJsonResponse;
+
+    if (!payload.ok && response.status === 429 && !payload.code) {
+      return {
+        ...payload,
+        code: "RATE_LIMITED",
+        message: payload.message ?? "验证码发送过于频繁，请稍后再试。",
+      };
+    }
+
+    return payload;
   } catch {
     return { ok: false, message: "认证服务返回异常，请稍后重试。" };
   }
@@ -133,7 +143,11 @@ export function useAuth() {
     if (result.ok) {
       setMessage(result.message ?? "验证码已发送，请查收邮箱。");
     } else {
-      setError(result.message ?? "验证码发送失败：未知错误");
+      setError(
+        result.code === "RATE_LIMITED"
+          ? "验证码发送过于频繁，请等待 1 分钟后再试。"
+          : result.message ?? "验证码发送失败，请稍后重试。",
+      );
     }
 
     setAction(null);

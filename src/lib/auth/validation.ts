@@ -47,9 +47,18 @@ export type AuthUser = {
   email: string;
 };
 
+export type AuthErrorCode =
+  | "AUTH_NOT_CONFIGURED"
+  | "INVALID_EMAIL"
+  | "RATE_LIMITED"
+  | "SUPABASE_ERROR"
+  | "INVALID_OTP";
+
 export type AuthJsonResponse = {
   ok: boolean;
+  code?: AuthErrorCode;
   message?: string;
+  debug?: string;
   user?: AuthUser | null;
 };
 
@@ -107,4 +116,10 @@ export function sanitizeAuthErrorDetail(message?: string) {
 
 export function formatSupabaseAuthError(prefix: string, message?: string) {
   return `${prefix}：${sanitizeAuthErrorDetail(message)}`;
+}
+
+export function isRateLimitError(message?: string, status?: number) {
+  const source = message?.toLowerCase() ?? "";
+
+  return status === 429 || source.includes("rate limit") || source.includes("too many");
 }

@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import {
   firstZodMessage,
   formatSupabaseAuthError,
+  isRateLimitError,
+  sanitizeAuthErrorDetail,
   sendOtpSchema,
 } from "@/lib/auth/validation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -23,7 +25,11 @@ export async function POST(request: Request) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, message: firstZodMessage(parsed.error) },
+      {
+        ok: false,
+        code: "INVALID_EMAIL",
+        message: firstZodMessage(parsed.error),
+      },
       { status: 400 },
     );
   }
@@ -32,7 +38,12 @@ export async function POST(request: Request) {
 
   if (!clientResult.ok) {
     return NextResponse.json(
-      { ok: false, message: `验证码发送失败：${clientResult.message}` },
+      {
+        ok: false,
+        code: "AUTH_NOT_CONFIGURED",
+        message: "认证服务暂未配置，请检查 Supabase 环境变量。",
+        debug: clientResult.message,
+      },
       { status: 503 },
     );
   }
@@ -45,8 +56,11 @@ export async function POST(request: Request) {
   });
 
   if (error) {
+    const debug = sanitizeAuthErrorDetail(error.message);
+    const rateLimited = isRateLimitError(error.message, error.status);
+
     console.error("[auth/send-otp] Supabase error", {
-      message: error.message,
+      message: debug,
       name: error.name,
       status: error.status,
     });
@@ -54,9 +68,15 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
-        message: formatSupabaseAuthError("验证码发送失败", error.message),
+        code: rateLimited ? "RATE_LIMITED" : "SUPABASE_ERROR",
+        message: rateLimited
+          ? "验证码发送过于频繁，请稍后再试。"
+          : "验证码发送失败，请稍后重试。",
+        debug: rateLimited
+          ? debug
+          : formatSupabaseAuthError("Supabase", error.message),
       },
-      { status: error.status || 400 },
+      { status: rateLimited ? 429 : error.status || 400 },
     );
   }
 
