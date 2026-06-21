@@ -381,9 +381,8 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
           </div>
 
           <div className="auth-placeholder-list">
-            <span>我的资料</span>
-            <span>订单记录</span>
-            <span>合作咨询</span>
+            <span>资料</span>
+            <span>聊天记录</span>
             <span>账号设置</span>
           </div>
 

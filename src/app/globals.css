@@ -807,6 +807,10 @@ svg {
   text-align: center;
 }
 
+.auth-placeholder-list span:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .account-modal-note {
   position: relative;
   z-index: 1;
