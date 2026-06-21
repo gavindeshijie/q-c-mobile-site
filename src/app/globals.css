@@ -1440,13 +1440,20 @@ svg {
 .hero-node-title {
   display: block;
   max-width: 100%;
-  color: rgba(255, 255, 255, 0.96);
-  font-size: 13.5px;
-  font-weight: 800;
-  line-height: 1.12;
+  background: linear-gradient(104deg, #ffffff 0%, #f8fbff 38%, #9eefff 68%, #d8b4fe 100%);
+  background-clip: text;
+  color: #ffffff;
+  font-size: clamp(15px, 4vw, 15.8px);
+  font-weight: 900;
+  letter-spacing: -0.018em;
+  line-height: 1.08;
   overflow-wrap: anywhere;
-  text-shadow: 0 0 10px rgba(103, 232, 249, 0.18);
+  text-shadow:
+    0 0 10px rgba(103, 232, 249, 0.2),
+    0 0 18px rgba(244, 114, 182, 0.12);
   text-wrap: balance;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-hud-node .hero-node-title-nowrap {
@@ -1457,8 +1464,8 @@ svg {
 .hero-node-title-nowrap {
   overflow-wrap: normal;
   white-space: nowrap;
-  font-size: 12.8px;
-  letter-spacing: -0.03em;
+  font-size: clamp(13.8px, 3.55vw, 14.5px);
+  letter-spacing: -0.045em;
   text-wrap: nowrap;
 }
 
