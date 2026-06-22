@@ -2187,13 +2187,16 @@ svg {
   position: relative;
   pointer-events: auto;
   display: grid;
+  grid-template-rows: 30px 14px;
   width: 66px;
   min-height: 66px;
-  place-items: center;
-  gap: 1px;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
   overflow: hidden;
   border: 1px solid transparent;
   border-radius: 20px 7px 20px 7px;
+  padding: 8px 0 7px;
   background:
     linear-gradient(145deg, rgba(3, 7, 18, 0.76), rgba(35, 14, 48, 0.5)) padding-box,
     linear-gradient(135deg, rgba(255, 42, 109, 0.92), rgba(168, 85, 247, 0.78), rgba(103, 232, 249, 0.44)) border-box;
@@ -2216,7 +2219,7 @@ svg {
 .support-admin-login::before,
 .support-admin-shell::before {
   position: absolute;
-  inset: 6px;
+  inset: 7px;
   content: "";
   pointer-events: none;
   border: 1px solid rgba(224, 242, 254, 0.08);
@@ -2255,6 +2258,8 @@ svg {
 }
 
 .support-chat-entry svg {
+  display: block;
+  align-self: end;
   color: rgba(103, 232, 249, 0.98);
   filter:
     drop-shadow(0 0 8px rgba(103, 232, 249, 0.58))
@@ -2262,6 +2267,8 @@ svg {
 }
 
 .support-chat-entry span {
+  display: block;
+  align-self: start;
   font-size: 12px;
   line-height: 1;
   text-shadow: 0 0 10px rgba(103, 232, 249, 0.36);
