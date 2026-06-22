@@ -209,8 +209,8 @@ svg {
 
 .header-logo-mark {
   position: relative;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.38);
   border-radius: 13px 4px 13px 4px;
@@ -221,6 +221,17 @@ svg {
   box-shadow:
     0 0 18px rgba(34, 211, 238, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.header-logo-image {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 5px rgba(103, 232, 249, 0.24))
+    drop-shadow(0 0 7px rgba(15, 23, 42, 0.48));
 }
 
 .header-logo-mark::after {

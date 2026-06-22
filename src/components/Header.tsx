@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
 
@@ -115,8 +116,15 @@ export function Header({ site }: HeaderProps) {
             className="header-brand group pointer-events-auto flex min-h-12 min-w-0 items-center gap-3 outline-none transition-transform active:scale-[0.98]"
             aria-label={site.name}
           >
-            <span className="header-logo-mark grid size-11 shrink-0 place-items-center text-[13px] font-semibold text-cyan-50">
-              {site.logoText}
+            <span className="header-logo-mark grid size-11 shrink-0 place-items-center">
+              <Image
+                src="/images/qichuang-logo.png"
+                alt="启创"
+                width={512}
+                height={512}
+                className="header-logo-image"
+                priority
+              />
             </span>
             <span className="min-w-0">
               <span className="block truncate text-[16px] font-semibold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
