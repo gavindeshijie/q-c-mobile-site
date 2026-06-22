@@ -1658,18 +1658,21 @@ svg {
 }
 
 .hero-platform-entry {
-  position: relative;
+  position: absolute;
+  left: max(10px, env(safe-area-inset-left));
+  bottom: calc(env(safe-area-inset-bottom) + 18px);
   isolation: isolate;
   display: inline-flex;
-  min-height: 38px;
-  min-width: 164px;
+  min-height: 108px;
+  width: 42px;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  flex-direction: column;
+  gap: 8px;
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.34);
   border-radius: 15px 5px 15px 5px;
-  padding: 0 16px;
+  padding: 10px 0;
   color: rgba(224, 242, 254, 0.94);
   font-size: 13px;
   font-weight: 900;
@@ -1721,7 +1724,14 @@ svg {
   z-index: 1;
 }
 
+.hero-platform-entry span {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
 .hero-platform-entry svg {
+  width: 15px;
+  height: 15px;
   color: rgba(165, 243, 252, 0.92);
   filter: drop-shadow(0 0 7px rgba(103, 232, 249, 0.36));
 }

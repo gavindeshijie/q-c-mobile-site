@@ -11,7 +11,7 @@ export const siteContent = {
     menu: "/menu",
   },
   externalProject: {
-    label: "进入平台",
+    label: "兄弟网站",
     url:
       process.env.NEXT_PUBLIC_EXTERNAL_PROJECT_URL ||
       "https://q-c-new-project.vercel.app",
