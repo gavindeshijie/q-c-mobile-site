@@ -118,22 +118,22 @@ svg {
 
 .header-brand {
   position: relative;
-  width: min(128px, calc(100vw - 90px));
-  min-height: 52px;
+  width: min(140px, calc(100vw - 90px));
+  min-height: 54px;
   overflow: hidden;
   border: 1px solid transparent;
-  border-radius: 17px 5px 17px 5px;
-  padding: 5px 10px 5px 6px;
+  border-radius: 18px 6px 18px 6px;
+  padding: 6px 12px 6px 7px;
   background:
-    linear-gradient(135deg, rgba(3, 7, 18, 0.72), rgba(12, 16, 42, 0.34)) padding-box,
-    linear-gradient(120deg, rgba(103, 232, 249, 0.82), rgba(255, 45, 115, 0.74) 42%, rgba(168, 85, 247, 0.84) 72%, rgba(103, 232, 249, 0.45)) border-box;
+    linear-gradient(135deg, rgba(3, 7, 18, 0.72), rgba(18, 12, 48, 0.38)) padding-box,
+    linear-gradient(124deg, rgba(103, 232, 249, 0.78), rgba(255, 45, 115, 0.7) 46%, rgba(168, 85, 247, 0.82) 76%, rgba(224, 242, 254, 0.46)) border-box;
   box-shadow:
     0 0 18px rgba(34, 211, 238, 0.18),
     0 0 18px rgba(244, 63, 94, 0.12),
     0 14px 32px rgba(0, 0, 0, 0.28),
     inset 0 0 16px rgba(124, 58, 237, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  clip-path: polygon(0 9px, 9px 0, calc(100% - 22px) 0, 100% 20px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 17px 100%, 0 calc(100% - 16px));
+  clip-path: polygon(0 14px, 14px 0, calc(100% - 28px) 0, calc(100% - 15px) 8px, 100% 8px, 100% calc(100% - 15px), calc(100% - 11px) 100%, 24px 100%, 15px calc(100% - 8px), 0 calc(100% - 8px));
 }
 
 .header-brand > span {
@@ -156,16 +156,16 @@ svg {
 }
 
 .header-brand::before {
-  inset: 4px;
+  inset: 5px 7px 5px 5px;
   z-index: 1;
   border: 1px solid rgba(224, 242, 254, 0.1);
-  border-radius: 13px 3px 13px 3px;
+  border-radius: 13px 4px 13px 4px;
   background:
-    linear-gradient(90deg, rgba(103, 232, 249, 0.56) 0 14px, transparent 14px),
-    linear-gradient(270deg, rgba(255, 45, 115, 0.48) 0 12px, transparent 12px),
-    linear-gradient(180deg, rgba(224, 242, 254, 0.08), transparent 58%);
+    linear-gradient(90deg, rgba(103, 232, 249, 0.5) 0 18px, transparent 18px),
+    linear-gradient(270deg, rgba(255, 45, 115, 0.42) 0 14px, transparent 14px),
+    linear-gradient(180deg, rgba(224, 242, 254, 0.07), transparent 58%);
   opacity: 1;
-  clip-path: polygon(0 7px, 7px 0, calc(100% - 15px) 0, 100% 14px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  clip-path: polygon(0 11px, 11px 0, calc(100% - 21px) 0, 100% 10px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 18px 100%, 0 calc(100% - 10px));
 }
 
 .header-brand::after,
