@@ -27,8 +27,8 @@ type FloatingPosition = {
 const conversationKey = "q-c-support-conversation-id";
 const visitorKey = "q-c-support-visitor-id";
 const languageKey = "q-c-support-language";
-const entryPositionKey = "q-c-support-entry-position";
-const panelPositionKey = "q-c-support-panel-position";
+const entryPositionKey = "q-c-support-entry-position-v2";
+const panelPositionKey = "q-c-support-panel-position-v2";
 
 const languages = [
   { value: "zh", label: "中文" },
