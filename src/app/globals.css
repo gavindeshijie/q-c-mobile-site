@@ -1657,6 +1657,79 @@ svg {
   transform: scale(0.975);
 }
 
+.hero-platform-entry {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  min-height: 38px;
+  min-width: 164px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.34);
+  border-radius: 15px 5px 15px 5px;
+  padding: 0 16px;
+  color: rgba(224, 242, 254, 0.94);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 0 0 10px rgba(103, 232, 249, 0.28);
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.12) 0 1px, transparent 1px),
+    linear-gradient(270deg, rgba(244, 114, 182, 0.14) 0 1px, transparent 1px),
+    linear-gradient(135deg, rgba(2, 6, 23, 0.48), rgba(21, 11, 45, 0.28)),
+    radial-gradient(circle at 18% 20%, rgba(34, 211, 238, 0.15), transparent 48%),
+    radial-gradient(circle at 86% 84%, rgba(244, 114, 182, 0.14), transparent 52%);
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.12),
+    0 12px 34px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 14px rgba(124, 58, 237, 0.08);
+  backdrop-filter: blur(10px) saturate(125%);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.hero-platform-entry::before {
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
+  content: "";
+  border: 1px solid rgba(224, 242, 254, 0.07);
+  border-radius: 11px 3px 11px 3px;
+}
+
+.hero-platform-entry::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(224, 242, 254, 0.16), transparent);
+  opacity: 0.7;
+  transform: translateX(-62%);
+  animation: hero-action-sheen 7.2s ease-in-out infinite;
+}
+
+.hero-platform-entry span,
+.hero-platform-entry svg {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-platform-entry svg {
+  color: rgba(165, 243, 252, 0.92);
+  filter: drop-shadow(0 0 7px rgba(103, 232, 249, 0.36));
+}
+
+.hero-platform-entry:active {
+  transform: scale(0.975);
+}
+
 .hero-action-primary {
   border-color: rgba(103, 232, 249, 0.48);
   background:

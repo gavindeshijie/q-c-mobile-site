@@ -10,6 +10,13 @@ export const siteContent = {
     brand: "/brand",
     menu: "/menu",
   },
+  externalProject: {
+    label: "进入平台",
+    url:
+      process.env.NEXT_PUBLIC_EXTERNAL_PROJECT_URL ||
+      "https://q-c-new-project.vercel.app",
+    openInNewTab: true,
+  },
   desktopNotice: "请使用手机浏览",
   hero: {
     eyebrow: "Thailand Market Supply & Technology Hub",

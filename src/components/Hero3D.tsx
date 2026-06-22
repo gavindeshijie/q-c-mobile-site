@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import type { SiteContent } from "@/data/siteContent";
 
 type Hero3DProps = {
   hero: SiteContent["hero"];
+  externalProject: SiteContent["externalProject"];
 };
 
 const nodePositions = [
@@ -40,8 +41,12 @@ const particlePositions = [
 // TODO: Replace with transparent character cutout for perfect layering.
 const characterImage = "/images/hero-character.png";
 
-export function Hero3D({ hero }: Hero3DProps) {
+export function Hero3D({ hero, externalProject }: Hero3DProps) {
   const reduceMotion = useReducedMotion();
+  const externalTarget = externalProject.openInNewTab ? "_blank" : undefined;
+  const externalRel = externalProject.openInNewTab
+    ? "noopener noreferrer"
+    : undefined;
   const characterMotion = reduceMotion ? undefined : { y: [0, -3, 0] };
   const characterTransition = {
     duration: 9.5,
@@ -194,7 +199,16 @@ export function Hero3D({ hero }: Hero3DProps) {
       </div>
 
       <div className="hero-bottom-actions absolute inset-x-0 bottom-0 z-[60]">
-        <div className="flex w-full justify-center">
+        <div className="flex w-full flex-col items-center justify-center gap-2">
+          <a
+            href={externalProject.url}
+            target={externalTarget}
+            rel={externalRel}
+            className="hero-platform-entry"
+          >
+            <span>{externalProject.label}</span>
+            <ArrowUpRight size={16} strokeWidth={2.1} aria-hidden="true" />
+          </a>
           <a
             href={hero.secondaryAction.href}
             className="hero-action-button hero-action-secondary hero-action-single"
