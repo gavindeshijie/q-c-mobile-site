@@ -12,10 +12,10 @@ export const siteContent = {
   },
   externalProject: {
     label: "兄弟网站",
-    url:
-      process.env.NEXT_PUBLIC_EXTERNAL_PROJECT_URL ||
-      "https://q-c-new-project.vercel.app",
+    url: process.env.NEXT_PUBLIC_EXTERNAL_PROJECT_URL || "",
+    enabled: false,
     openInNewTab: true,
+    statusText: "独立平台建设中，即将开放。",
   },
   desktopNotice: "请使用手机浏览",
   hero: {

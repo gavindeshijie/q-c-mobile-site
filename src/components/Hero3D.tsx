@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
@@ -43,8 +44,15 @@ const characterImage = "/images/hero-character.png";
 
 export function Hero3D({ hero, externalProject }: Hero3DProps) {
   const reduceMotion = useReducedMotion();
-  const externalTarget = externalProject.openInNewTab ? "_blank" : undefined;
-  const externalRel = externalProject.openInNewTab
+  const [isPlatformNoticeVisible, setIsPlatformNoticeVisible] = useState(false);
+  const isExternalProjectEnabled = Boolean(
+    externalProject.enabled && externalProject.url,
+  );
+  const externalTarget =
+    isExternalProjectEnabled && externalProject.openInNewTab
+      ? "_blank"
+      : undefined;
+  const externalRel = isExternalProjectEnabled && externalProject.openInNewTab
     ? "noopener noreferrer"
     : undefined;
   const characterMotion = reduceMotion ? undefined : { y: [0, -3, 0] };
@@ -53,6 +61,18 @@ export function Hero3D({ hero, externalProject }: Hero3DProps) {
     repeat: Infinity,
     ease: "easeInOut" as const,
   };
+
+  useEffect(() => {
+    if (!isPlatformNoticeVisible) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setIsPlatformNoticeVisible(false);
+    }, 2600);
+
+    return () => window.clearTimeout(timer);
+  }, [isPlatformNoticeVisible]);
 
   return (
     <section
@@ -200,15 +220,26 @@ export function Hero3D({ hero, externalProject }: Hero3DProps) {
 
       <div className="hero-bottom-actions absolute inset-x-0 bottom-0 z-[60]">
         <div className="flex w-full flex-col items-center justify-center gap-2">
-          <a
-            href={externalProject.url}
-            target={externalTarget}
-            rel={externalRel}
-            className="hero-platform-entry"
-          >
-            <span>{externalProject.label}</span>
-            <ArrowUpRight size={16} strokeWidth={2.1} aria-hidden="true" />
-          </a>
+          {isExternalProjectEnabled ? (
+            <a
+              href={externalProject.url}
+              target={externalTarget}
+              rel={externalRel}
+              className="hero-platform-entry"
+            >
+              <span>{externalProject.label}</span>
+              <ArrowUpRight size={16} strokeWidth={2.1} aria-hidden="true" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              className="hero-platform-entry"
+              onClick={() => setIsPlatformNoticeVisible(true)}
+            >
+              <span>{externalProject.label}</span>
+              <ArrowUpRight size={16} strokeWidth={2.1} aria-hidden="true" />
+            </button>
+          )}
           <a
             href={hero.secondaryAction.href}
             className="hero-action-button hero-action-secondary hero-action-single"
@@ -218,6 +249,19 @@ export function Hero3D({ hero, externalProject }: Hero3DProps) {
           </a>
         </div>
       </div>
+
+      {isPlatformNoticeVisible ? (
+        <motion.div
+          role="status"
+          aria-live="polite"
+          className="hero-platform-toast absolute z-[80]"
+          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
+        >
+          {externalProject.statusText}
+        </motion.div>
+      ) : null}
     </section>
   );
 }
