@@ -27,6 +27,8 @@ type FloatingPosition = {
 const conversationKey = "q-c-support-conversation-id";
 const visitorKey = "q-c-support-visitor-id";
 const languageKey = "q-c-support-language";
+const entryPositionKey = "q-c-support-entry-position";
+const panelPositionKey = "q-c-support-panel-position";
 
 const languages = [
   { value: "zh", label: "中文" },
@@ -52,6 +54,51 @@ function getSavedLanguage() {
   if (typeof window === "undefined") return "zh";
 
   return window.localStorage.getItem(languageKey) || "zh";
+}
+
+function readSavedFloatingPosition(
+  key: string,
+  width: number,
+  height: number,
+): FloatingPosition | null {
+  if (typeof window === "undefined") return null;
+
+  const raw = window.localStorage.getItem(key);
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<FloatingPosition>;
+
+    if (typeof parsed.left !== "number" || typeof parsed.top !== "number") {
+      return null;
+    }
+
+    return clampPositionToViewport(parsed.left, parsed.top, width, height);
+  } catch {
+    return null;
+  }
+}
+
+function saveFloatingPosition(key: string, position: FloatingPosition) {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.setItem(key, JSON.stringify(position));
+}
+
+function clampPositionToViewport(
+  nextLeft: number,
+  nextTop: number,
+  width: number,
+  height: number,
+) {
+  const margin = 8;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  return {
+    left: Math.min(Math.max(margin, nextLeft), viewportWidth - width - margin),
+    top: Math.min(Math.max(margin, nextTop), viewportHeight - height - margin),
+  };
 }
 
 export function SupportChatWidget() {
@@ -83,6 +130,44 @@ export function SupportChatWidget() {
       window.localStorage.setItem(languageKey, language);
     }
   }, [language]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const savedEntryPosition = readSavedFloatingPosition(entryPositionKey, 66, 66);
+      const savedPanelPosition = readSavedFloatingPosition(panelPositionKey, 330, 430);
+
+      if (savedEntryPosition) {
+        setEntryPosition(savedEntryPosition);
+      }
+
+      if (savedPanelPosition) {
+        setPanelPosition(savedPanelPosition);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setEntryPosition((current) =>
+        current ? clampPositionToViewport(current.left, current.top, 66, 66) : current,
+      );
+      setPanelPosition((current) =>
+        current
+          ? clampPositionToViewport(current.left, current.top, 330, 430)
+          : current,
+      );
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -144,14 +229,7 @@ export function SupportChatWidget() {
     width: number,
     height: number,
   ) {
-    const margin = 8;
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    return {
-      left: Math.min(Math.max(margin, nextLeft), viewportWidth - width - margin),
-      top: Math.min(Math.max(margin, nextTop), viewportHeight - height - margin),
-    };
+    return clampPositionToViewport(nextLeft, nextTop, width, height);
   }
 
   function startFloatingDrag(
@@ -179,6 +257,7 @@ export function SupportChatWidget() {
     const width = rect.width;
     const height = rect.height;
     let moved = false;
+    let lastPosition: FloatingPosition | null = null;
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const deltaX = moveEvent.clientX - startX;
@@ -197,6 +276,7 @@ export function SupportChatWidget() {
         width,
         height,
       );
+      lastPosition = nextPosition;
 
       if (target === "entry") {
         setEntryPosition(nextPosition);
@@ -210,9 +290,17 @@ export function SupportChatWidget() {
       window.removeEventListener("pointerup", handlePointerUp);
 
       if (target === "entry" && moved) {
+        if (lastPosition) {
+          saveFloatingPosition(entryPositionKey, lastPosition);
+        }
+
         window.setTimeout(() => {
           entryMovedRef.current = false;
         }, 180);
+      }
+
+      if (target === "panel" && moved && lastPosition) {
+        saveFloatingPosition(panelPositionKey, lastPosition);
       }
     };
 
