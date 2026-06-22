@@ -58,7 +58,7 @@ export const siteContent = {
       title: "网站与软件定制",
       english: "WEB & SOFTWARE",
       description:
-        "根据业务需求定制官网、商城系统、管理后台、小程序与自动化工具，帮助项目快速完成线上化搭建。",
+        "根据业务需求定制网站、手机APP、小程序与自动化工具，帮助项目快速完成线上化搭建。",
       accent: "violet",
     },
     {
