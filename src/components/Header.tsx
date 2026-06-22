@@ -119,11 +119,8 @@ export function Header({ site }: HeaderProps) {
               {site.logoText}
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[15px] font-semibold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
+              <span className="block truncate text-[16px] font-semibold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
                 {headerDisplayName}
-              </span>
-              <span className="block truncate text-xs leading-5 text-cyan-100/62">
-                {site.tagline}
               </span>
             </span>
           </Link>
