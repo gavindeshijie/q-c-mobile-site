@@ -121,19 +121,24 @@ svg {
   width: min(128px, calc(100vw - 90px));
   min-height: 52px;
   overflow: hidden;
-  border-color: rgba(103, 232, 249, 0.38);
-  border-radius: 16px 4px 16px 4px;
+  border: 1px solid transparent;
+  border-radius: 17px 5px 17px 5px;
   padding: 5px 10px 5px 6px;
   background:
-    linear-gradient(135deg, rgba(3, 7, 18, 0.34), rgba(15, 23, 42, 0.14)),
-    radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.14), transparent 45%),
-    radial-gradient(circle at 92% 82%, rgba(244, 114, 182, 0.15), transparent 44%);
+    linear-gradient(135deg, rgba(3, 7, 18, 0.72), rgba(12, 16, 42, 0.34)) padding-box,
+    linear-gradient(120deg, rgba(103, 232, 249, 0.82), rgba(255, 45, 115, 0.74) 42%, rgba(168, 85, 247, 0.84) 72%, rgba(103, 232, 249, 0.45)) border-box;
   box-shadow:
-    0 0 20px rgba(34, 211, 238, 0.12),
-    0 12px 30px rgba(0, 0, 0, 0.22),
-    inset 0 0 12px rgba(124, 58, 237, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.13);
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    0 0 18px rgba(34, 211, 238, 0.18),
+    0 0 18px rgba(244, 63, 94, 0.12),
+    0 14px 32px rgba(0, 0, 0, 0.28),
+    inset 0 0 16px rgba(124, 58, 237, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  clip-path: polygon(0 9px, 9px 0, calc(100% - 22px) 0, 100% 20px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 17px 100%, 0 calc(100% - 16px));
+}
+
+.header-brand > span {
+  position: relative;
+  z-index: 2;
 }
 
 .header-brand::before,
@@ -150,6 +155,19 @@ svg {
   opacity: 0.4;
 }
 
+.header-brand::before {
+  inset: 4px;
+  z-index: 1;
+  border: 1px solid rgba(224, 242, 254, 0.1);
+  border-radius: 13px 3px 13px 3px;
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.56) 0 14px, transparent 14px),
+    linear-gradient(270deg, rgba(255, 45, 115, 0.48) 0 12px, transparent 12px),
+    linear-gradient(180deg, rgba(224, 242, 254, 0.08), transparent 58%);
+  opacity: 1;
+  clip-path: polygon(0 7px, 7px 0, calc(100% - 15px) 0, 100% 14px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
 .header-brand::after,
 .header-menu-button::after {
   position: absolute;
@@ -163,10 +181,16 @@ svg {
 }
 
 .header-brand::after {
-  right: 11px;
-  bottom: 8px;
-  width: 34px;
-  background: linear-gradient(90deg, rgba(244, 114, 182, 0.1), rgba(103, 232, 249, 0.78));
+  z-index: 1;
+  right: 9px;
+  bottom: 7px;
+  width: 43px;
+  height: 2px;
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 45, 115, 0.74), rgba(103, 232, 249, 0.9));
+  box-shadow:
+    0 0 8px rgba(255, 45, 115, 0.34),
+    0 0 10px rgba(103, 232, 249, 0.28);
 }
 
 .header-logo-mark {
