@@ -2158,7 +2158,7 @@ svg {
 .support-chat-widget {
   position: fixed;
   right: max(8px, calc((100vw - 430px) / 2 + 8px));
-  bottom: calc(env(safe-area-inset-bottom) + 14px);
+  bottom: calc(env(safe-area-inset-bottom) + 76px);
   z-index: 9200;
   pointer-events: none;
   touch-action: none;
