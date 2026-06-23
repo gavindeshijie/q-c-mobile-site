@@ -20,7 +20,7 @@ export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const scrollYRef = useRef(0);
-  const headerDisplayName = "A-C.HK";
+  const headerDisplayName = "Q-C.HK";
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
