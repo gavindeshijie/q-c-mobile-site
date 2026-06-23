@@ -209,25 +209,20 @@ svg {
 
 .header-logo-mark {
   position: relative;
-  width: 42px;
-  height: 42px;
-  overflow: hidden;
-  border: 1px solid rgba(103, 232, 249, 0.38);
-  border-radius: 13px 4px 13px 4px;
-  background:
-    linear-gradient(145deg, rgba(224, 242, 254, 0.12), rgba(3, 7, 18, 0.16)),
-    radial-gradient(circle at 20% 12%, rgba(244, 114, 182, 0.22), transparent 42%),
-    radial-gradient(circle at 82% 88%, rgba(34, 211, 238, 0.2), transparent 48%);
-  box-shadow:
-    0 0 18px rgba(34, 211, 238, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  width: 48px;
+  height: 44px;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .header-logo-image {
   position: relative;
   z-index: 1;
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 44px;
   object-fit: contain;
   filter:
     drop-shadow(0 0 5px rgba(103, 232, 249, 0.24))
@@ -235,13 +230,7 @@ svg {
 }
 
 .header-logo-mark::after {
-  position: absolute;
-  inset: 4px;
-  content: "";
-  border-top: 1px solid rgba(224, 242, 254, 0.28);
-  border-left: 1px solid rgba(244, 114, 182, 0.22);
-  border-radius: 10px 3px 10px 3px;
-  pointer-events: none;
+  content: none;
 }
 
 .header-menu-button {

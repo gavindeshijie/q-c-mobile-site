@@ -113,7 +113,7 @@ export function Header({ site }: HeaderProps) {
         <div className="relative z-10 flex items-start justify-between">
           <Link
             href={site.entryLinks.brand}
-            className="header-brand group pointer-events-auto flex min-h-12 min-w-0 items-center gap-3 outline-none transition-transform active:scale-[0.98]"
+            className="header-brand group pointer-events-auto flex min-h-12 min-w-0 items-center gap-2 outline-none transition-transform active:scale-[0.98]"
             aria-label={site.name}
           >
             <span className="header-logo-mark grid size-11 shrink-0 place-items-center">
