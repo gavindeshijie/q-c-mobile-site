@@ -30,7 +30,7 @@ const languageKey = "q-c-support-language";
 const entryPositionKey = "q-c-support-entry-position-v3";
 const panelPositionKey = "q-c-support-panel-position-v3";
 const entryWidth = 66;
-const entryClampHeight = 120;
+const entryClampHeight = 138;
 
 const languages = [
   { value: "zh", label: "中文" },
@@ -503,7 +503,7 @@ export function SupportChatWidget() {
               window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             }}
           >
-            <ArrowUp size={18} strokeWidth={2.4} />
+            <ArrowUp size={27} strokeWidth={2.4} />
           </button>
         </>
       ) : null}
