@@ -179,8 +179,10 @@ svg {
     brightness(0.9)
     contrast(1.18)
     saturate(1.08)
-    drop-shadow(0 0 5px rgba(103, 232, 249, 0.2))
-    drop-shadow(0 0 7px rgba(15, 23, 42, 0.52));
+    drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 5px rgba(255, 255, 255, 0.72))
+    drop-shadow(0 0 10px rgba(224, 242, 254, 0.46))
+    drop-shadow(0 0 8px rgba(15, 23, 42, 0.52));
 }
 
 .header-logo-mark::after {
