@@ -10,6 +10,13 @@ export const siteContent = {
     brand: "/brand",
     menu: "/menu",
   },
+  brotherSites: {
+    label: "兄弟网站",
+    enabled: false,
+    url: "",
+    statusText: "兄弟网站入口建设中，即将开放",
+    openInNewTab: true,
+  },
   desktopNotice: "请使用手机浏览",
   hero: {
     eyebrow: "Thailand Market Supply & Technology Hub",

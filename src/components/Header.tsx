@@ -12,19 +12,27 @@ import type { SiteContent } from "@/data/siteContent";
 type HeaderProps = {
   site: Pick<
     SiteContent,
-    "logoText" | "name" | "tagline" | "menuLabel" | "entryLinks" | "hero"
+    | "logoText"
+    | "name"
+    | "tagline"
+    | "menuLabel"
+    | "entryLinks"
+    | "hero"
+    | "brotherSites"
   >;
 };
 
 export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [brotherNotice, setBrotherNotice] = useState("");
   const scrollYRef = useRef(0);
   const headerDisplayName = "Q-C.HK";
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
   }));
+  const brotherConfig = site.brotherSites;
 
   useEffect(() => {
     if (!isMenuOpen && !isAccountOpen) {
@@ -82,6 +90,31 @@ export function Header({ site }: HeaderProps) {
     };
   }, [isAccountOpen]);
 
+  useEffect(() => {
+    if (!brotherNotice) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setBrotherNotice(""), 2600);
+    return () => window.clearTimeout(timer);
+  }, [brotherNotice]);
+
+  function handleBrotherSitesClick() {
+    setIsMenuOpen(false);
+
+    if (brotherConfig.enabled && brotherConfig.url) {
+      if (brotherConfig.openInNewTab) {
+        window.open(brotherConfig.url, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.href = brotherConfig.url;
+      }
+
+      return;
+    }
+
+    setBrotherNotice(brotherConfig.statusText);
+  }
+
   const accountModal =
     isAccountOpen && typeof document !== "undefined"
       ? createPortal(
@@ -93,6 +126,16 @@ export function Header({ site }: HeaderProps) {
               onClick={() => setIsAccountOpen(false)}
             />
             <UserCenterModal onClose={() => setIsAccountOpen(false)} />
+          </div>,
+          document.body,
+        )
+      : null;
+
+  const brotherSitesNotice =
+    brotherNotice && typeof document !== "undefined"
+      ? createPortal(
+          <div className="brother-sites-toast pointer-events-none fixed left-1/2 z-[9998] -translate-x-1/2">
+            <span>{brotherNotice}</span>
           </div>,
           document.body,
         )
@@ -187,21 +230,25 @@ export function Header({ site }: HeaderProps) {
               </Link>
             ))}
 
-            <Link
-              href="/brand"
+            <button
+              type="button"
               className="header-menu-item header-brother-entry group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 py-2 text-sm font-semibold text-white/86 transition active:scale-[0.98]"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleBrotherSitesClick}
             >
-              <span className="header-menu-alert-dot" aria-hidden="true" />
+              <span
+                className="header-menu-alert-dot header-brother-dot"
+                aria-hidden="true"
+              />
               <span className="min-w-0 flex-1 leading-tight">
-                <span className="block truncate">兄弟网站</span>
+                <span className="block truncate">{brotherConfig.label}</span>
               </span>
               <ArrowRight size={15} strokeWidth={2} />
-            </Link>
+            </button>
           </div>
         </nav>
       </header>
       {accountModal}
+      {brotherSitesNotice}
     </>
   );
 }

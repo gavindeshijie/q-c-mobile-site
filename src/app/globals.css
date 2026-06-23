@@ -385,14 +385,28 @@ svg {
 
 .header-brother-entry {
   margin-top: 4px;
-  border-color: rgba(216, 180, 254, 0.34);
+  width: 100%;
+  border-color: rgba(103, 232, 249, 0.5);
   background:
-    linear-gradient(90deg, rgba(168, 85, 247, 0.24) 0 2px, transparent 2px),
-    linear-gradient(270deg, rgba(103, 232, 249, 0.2) 0 2px, transparent 2px),
-    linear-gradient(135deg, rgba(30, 12, 62, 0.36), rgba(3, 7, 18, 0.2));
+    linear-gradient(90deg, rgba(34, 211, 238, 0.46) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(96, 165, 250, 0.38) 0 2px, transparent 2px),
+    radial-gradient(circle at 14% 18%, rgba(103, 232, 249, 0.38), transparent 44%),
+    radial-gradient(circle at 86% 88%, rgba(37, 99, 235, 0.34), transparent 50%),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.58), rgba(34, 211, 238, 0.22), rgba(12, 18, 48, 0.34));
   box-shadow:
-    0 0 16px rgba(168, 85, 247, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 0 24px rgba(37, 99, 235, 0.22),
+    0 0 18px rgba(34, 211, 238, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 18px rgba(103, 232, 249, 0.08);
+  color: rgba(239, 246, 255, 0.96);
+}
+
+.header-brother-entry .header-brother-dot {
+  background: #67e8f9;
+  box-shadow:
+    0 0 8px rgba(103, 232, 249, 0.9),
+    0 0 16px rgba(37, 99, 235, 0.58),
+    0 0 22px rgba(96, 165, 250, 0.32);
 }
 
 .header-menu-index {
@@ -414,6 +428,48 @@ svg {
     0 0 8px rgba(255, 45, 85, 0.82),
     0 0 14px rgba(244, 63, 94, 0.44);
   animation: hero-hud-alert-blink 1s steps(1, end) infinite;
+}
+
+.brother-sites-toast {
+  top: calc(env(safe-area-inset-top) + 92px);
+  width: min(330px, calc(100vw - 36px));
+  border: 1px solid rgba(103, 232, 249, 0.4);
+  border-radius: 18px 7px 18px 7px;
+  padding: 13px 15px;
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, 0.4) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(37, 99, 235, 0.34) 0 2px, transparent 2px),
+    radial-gradient(circle at 12% 14%, rgba(103, 232, 249, 0.28), transparent 46%),
+    radial-gradient(circle at 88% 92%, rgba(37, 99, 235, 0.3), transparent 52%),
+    linear-gradient(135deg, rgba(3, 7, 18, 0.86), rgba(12, 18, 48, 0.72));
+  box-shadow:
+    0 0 26px rgba(37, 99, 235, 0.22),
+    0 20px 48px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(12px) saturate(130%);
+  color: rgba(239, 246, 255, 0.96);
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(103, 232, 249, 0.32);
+  animation: brother-sites-toast-in 220ms ease both;
+}
+
+.brother-sites-toast span {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes brother-sites-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .account-modal-layer {
