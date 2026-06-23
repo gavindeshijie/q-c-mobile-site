@@ -20,7 +20,7 @@ export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const scrollYRef = useRef(0);
-  const headerDisplayName = "q-c.hk";
+  const headerDisplayName = "2ganc.hk";
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
@@ -127,7 +127,7 @@ export function Header({ site }: HeaderProps) {
               />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[16px] font-semibold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
+              <span className="block truncate text-[17px] font-extrabold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
                 {headerDisplayName}
               </span>
             </span>
