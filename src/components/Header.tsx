@@ -186,6 +186,18 @@ export function Header({ site }: HeaderProps) {
                 <ArrowRight size={15} strokeWidth={2} />
               </Link>
             ))}
+
+            <Link
+              href="/brand"
+              className="header-menu-item header-brother-entry group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 py-2 text-sm font-semibold text-white/86 transition active:scale-[0.98]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span className="header-menu-alert-dot" aria-hidden="true" />
+              <span className="min-w-0 flex-1 leading-tight">
+                <span className="block truncate">兄弟网站</span>
+              </span>
+              <ArrowRight size={15} strokeWidth={2} />
+            </Link>
           </div>
         </nav>
       </header>

@@ -383,6 +383,18 @@ svg {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
+.header-brother-entry {
+  margin-top: 4px;
+  border-color: rgba(216, 180, 254, 0.34);
+  background:
+    linear-gradient(90deg, rgba(168, 85, 247, 0.24) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(103, 232, 249, 0.2) 0 2px, transparent 2px),
+    linear-gradient(135deg, rgba(30, 12, 62, 0.36), rgba(3, 7, 18, 0.2));
+  box-shadow:
+    0 0 16px rgba(168, 85, 247, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
 .header-menu-index {
   color: rgba(103, 232, 249, 0.76);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
