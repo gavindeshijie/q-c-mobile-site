@@ -122,7 +122,7 @@ svg {
   min-height: clamp(68px, 18.5vw, 82px);
   flex-direction: column;
   align-items: center;
-  gap: clamp(10px, 2.8vw, 12px);
+  gap: clamp(2px, 0.55vw, 3px);
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -151,8 +151,8 @@ svg {
   min-height: 22px;
   place-items: center;
   border: 1px solid rgba(216, 180, 254, 0.34);
-  border-radius: 999px 999px 999px 999px / 70% 70% 95% 95%;
-  padding: 4px 10px 5px;
+  border-radius: 999px;
+  padding: 4px 11px 5px;
   background:
     radial-gradient(ellipse at 20% 12%, rgba(244, 114, 182, 0.3), transparent 48%),
     radial-gradient(ellipse at 84% 90%, rgba(103, 232, 249, 0.2), transparent 54%),
