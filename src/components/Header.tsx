@@ -126,8 +126,8 @@ export function Header({ site }: HeaderProps) {
                 priority
               />
             </span>
-            <span className="header-brand-url-wrap min-w-0">
-              <span className="header-brand-url block truncate">
+            <span className="header-brand-url-wrap">
+              <span className="header-brand-url block whitespace-nowrap">
                 {headerDisplayName}
               </span>
             </span>

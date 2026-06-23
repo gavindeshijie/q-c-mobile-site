@@ -117,8 +117,8 @@ svg {
 
 .header-brand {
   position: relative;
-  width: 134px;
-  min-height: 76px;
+  width: 154px;
+  min-height: 82px;
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -136,13 +136,13 @@ svg {
 
 .header-brand-url-wrap {
   position: absolute;
-  right: 0;
-  bottom: 9px;
+  left: 83px;
+  bottom: 12px;
   z-index: 3;
 }
 
 .header-brand-url {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
   line-height: 1;
   color: #f8fbff;
@@ -179,8 +179,8 @@ svg {
 
 .header-logo-mark {
   position: relative;
-  width: 92px;
-  height: 72px;
+  width: 102px;
+  height: 80px;
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -190,29 +190,29 @@ svg {
 
 .header-logo-mark::before {
   position: absolute;
-  inset: 8px 5px 4px 3px;
+  inset: 7px 6px 5px 4px;
   z-index: 0;
   content: "";
   pointer-events: none;
   border-radius: 999px;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.28) 0 28%, rgba(224, 242, 254, 0.16) 42%, transparent 70%);
-  filter: blur(8px);
-  transform: scale(1.18);
+    radial-gradient(circle, rgba(255, 255, 255, 0.42) 0 24%, rgba(224, 242, 254, 0.24) 39%, rgba(103, 232, 249, 0.08) 55%, transparent 72%);
+  filter: blur(10px);
+  transform: scale(1.22);
 }
 
 .header-logo-image {
   position: relative;
   z-index: 1;
-  width: 92px;
-  height: 72px;
+  width: 102px;
+  height: 80px;
   object-fit: contain;
   filter:
-    brightness(0.9)
-    contrast(1.18)
-    saturate(1.08)
-    drop-shadow(0 0 2px rgba(255, 255, 255, 0.55))
-    drop-shadow(0 0 5px rgba(224, 242, 254, 0.28))
+    brightness(1.1)
+    contrast(1.36)
+    saturate(1.24)
+    drop-shadow(0 0 2px rgba(255, 255, 255, 0.82))
+    drop-shadow(0 0 6px rgba(224, 242, 254, 0.5))
     drop-shadow(0 0 8px rgba(15, 23, 42, 0.52));
 }
 
