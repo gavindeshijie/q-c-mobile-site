@@ -143,20 +143,32 @@ export function Header({ site }: HeaderProps) {
             </span>
           </Link>
 
-          <button
-            type="button"
-            aria-label={isMenuOpen ? "关闭菜单" : site.menuLabel}
-            aria-expanded={isMenuOpen}
-            aria-controls="site-hud-menu"
-            className="header-menu-button pointer-events-auto grid size-12 place-items-center text-cyan-50 outline-none transition duration-200 active:scale-95"
-            onClick={() => setIsMenuOpen((current) => !current)}
-          >
-            {isMenuOpen ? (
-              <X size={20} strokeWidth={1.9} />
-            ) : (
-              <Menu size={21} strokeWidth={1.9} />
-            )}
-          </button>
+          <div className="header-action-group">
+            {isBrotherPage ? (
+              <Link
+                href="/"
+                className="header-home-link pointer-events-auto"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                返回首页
+              </Link>
+            ) : null}
+
+            <button
+              type="button"
+              aria-label={isMenuOpen ? "关闭菜单" : site.menuLabel}
+              aria-expanded={isMenuOpen}
+              aria-controls="site-hud-menu"
+              className="header-menu-button pointer-events-auto grid size-12 place-items-center text-cyan-50 outline-none transition duration-200 active:scale-95"
+              onClick={() => setIsMenuOpen((current) => !current)}
+            >
+              {isMenuOpen ? (
+                <X size={20} strokeWidth={1.9} />
+              ) : (
+                <Menu size={21} strokeWidth={1.9} />
+              )}
+            </button>
+          </div>
         </div>
 
         <nav

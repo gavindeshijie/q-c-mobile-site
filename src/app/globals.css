@@ -115,6 +115,40 @@ svg {
   backdrop-filter: blur(10px) saturate(132%);
 }
 
+.header-action-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-home-link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(103, 232, 249, 0.34);
+  border-radius: 15px 6px 15px 6px;
+  padding: 0 12px;
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, 0.32) 0 2px, transparent 2px),
+    radial-gradient(circle at 18% 18%, rgba(103, 232, 249, 0.22), transparent 46%),
+    linear-gradient(135deg, rgba(3, 7, 18, 0.4), rgba(30, 64, 175, 0.22));
+  color: rgba(239, 246, 255, 0.94);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  box-shadow:
+    0 0 16px rgba(37, 99, 235, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px) saturate(132%);
+  transition: transform 160ms ease;
+}
+
+.header-home-link:active {
+  transform: scale(0.96);
+}
+
 .header-brand {
   position: relative;
   display: flex;
@@ -565,7 +599,7 @@ svg {
 }
 
 .brother-sites-hero {
-  padding-top: 28px;
+  padding-top: 10px;
 }
 
 .brother-sites-kicker {
@@ -599,7 +633,7 @@ svg {
 
 .brother-sites-description {
   max-width: 24rem;
-  margin-top: 14px;
+  margin-top: 0;
   color: rgba(203, 213, 225, 0.76);
   font-size: 13px;
   line-height: 1.8;

@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, Network, Radar } from "lucide-react";
 
 import { BrotherSiteCard } from "@/components/BrotherSiteCard";
 import type { BrotherSite } from "@/data/brotherSites";
@@ -39,29 +37,10 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
       ) : null}
 
       <div className="brother-sites-content">
-        <Link href="/" className="brother-sites-back">
-          <ArrowLeft size={16} strokeWidth={2.2} />
-          返回 q-c.hk 首页
-        </Link>
-
         <header className="brother-sites-hero">
-          <p className="brother-sites-kicker">
-            <Radar size={14} strokeWidth={2} />
-            Brother Sites Hub
-          </p>
-          <h1>兄弟网站</h1>
-          <p className="brother-sites-subtitle">独立项目入口中心</p>
           <p className="brother-sites-description">
-            这里集中展示未来将独立部署的项目入口。每个入口对应一个独立网站，后续可绑定不同域名、独立部署和独立管理。
+            这里集中展示独立部署的网站，每个入口对应一个独立网站。
           </p>
-
-          <div className="brother-sites-summary">
-            <span>
-              <Network size={15} strokeWidth={2} />
-              10 个预留入口
-            </span>
-            <span>外部网站独立部署</span>
-          </div>
         </header>
 
         <div className="brother-sites-list">
