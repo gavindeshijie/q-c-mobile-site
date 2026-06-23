@@ -120,8 +120,9 @@ svg {
   display: flex;
   width: auto;
   min-height: clamp(68px, 18.5vw, 82px);
-  align-items: flex-start;
-  gap: clamp(8px, 2vw, 10px);
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 2.8vw, 12px);
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -139,8 +140,8 @@ svg {
 .header-brand-url-wrap {
   position: relative;
   z-index: 4;
-  align-self: flex-end;
-  margin-bottom: clamp(10px, 2.7vw, 13px);
+  align-self: center;
+  margin: 0;
 }
 
 .header-brand-url {
