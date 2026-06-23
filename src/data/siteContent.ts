@@ -12,10 +12,7 @@ export const siteContent = {
   },
   brotherSites: {
     label: "兄弟网站",
-    enabled: false,
-    url: "",
-    statusText: "兄弟网站入口建设中，即将开放",
-    openInNewTab: true,
+    href: "/brother-sites",
   },
   desktopNotice: "请使用手机浏览",
   hero: {

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, X } from "lucide-react";
 
 import { UserCenterModal } from "@/components/UserCenterModal";
@@ -25,8 +26,8 @@ type HeaderProps = {
 export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const [brotherNotice, setBrotherNotice] = useState("");
   const scrollYRef = useRef(0);
+  const pathname = usePathname();
   const headerDisplayName = "Q-C.HK";
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
@@ -90,31 +91,6 @@ export function Header({ site }: HeaderProps) {
     };
   }, [isAccountOpen]);
 
-  useEffect(() => {
-    if (!brotherNotice) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => setBrotherNotice(""), 2600);
-    return () => window.clearTimeout(timer);
-  }, [brotherNotice]);
-
-  function handleBrotherSitesClick() {
-    setIsMenuOpen(false);
-
-    if (brotherConfig.enabled && brotherConfig.url) {
-      if (brotherConfig.openInNewTab) {
-        window.open(brotherConfig.url, "_blank", "noopener,noreferrer");
-      } else {
-        window.location.href = brotherConfig.url;
-      }
-
-      return;
-    }
-
-    setBrotherNotice(brotherConfig.statusText);
-  }
-
   const accountModal =
     isAccountOpen && typeof document !== "undefined"
       ? createPortal(
@@ -130,16 +106,7 @@ export function Header({ site }: HeaderProps) {
           document.body,
         )
       : null;
-
-  const brotherSitesNotice =
-    brotherNotice && typeof document !== "undefined"
-      ? createPortal(
-          <div className="brother-sites-toast pointer-events-none fixed left-1/2 z-[9998] -translate-x-1/2">
-            <span>{brotherNotice}</span>
-          </div>,
-          document.body,
-        )
-      : null;
+  const isBrotherPage = pathname === brotherConfig.href;
 
   return (
     <>
@@ -230,10 +197,12 @@ export function Header({ site }: HeaderProps) {
               </Link>
             ))}
 
-            <button
-              type="button"
-              className="header-menu-item header-brother-entry group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 py-2 text-sm font-semibold text-white/86 transition active:scale-[0.98]"
-              onClick={handleBrotherSitesClick}
+            <Link
+              href={brotherConfig.href}
+              className={`header-menu-item header-brother-entry group flex min-h-12 items-center gap-3 rounded-2xl px-3.5 py-2 text-sm font-semibold text-white/86 transition active:scale-[0.98] ${
+                isBrotherPage ? "is-current" : ""
+              }`}
+              onClick={() => setIsMenuOpen(false)}
             >
               <span
                 className="header-menu-alert-dot header-brother-dot"
@@ -243,12 +212,11 @@ export function Header({ site }: HeaderProps) {
                 <span className="block truncate">{brotherConfig.label}</span>
               </span>
               <ArrowRight size={15} strokeWidth={2} />
-            </button>
+            </Link>
           </div>
         </nav>
       </header>
       {accountModal}
-      {brotherSitesNotice}
     </>
   );
 }
