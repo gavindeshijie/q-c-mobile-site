@@ -20,7 +20,7 @@ export function Header({ site }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const scrollYRef = useRef(0);
-  const headerDisplayName = "2ganc.hk";
+  const headerDisplayName = "A-C.HK";
   const menuItems = site.hero.nodes.map((node) => ({
     label: node.title,
     href: node.href,
@@ -116,7 +116,7 @@ export function Header({ site }: HeaderProps) {
             className="header-brand group pointer-events-auto flex min-h-12 min-w-0 items-center gap-2 outline-none transition-transform active:scale-[0.98]"
             aria-label={site.name}
           >
-            <span className="header-logo-mark grid size-11 shrink-0 place-items-center">
+            <span className="header-logo-mark grid shrink-0 place-items-center">
               <Image
                 src="/images/qichuang-logo.png"
                 alt="启创"
@@ -127,7 +127,7 @@ export function Header({ site }: HeaderProps) {
               />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[17px] font-extrabold leading-5 text-white drop-shadow-[0_0_10px_rgba(103,232,249,0.2)]">
+              <span className="block truncate text-[22px] font-black leading-6 text-[#e8edf7] drop-shadow-[0_0_10px_rgba(103,232,249,0.22)]">
                 {headerDisplayName}
               </span>
             </span>

@@ -118,7 +118,7 @@ svg {
 .header-brand {
   position: relative;
   width: auto;
-  min-height: 48px;
+  min-height: 76px;
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -160,8 +160,8 @@ svg {
 
 .header-logo-mark {
   position: relative;
-  width: 48px;
-  height: 44px;
+  width: 92px;
+  height: 72px;
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -172,12 +172,15 @@ svg {
 .header-logo-image {
   position: relative;
   z-index: 1;
-  width: 48px;
-  height: 44px;
+  width: 92px;
+  height: 72px;
   object-fit: contain;
   filter:
-    drop-shadow(0 0 5px rgba(103, 232, 249, 0.24))
-    drop-shadow(0 0 7px rgba(15, 23, 42, 0.48));
+    brightness(0.9)
+    contrast(1.18)
+    saturate(1.08)
+    drop-shadow(0 0 5px rgba(103, 232, 249, 0.2))
+    drop-shadow(0 0 7px rgba(15, 23, 42, 0.52));
 }
 
 .header-logo-mark::after {
