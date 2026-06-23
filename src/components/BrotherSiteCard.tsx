@@ -18,6 +18,16 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
         site.accent === "music" ? "is-music-site" : ""
       }`}
     >
+      {isAvailable ? (
+        <a
+          href={site.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="brother-site-card-link"
+          aria-label={`打开${site.title}：${site.domain}`}
+        />
+      ) : null}
+
       <div className="brother-site-card-grid">
         <div className="brother-site-index" aria-hidden="true">
           <span>{site.index}</span>
@@ -43,15 +53,10 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
         </span>
 
         {isAvailable ? (
-          <a
-            href={site.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="brother-site-button is-live"
-          >
+          <span className="brother-site-button is-live">
             进入网站
             <ArrowUpRight size={15} strokeWidth={2.2} />
-          </a>
+          </span>
         ) : (
           <button
             type="button"

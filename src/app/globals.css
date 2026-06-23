@@ -726,9 +726,16 @@ svg {
   border-radius: inherit;
 }
 
+.brother-site-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+}
+
 .brother-site-card-grid {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr);
   gap: 12px;
@@ -818,7 +825,7 @@ svg {
 
 .brother-site-actions {
   position: relative;
-  z-index: 1;
+  z-index: 4;
   display: flex;
   align-items: center;
   justify-content: space-between;
