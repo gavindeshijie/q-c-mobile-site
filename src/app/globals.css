@@ -2253,7 +2253,7 @@ svg {
 
 .support-scroll-top {
   position: absolute;
-  top: calc(100% + 7px);
+  top: calc(100% + 14px);
   left: 50%;
   pointer-events: auto;
   display: grid;

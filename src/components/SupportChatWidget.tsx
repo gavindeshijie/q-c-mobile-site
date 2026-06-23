@@ -30,7 +30,7 @@ const languageKey = "q-c-support-language";
 const entryPositionKey = "q-c-support-entry-position-v3";
 const panelPositionKey = "q-c-support-panel-position-v3";
 const entryWidth = 66;
-const entryClampHeight = 112;
+const entryClampHeight = 120;
 
 const languages = [
   { value: "zh", label: "中文" },
