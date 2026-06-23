@@ -48,7 +48,7 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
             <BrotherSiteCard
               key={site.id}
               site={site}
-              onUnavailable={() => setNotice("该兄弟网站暂未开放。")}
+              onUnavailable={(message) => setNotice(message)}
             />
           ))}
         </div>

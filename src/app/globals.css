@@ -686,6 +686,37 @@ svg {
   backdrop-filter: blur(12px) saturate(124%);
 }
 
+.brother-site-card.is-music-site {
+  border-color: rgba(103, 232, 249, 0.38);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, 0.42) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(168, 85, 247, 0.3) 0 2px, transparent 2px),
+    radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.24), transparent 42%),
+    radial-gradient(circle at 86% 78%, rgba(168, 85, 247, 0.2), transparent 48%),
+    linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(15, 23, 42, 0.48));
+  box-shadow:
+    0 0 28px rgba(34, 211, 238, 0.16),
+    0 18px 46px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.brother-site-card.is-music-site::after {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  width: 62px;
+  height: 34px;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 8px, rgba(103, 232, 249, 0.22) 8px 10px, transparent 10px 18px),
+    linear-gradient(90deg, transparent 0 20px, rgba(168, 85, 247, 0.2) 20px 22px, transparent 22px 30px),
+    linear-gradient(90deg, transparent 0 34px, rgba(103, 232, 249, 0.18) 34px 36px, transparent 36px);
+  background-size: 46px 100%;
+  opacity: 0.54;
+  mask-image: linear-gradient(to top, transparent, #000 28%, #000 76%, transparent);
+}
+
 .brother-site-card::before {
   position: absolute;
   inset: 7px;
@@ -719,6 +750,25 @@ svg {
   box-shadow:
     0 0 18px rgba(56, 189, 248, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.brother-site-index span,
+.brother-site-index svg {
+  grid-area: 1 / 1;
+}
+
+.brother-site-index svg {
+  color: rgba(103, 232, 249, 0.92);
+  filter: drop-shadow(0 0 8px rgba(103, 232, 249, 0.4));
+  transform: translate(13px, 13px);
+}
+
+.brother-site-card.is-music-site .brother-site-index {
+  border-color: rgba(103, 232, 249, 0.44);
+  background:
+    radial-gradient(circle at 28% 20%, rgba(103, 232, 249, 0.42), transparent 48%),
+    radial-gradient(circle at 88% 90%, rgba(168, 85, 247, 0.26), transparent 48%),
+    linear-gradient(145deg, rgba(30, 64, 175, 0.4), rgba(2, 6, 23, 0.46));
 }
 
 .brother-site-copy {
