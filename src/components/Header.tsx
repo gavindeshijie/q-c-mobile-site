@@ -126,8 +126,8 @@ export function Header({ site }: HeaderProps) {
                 priority
               />
             </span>
-            <span className="min-w-0">
-              <span className="block truncate text-[22px] font-black leading-6 text-[#e8edf7] drop-shadow-[0_0_10px_rgba(103,232,249,0.22)]">
+            <span className="header-brand-url-wrap min-w-0">
+              <span className="header-brand-url block truncate">
                 {headerDisplayName}
               </span>
             </span>
