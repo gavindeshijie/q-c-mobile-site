@@ -2,7 +2,7 @@
 
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Headphones, Languages, Send, X } from "lucide-react";
+import { ArrowUp, Headphones, Languages, Send, X } from "lucide-react";
 
 type SupportMessage = {
   id: string;
@@ -29,6 +29,8 @@ const visitorKey = "q-c-support-visitor-id";
 const languageKey = "q-c-support-language";
 const entryPositionKey = "q-c-support-entry-position-v3";
 const panelPositionKey = "q-c-support-panel-position-v3";
+const entryWidth = 66;
+const entryClampHeight = 112;
 
 const languages = [
   { value: "zh", label: "中文" },
@@ -133,7 +135,11 @@ export function SupportChatWidget() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      const savedEntryPosition = readSavedFloatingPosition(entryPositionKey, 66, 66);
+      const savedEntryPosition = readSavedFloatingPosition(
+        entryPositionKey,
+        entryWidth,
+        entryClampHeight,
+      );
       const savedPanelPosition = readSavedFloatingPosition(panelPositionKey, 330, 430);
 
       if (savedEntryPosition) {
@@ -151,7 +157,14 @@ export function SupportChatWidget() {
   useEffect(() => {
     function handleResize() {
       setEntryPosition((current) =>
-        current ? clampPositionToViewport(current.left, current.top, 66, 66) : current,
+        current
+          ? clampPositionToViewport(
+              current.left,
+              current.top,
+              entryWidth,
+              entryClampHeight,
+            )
+          : current,
       );
       setPanelPosition((current) =>
         current
@@ -254,8 +267,8 @@ export function SupportChatWidget() {
     const startY = event.clientY;
     const startLeft = rect.left;
     const startTop = rect.top;
-    const width = rect.width;
-    const height = rect.height;
+    const width = target === "entry" ? entryWidth : rect.width;
+    const height = target === "entry" ? entryClampHeight : rect.height;
     let moved = false;
     let lastPosition: FloatingPosition | null = null;
 
@@ -464,23 +477,35 @@ export function SupportChatWidget() {
       ) : null}
 
       {!isOpen ? (
-        <button
-          type="button"
-          className="support-chat-entry"
-          aria-label="打开客服聊天"
-          onPointerDown={(event) => startFloatingDrag(event, "entry")}
-          onClick={() => {
-            if (entryMovedRef.current) {
-              entryMovedRef.current = false;
-              return;
-            }
+        <>
+          <button
+            type="button"
+            className="support-chat-entry"
+            aria-label="打开客服聊天"
+            onPointerDown={(event) => startFloatingDrag(event, "entry")}
+            onClick={() => {
+              if (entryMovedRef.current) {
+                entryMovedRef.current = false;
+                return;
+              }
 
-            setIsOpen(true);
-          }}
-        >
-          <Headphones size={27} strokeWidth={1.8} />
-          <span>客服</span>
-        </button>
+              setIsOpen(true);
+            }}
+          >
+            <Headphones size={27} strokeWidth={1.8} />
+            <span>客服</span>
+          </button>
+          <button
+            type="button"
+            className="support-scroll-top"
+            aria-label="返回页面顶部"
+            onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            }}
+          >
+            <ArrowUp size={18} strokeWidth={2.4} />
+          </button>
+        </>
       ) : null}
     </div>
   );

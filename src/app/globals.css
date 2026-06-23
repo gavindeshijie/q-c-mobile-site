@@ -2235,6 +2235,56 @@ svg {
   transition: transform 170ms ease, border-color 170ms ease;
 }
 
+.support-scroll-top {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 50%;
+  pointer-events: auto;
+  display: grid;
+  width: 38px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(216, 180, 254, 0.52);
+  border-radius: 14px 5px 14px 5px;
+  background:
+    linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(44, 18, 68, 0.5)),
+    radial-gradient(circle at 18% 18%, rgba(244, 114, 182, 0.24), transparent 48%),
+    radial-gradient(circle at 82% 86%, rgba(103, 232, 249, 0.2), transparent 52%);
+  color: rgba(248, 250, 252, 0.96);
+  cursor: pointer;
+  box-shadow:
+    0 0 16px rgba(168, 85, 247, 0.22),
+    0 0 12px rgba(34, 211, 238, 0.14),
+    0 10px 24px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transform: translateX(-50%);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.support-scroll-top::before {
+  position: absolute;
+  inset: 5px;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(224, 242, 254, 0.08);
+  border-radius: inherit;
+}
+
+.support-scroll-top svg {
+  position: relative;
+  z-index: 1;
+  filter:
+    drop-shadow(0 0 7px rgba(216, 180, 254, 0.58))
+    drop-shadow(0 0 10px rgba(103, 232, 249, 0.28));
+}
+
+.support-scroll-top:active {
+  transform: translateX(-50%) scale(0.94);
+}
+
 .support-chat-entry::before,
 .support-chat-panel::before,
 .support-admin-login::before,
