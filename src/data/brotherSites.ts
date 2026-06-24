@@ -7,6 +7,8 @@ export type BrotherSite = {
   url: string;
   enabled: boolean;
   status: string;
+  category: string;
+  keywords?: string[];
   actionLabel?: string;
   footerNote?: string;
   unavailableMessage?: string;
@@ -23,6 +25,8 @@ export const brotherSites: BrotherSite[] = [
     url: "https://yy.q-c.hk",
     enabled: true,
     status: "已上线",
+    category: "音乐",
+    keywords: ["音乐", "歌曲", "歌单", "music", "yy"],
     actionLabel: "进入网站",
     unavailableMessage: "音乐网站正在准备独立部署，域名将使用 YY.Q-C.HK。",
     accent: "music",
@@ -36,6 +40,8 @@ export const brotherSites: BrotherSite[] = [
     url: "https://zuqiu.games",
     enabled: true,
     status: "已上线",
+    category: "体育",
+    keywords: ["足球", "直播", "实况", "胜率", "football", "zuqiu"],
     actionLabel: "进入网站",
     footerNote: "实时足球直播 · 胜率自动计算",
     accent: "football",
@@ -52,6 +58,8 @@ export const brotherSites: BrotherSite[] = [
       url: "",
       enabled: false,
       status: "待配置",
+      category: "待配置",
+      keywords: ["占位", "预留", "待配置"],
     };
   }),
 ];
