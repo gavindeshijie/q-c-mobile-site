@@ -17,6 +17,59 @@ function getPlaceholderPage(slug: string) {
   return pages.find((page) => page.slug === slug);
 }
 
+function getBusinessDetail(slug: string) {
+  return siteContent.businessDetails.find((detail) => detail.id === slug);
+}
+
+function getPageSections(slug: string) {
+  const businessDetail = getBusinessDetail(slug);
+
+  if (businessDetail) {
+    return [
+      {
+        title: "服务方向",
+        items: businessDetail.points,
+      },
+      {
+        title: "适合场景",
+        items: [
+          "需要把项目从想法推进到可访问页面或可执行流程",
+          "需要面向泰国市场整理商品、资源、销售或技术入口",
+          "需要先有清晰页面框架，再逐步接入后台、表单或数据",
+        ],
+      },
+    ];
+  }
+
+  if (slug === "brand") {
+    return [
+      {
+        title: "品牌定位",
+        items: [
+          siteContent.fullTagline,
+          siteContent.chineseTagline,
+          "围绕泰国市场供应、技术服务、资源对接与线上化落地。",
+        ],
+      },
+      {
+        title: "快速入口",
+        items: siteContent.businessDetails.map((item) => item.title),
+      },
+    ];
+  }
+
+  return [
+    {
+      title: "导航入口",
+      items: [
+        "查看四大核心业务",
+        "进入兄弟网站目录",
+        "返回首页主视觉与咨询入口",
+      ],
+    },
+  ];
+}
+
 export function generateStaticParams() {
   return pages.map((page) => ({
     slug: page.slug,
@@ -52,6 +105,22 @@ export default async function PlaceholderPage({ params }: PageProps) {
   const menuLinks = siteContent.placeholderPages.filter(
     (item) => item.slug !== page.slug,
   );
+  const businessDetail = getBusinessDetail(slug);
+  const pageSections = getPageSections(slug);
+  const primaryAction = businessDetail
+    ? {
+        href: `/#${businessDetail.id}`,
+        label: "查看首页业务模块",
+      }
+    : slug === "menu"
+      ? {
+          href: "/brother-sites",
+          label: "进入兄弟网站",
+        }
+      : {
+          href: "/",
+          label: "返回首页",
+        };
 
   return (
     <div className="relative min-h-svh overflow-x-hidden bg-[#02040a] text-white md:flex md:justify-center md:px-8">
@@ -84,16 +153,40 @@ export default async function PlaceholderPage({ params }: PageProps) {
           </section>
 
           <section className="mt-10 rounded-[24px] border border-cyan-200/18 bg-white/[0.055] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.32),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-md">
-            <div className="rounded-[18px] border border-white/10 bg-slate-950/36 p-4">
-              <p className="text-sm font-semibold text-white">页面框架已创建</p>
-              <p className="mt-2 text-xs leading-5 text-slate-300/72">
-                这里先作为内容入口，后续可以继续添加图片、介绍模块、服务说明、案例、按钮或表单。
-              </p>
+            <div className="grid gap-3">
+              {pageSections.map((section) => (
+                <div key={section.title} className="rounded-[18px] border border-white/10 bg-slate-950/36 p-4">
+                  <p className="text-sm font-semibold text-white">{section.title}</p>
+                  <ul className="mt-3 grid gap-2">
+                    {section.items.map((item) => (
+                      <li key={item} className="flex gap-2 text-xs leading-5 text-slate-300/78">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-200/80" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </section>
 
+          <Link
+            href={primaryAction.href}
+            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-cyan-200/24 bg-cyan-300/12 px-4 text-sm font-bold text-cyan-50 shadow-[0_18px_48px_rgba(8,145,178,0.16)] transition active:scale-[0.98]"
+          >
+            {primaryAction.label}
+            <ArrowRight size={16} strokeWidth={2.2} />
+          </Link>
+
           {page.slug === "menu" ? (
             <section className="mt-5 space-y-2">
+              <Link
+                href="/brother-sites"
+                className="flex min-h-12 items-center justify-between rounded-2xl border border-cyan-200/18 bg-cyan-300/10 px-4 text-sm font-semibold text-cyan-50 transition active:scale-[0.98]"
+              >
+                <span>兄弟网站入口</span>
+                <ArrowRight size={16} strokeWidth={2} />
+              </Link>
               {menuLinks.map((item) => (
                 <Link
                   key={item.slug}

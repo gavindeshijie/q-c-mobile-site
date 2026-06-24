@@ -19,7 +19,7 @@ type UserCenterModalProps = {
 };
 
 type AuthMode = "entry" | "otp";
-type AccountPanel = "home" | "settings";
+type AccountPanel = "home" | "profile" | "history" | "settings";
 type CooldownReason = "OTP_RESEND_COOLDOWN" | "EMAIL_PROVIDER_RATE_LIMIT";
 type AccountProfile = {
   personalIp?: string;
@@ -192,6 +192,10 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const isBusy = auth.action !== null;
   const canRequestCode = !isBusy && cooldownSeconds <= 0;
   const canSubmitCode = !isBusy && codePattern.test(code.trim());
+  const supportConversationId =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("q-c-support-conversation-id")
+      : "";
   const feedbackError =
     showRateLimitHint && cooldownReason && cooldownSeconds > 0
       ? getCooldownMessage(cooldownReason, cooldownSeconds)
@@ -519,7 +523,11 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
   const accountTitle = auth.user
     ? accountPanel === "settings"
       ? "账号设置"
-      : "账号状态"
+      : accountPanel === "profile"
+        ? "账号资料"
+        : accountPanel === "history"
+          ? "聊天记录"
+          : "账号状态"
     : mode === "otp"
       ? "邮箱验证码登录"
       : "登录界面";
@@ -648,10 +656,83 @@ export function UserCenterModal({ onClose }: UserCenterModalProps) {
                 </button>
               </form>
             </div>
+          ) : accountPanel === "profile" ? (
+            <div className="auth-settings-panel">
+              <button
+                type="button"
+                className="auth-back-button"
+                onClick={() => setAccountPanel("home")}
+              >
+                <ArrowLeft size={16} strokeWidth={2} />
+                返回账号状态
+              </button>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>账号邮箱</strong>
+                  <span>{auth.user.email}</span>
+                </div>
+              </div>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>网站名字</strong>
+                  <span>{profile.websiteName || "未设置，可在账号设置中保存。"}</span>
+                </div>
+              </div>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>个人IP号码</strong>
+                  <span>{profile.personalIp || "未锁定，可在账号设置中设置一次。"}</span>
+                </div>
+              </div>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>绑定信息</strong>
+                  <span>手机：{profile.boundPhone || "未绑定"}</span>
+                  <span>邮箱：{profile.boundEmail || auth.user.email}</span>
+                </div>
+              </div>
+            </div>
+          ) : accountPanel === "history" ? (
+            <div className="auth-settings-panel">
+              <button
+                type="button"
+                className="auth-back-button"
+                onClick={() => setAccountPanel("home")}
+              >
+                <ArrowLeft size={16} strokeWidth={2} />
+                返回账号状态
+              </button>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>客服会话</strong>
+                  <span>
+                    {supportConversationId
+                      ? `当前设备会话：${supportConversationId}`
+                      : "当前设备暂无客服会话记录。"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="auth-setting-card">
+                <div>
+                  <strong>记录说明</strong>
+                  <span>聊天内容由客服系统保存；打开右下角客服按钮可以继续咨询。</span>
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="auth-placeholder-list">
-              <button type="button">资料</button>
-              <button type="button">聊天记录</button>
+              <button type="button" onClick={() => setAccountPanel("profile")}>
+                资料
+              </button>
+              <button type="button" onClick={() => setAccountPanel("history")}>
+                聊天记录
+              </button>
               <button type="button" onClick={() => setAccountPanel("settings")}>
                 账号设置
               </button>
