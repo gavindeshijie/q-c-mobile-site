@@ -48,7 +48,10 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
         <div className="brother-site-copy">
           <div className="brother-site-meta">
             <span className={isAvailable ? "is-live" : ""}>{site.status}</span>
-            <span>{domainText}</span>
+            <span className="brother-site-domain">
+              <Globe2 size={12} strokeWidth={2} />
+              {domainText}
+            </span>
           </div>
           <h2>{site.title}</h2>
           <p>{site.description}</p>
@@ -56,11 +59,6 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
       </div>
 
       <div className="brother-site-actions">
-        <span className="brother-site-domain">
-          <Globe2 size={14} strokeWidth={2} />
-          {domainText}
-        </span>
-
         {isAvailable ? (
           <span className="brother-site-action-stack">
             {site.footerNote ? (

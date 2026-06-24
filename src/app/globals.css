@@ -663,8 +663,8 @@ svg {
 
 .brother-sites-list {
   display: grid;
-  gap: 12px;
-  margin-top: 28px;
+  gap: 9px;
+  margin-top: 22px;
 }
 
 .brother-site-card {
@@ -672,7 +672,7 @@ svg {
   overflow: hidden;
   border: 1px solid rgba(103, 232, 249, 0.24);
   border-radius: 22px 8px 22px 8px;
-  padding: 15px;
+  padding: 10px 12px;
   background:
     linear-gradient(90deg, rgba(34, 211, 238, 0.32) 0 2px, transparent 2px),
     linear-gradient(270deg, rgba(37, 99, 235, 0.28) 0 2px, transparent 2px),
@@ -772,14 +772,14 @@ svg {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
 }
 
 .brother-site-index {
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border: 1px solid rgba(103, 232, 249, 0.32);
   border-radius: 17px 5px 17px 5px;
@@ -787,7 +787,7 @@ svg {
     radial-gradient(circle at 28% 20%, rgba(103, 232, 249, 0.32), transparent 48%),
     linear-gradient(145deg, rgba(30, 64, 175, 0.34), rgba(2, 6, 23, 0.42));
   color: rgba(224, 242, 254, 0.96);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 950;
   box-shadow:
     0 0 18px rgba(56, 189, 248, 0.14),
@@ -844,21 +844,21 @@ svg {
 .brother-site-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .brother-site-meta span,
 .brother-site-domain {
   display: inline-flex;
-  min-height: 24px;
+  min-height: 20px;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   border: 1px solid rgba(148, 163, 184, 0.16);
   border-radius: 999px;
-  padding: 0 8px;
+  padding: 0 7px;
   background: rgba(15, 23, 42, 0.48);
   color: rgba(203, 213, 225, 0.72);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 760;
 }
 
@@ -868,18 +868,18 @@ svg {
 }
 
 .brother-site-copy h2 {
-  margin-top: 10px;
+  margin-top: 6px;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 950;
   line-height: 1.16;
 }
 
 .brother-site-copy p {
-  margin-top: 8px;
+  margin-top: 4px;
   color: rgba(203, 213, 225, 0.72);
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 11px;
+  line-height: 1.42;
 }
 
 .brother-site-actions {
@@ -887,9 +887,9 @@ svg {
   z-index: 4;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 14px;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 7px;
 }
 
 .brother-site-action-stack {
@@ -897,14 +897,14 @@ svg {
   flex: 0 0 auto;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
+  gap: 4px;
 }
 
 .brother-site-note {
-  max-width: 150px;
+  max-width: 170px;
   overflow: hidden;
   color: rgba(187, 247, 208, 0.72);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 820;
   line-height: 1;
   text-align: right;
@@ -915,7 +915,7 @@ svg {
 
 .brother-site-domain {
   min-width: 0;
-  max-width: 52%;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -923,19 +923,19 @@ svg {
 
 .brother-site-button {
   display: inline-flex;
-  min-height: 36px;
+  min-height: 31px;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 6px;
   border: 1px solid rgba(103, 232, 249, 0.28);
   border-radius: 14px 5px 14px 5px;
-  padding: 0 12px;
+  padding: 0 10px;
   background:
     linear-gradient(135deg, rgba(15, 23, 42, 0.74), rgba(30, 64, 175, 0.28));
   color: rgba(224, 242, 254, 0.9);
   font: inherit;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 880;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: transform 160ms ease;
