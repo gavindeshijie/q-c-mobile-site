@@ -717,6 +717,36 @@ svg {
   mask-image: linear-gradient(to top, transparent, #000 28%, #000 76%, transparent);
 }
 
+.brother-site-card.is-football-site {
+  border-color: rgba(34, 211, 238, 0.36);
+  background:
+    linear-gradient(90deg, rgba(16, 185, 129, 0.36) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(34, 211, 238, 0.3) 0 2px, transparent 2px),
+    radial-gradient(circle at 12% 12%, rgba(34, 211, 238, 0.22), transparent 42%),
+    radial-gradient(circle at 86% 78%, rgba(16, 185, 129, 0.16), transparent 48%),
+    linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(7, 30, 36, 0.48));
+  box-shadow:
+    0 0 28px rgba(16, 185, 129, 0.13),
+    0 18px 46px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.brother-site-card.is-football-site::after {
+  position: absolute;
+  right: 17px;
+  bottom: 14px;
+  width: 82px;
+  height: 38px;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 12px, rgba(16, 185, 129, 0.18) 12px 14px, transparent 14px 27px),
+    linear-gradient(90deg, transparent 0 32px, rgba(34, 211, 238, 0.16) 32px 34px, transparent 34px);
+  background-size: 42px 100%;
+  opacity: 0.48;
+  mask-image: linear-gradient(to top, transparent, #000 24%, #000 78%, transparent);
+}
+
 .brother-site-card::before {
   position: absolute;
   inset: 7px;
@@ -778,6 +808,19 @@ svg {
     linear-gradient(145deg, rgba(30, 64, 175, 0.4), rgba(2, 6, 23, 0.46));
 }
 
+.brother-site-card.is-football-site .brother-site-index {
+  border-color: rgba(34, 211, 238, 0.44);
+  background:
+    radial-gradient(circle at 28% 20%, rgba(34, 211, 238, 0.34), transparent 48%),
+    radial-gradient(circle at 88% 90%, rgba(16, 185, 129, 0.28), transparent 48%),
+    linear-gradient(145deg, rgba(20, 83, 45, 0.32), rgba(2, 6, 23, 0.46));
+}
+
+.brother-site-card.is-football-site .brother-site-index svg {
+  color: rgba(134, 239, 172, 0.95);
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4));
+}
+
 .brother-site-copy {
   min-width: 0;
 }
@@ -831,6 +874,27 @@ svg {
   justify-content: space-between;
   gap: 10px;
   margin-top: 14px;
+}
+
+.brother-site-action-stack {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.brother-site-note {
+  max-width: 150px;
+  overflow: hidden;
+  color: rgba(187, 247, 208, 0.72);
+  font-size: 9px;
+  font-weight: 820;
+  line-height: 1;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.24);
 }
 
 .brother-site-domain {

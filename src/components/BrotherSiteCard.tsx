@@ -1,4 +1,4 @@
-import { ArrowUpRight, Globe2, Headphones, LockKeyhole } from "lucide-react";
+import { ArrowUpRight, Globe2, Headphones, LockKeyhole, Trophy } from "lucide-react";
 
 import type { BrotherSite } from "@/data/brotherSites";
 
@@ -11,13 +11,15 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
   const isAvailable = site.enabled && Boolean(site.url);
   const domainText = site.domain || "暂未设置";
   const unavailableMessage = site.unavailableMessage ?? "该兄弟网站暂未开放。";
+  const accentClass =
+    site.accent === "music"
+      ? "is-music-site"
+      : site.accent === "football"
+        ? "is-football-site"
+        : "";
 
   return (
-    <article
-      className={`brother-site-card ${
-        site.accent === "music" ? "is-music-site" : ""
-      }`}
-    >
+    <article className={`brother-site-card ${accentClass}`}>
       {isAvailable ? (
         <a
           href={site.url}
@@ -33,6 +35,9 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
           <span>{site.index}</span>
           {site.accent === "music" ? (
             <Headphones size={15} strokeWidth={2.2} />
+          ) : null}
+          {site.accent === "football" ? (
+            <Trophy size={15} strokeWidth={2.2} />
           ) : null}
         </div>
 
@@ -53,9 +58,14 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
         </span>
 
         {isAvailable ? (
-          <span className="brother-site-button is-live">
-            进入网站
-            <ArrowUpRight size={15} strokeWidth={2.2} />
+          <span className="brother-site-action-stack">
+            {site.footerNote ? (
+              <span className="brother-site-note">{site.footerNote}</span>
+            ) : null}
+            <span className="brother-site-button is-live">
+              {site.actionLabel ?? "进入网站"}
+              <ArrowUpRight size={15} strokeWidth={2.2} />
+            </span>
           </span>
         ) : (
           <button

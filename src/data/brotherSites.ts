@@ -8,8 +8,9 @@ export type BrotherSite = {
   enabled: boolean;
   status: string;
   actionLabel?: string;
+  footerNote?: string;
   unavailableMessage?: string;
-  accent?: "music";
+  accent?: "music" | "football";
 };
 
 export const brotherSites: BrotherSite[] = [
@@ -26,8 +27,21 @@ export const brotherSites: BrotherSite[] = [
     unavailableMessage: "音乐网站正在准备独立部署，域名将使用 YY.Q-C.HK。",
     accent: "music",
   },
-  ...Array.from({ length: 9 }, (_, index) => {
-    const number = String(index + 2).padStart(2, "0");
+  {
+    id: "football-live-site",
+    index: "02",
+    title: "足球直播 · 足球实况",
+    description: "足球赛事直播、即时赛况与胜率自动计算入口。",
+    domain: "ZUQIU.GAMES",
+    url: "https://zuqiu.games",
+    enabled: true,
+    status: "已上线",
+    actionLabel: "进入网站",
+    footerNote: "实时足球直播 · 胜率自动计算",
+    accent: "football",
+  },
+  ...Array.from({ length: 8 }, (_, index) => {
+    const number = String(index + 3).padStart(2, "0");
 
     return {
       id: `site-${number}`,
