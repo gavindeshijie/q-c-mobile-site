@@ -17,6 +17,7 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
       : site.accent === "football"
         ? "is-football-site"
         : "";
+  const iconOnlyIndex = site.accent === "music" || site.accent === "football";
 
   return (
     <article className={`brother-site-card ${accentClass}`}>
@@ -31,13 +32,16 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
       ) : null}
 
       <div className="brother-site-card-grid">
-        <div className="brother-site-index" aria-hidden="true">
-          <span>{site.index}</span>
+        <div
+          className={`brother-site-index ${iconOnlyIndex ? "is-icon-card" : ""}`}
+          aria-hidden="true"
+        >
+          {iconOnlyIndex ? null : <span>{site.index}</span>}
           {site.accent === "music" ? (
-            <Headphones size={15} strokeWidth={2.2} />
+            <Headphones size={27} strokeWidth={2.15} />
           ) : null}
           {site.accent === "football" ? (
-            <Trophy size={15} strokeWidth={2.2} />
+            <Trophy size={27} strokeWidth={2.15} />
           ) : null}
         </div>
 

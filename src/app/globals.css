@@ -805,12 +805,23 @@ svg {
   transform: translate(13px, 13px);
 }
 
+.brother-site-index.is-icon-card svg {
+  transform: none;
+}
+
 .brother-site-card.is-music-site .brother-site-index {
   border-color: rgba(103, 232, 249, 0.44);
   background:
     radial-gradient(circle at 28% 20%, rgba(103, 232, 249, 0.42), transparent 48%),
     radial-gradient(circle at 88% 90%, rgba(168, 85, 247, 0.26), transparent 48%),
     linear-gradient(145deg, rgba(30, 64, 175, 0.4), rgba(2, 6, 23, 0.46));
+}
+
+.brother-site-card.is-music-site .brother-site-index svg {
+  color: rgba(103, 232, 249, 0.96);
+  filter:
+    drop-shadow(0 0 7px rgba(103, 232, 249, 0.56))
+    drop-shadow(0 0 16px rgba(168, 85, 247, 0.28));
 }
 
 .brother-site-card.is-football-site .brother-site-index {
