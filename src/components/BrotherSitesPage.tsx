@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { BrotherSiteCard } from "@/components/BrotherSiteCard";
@@ -10,17 +10,39 @@ type BrotherSitesPageProps = {
   sites: BrotherSite[];
 };
 
+const directoryCategories = [
+  "全部",
+  "音乐",
+  "体育",
+  "游戏",
+  "影视",
+  "新闻",
+  "购物",
+  "工具",
+  "AI",
+  "教育",
+  "财经",
+  "旅游",
+  "社交",
+  "生活",
+  "娱乐",
+  "科技",
+  "待配置",
+];
+
 export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
   const [notice, setNotice] = useState("");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("全部");
+  const [categoryOpen, setCategoryOpen] = useState(false);
 
   const categories = useMemo(() => {
-    const uniqueCategories = Array.from(
-      new Set(sites.map((site) => site.category).filter(Boolean)),
-    );
+    const knownCategories = new Set(directoryCategories);
+    const extraCategories = sites
+      .map((site) => site.category)
+      .filter((category) => category && !knownCategories.has(category));
 
-    return ["全部", ...uniqueCategories];
+    return [...directoryCategories, ...Array.from(new Set(extraCategories))];
   }, [sites]);
 
   const filteredSites = useMemo(() => {
@@ -71,7 +93,7 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
       <div className="brother-sites-content">
         <header className="brother-sites-hero">
           <div className="brother-sites-directory">
-            <label className="brother-sites-search">
+            <div className="brother-sites-search">
               <Search size={15} strokeWidth={2.2} />
               <input
                 type="search"
@@ -80,19 +102,43 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
                 placeholder="搜索网站、分类或域名"
                 aria-label="搜索网站、分类或域名"
               />
-            </label>
+              <button
+                type="button"
+                className="brother-sites-search-action"
+                onClick={() => setQuery((value) => value.trim())}
+              >
+                搜索
+              </button>
+            </div>
 
-            <div className="brother-sites-categories" aria-label="网站分类筛选">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  className={category === activeCategory ? "is-active" : ""}
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
+            <div className="brother-sites-category-select">
+              <button
+                type="button"
+                className="brother-sites-category-trigger"
+                aria-expanded={categoryOpen}
+                onClick={() => setCategoryOpen((isOpen) => !isOpen)}
+              >
+                <span>{activeCategory}</span>
+                <ChevronDown size={15} strokeWidth={2.4} />
+              </button>
+
+              {categoryOpen ? (
+                <div className="brother-sites-category-menu" aria-label="网站分类筛选">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      type="button"
+                      className={category === activeCategory ? "is-active" : ""}
+                      onClick={() => {
+                        setActiveCategory(category);
+                        setCategoryOpen(false);
+                      }}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         </header>
