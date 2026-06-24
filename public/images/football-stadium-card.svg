@@ -1,0 +1,55 @@
+<svg width="640" height="320" viewBox="0 0 640 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="320" fill="#020817"/>
+  <defs>
+    <radialGradient id="fieldGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(316 214) rotate(90) scale(158 280)">
+      <stop stop-color="#22D3EE" stop-opacity="0.34"/>
+      <stop offset="0.46" stop-color="#2563EB" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#020817" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="stadiumGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(540 62) rotate(130) scale(210 180)">
+      <stop stop-color="#A78BFA" stop-opacity="0.44"/>
+      <stop offset="0.55" stop-color="#22D3EE" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#020817" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pitchLine" x1="88" y1="246" x2="562" y2="246" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67E8F9" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="#67E8F9" stop-opacity="0.68"/>
+      <stop offset="0.52" stop-color="#BBF7D0" stop-opacity="0.54"/>
+      <stop offset="0.86" stop-color="#67E8F9" stop-opacity="0.68"/>
+      <stop offset="1" stop-color="#67E8F9" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="seatLine" x1="34" y1="74" x2="610" y2="74" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#22D3EE" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="320" fill="url(#fieldGlow)"/>
+  <rect width="640" height="320" fill="url(#stadiumGlow)"/>
+  <path d="M44 124C137 65 500 65 596 124" stroke="url(#seatLine)" stroke-width="3"/>
+  <path d="M72 150C158 104 480 104 568 150" stroke="#60A5FA" stroke-opacity="0.24" stroke-width="2"/>
+  <path d="M100 174C190 140 452 140 540 174" stroke="#A78BFA" stroke-opacity="0.18" stroke-width="2"/>
+  <path d="M91 255C166 210 474 210 550 255" stroke="url(#pitchLine)" stroke-width="2.4"/>
+  <path d="M132 286C190 248 452 248 509 286" stroke="#67E8F9" stroke-opacity="0.3" stroke-width="2"/>
+  <path d="M320 220V304" stroke="#BBF7D0" stroke-opacity="0.22" stroke-width="2"/>
+  <ellipse cx="320" cy="248" rx="58" ry="26" stroke="#BBF7D0" stroke-opacity="0.32" stroke-width="2"/>
+  <path d="M126 231H214V289H126V231Z" stroke="#67E8F9" stroke-opacity="0.2" stroke-width="2"/>
+  <path d="M426 231H514V289H426V231Z" stroke="#67E8F9" stroke-opacity="0.2" stroke-width="2"/>
+  <g opacity="0.72">
+    <circle cx="106" cy="84" r="2.8" fill="#E0F2FE"/>
+    <circle cx="153" cy="68" r="2.2" fill="#67E8F9"/>
+    <circle cx="206" cy="58" r="2.5" fill="#E0F2FE"/>
+    <circle cx="256" cy="52" r="2.1" fill="#67E8F9"/>
+    <circle cx="312" cy="50" r="2.8" fill="#F8FAFC"/>
+    <circle cx="366" cy="52" r="2.1" fill="#67E8F9"/>
+    <circle cx="418" cy="58" r="2.5" fill="#E0F2FE"/>
+    <circle cx="470" cy="68" r="2.2" fill="#67E8F9"/>
+    <circle cx="524" cy="84" r="2.8" fill="#E0F2FE"/>
+  </g>
+  <g opacity="0.2">
+    <path d="M88 117L148 254" stroke="#67E8F9"/>
+    <path d="M552 117L492 254" stroke="#67E8F9"/>
+    <path d="M208 70L244 286" stroke="#67E8F9"/>
+    <path d="M430 70L392 286" stroke="#67E8F9"/>
+  </g>
+</svg>

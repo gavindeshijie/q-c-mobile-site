@@ -722,8 +722,8 @@ svg {
   background:
     linear-gradient(90deg, rgba(16, 185, 129, 0.36) 0 2px, transparent 2px),
     linear-gradient(270deg, rgba(34, 211, 238, 0.3) 0 2px, transparent 2px),
-    radial-gradient(circle at 12% 12%, rgba(34, 211, 238, 0.22), transparent 42%),
-    radial-gradient(circle at 86% 78%, rgba(16, 185, 129, 0.16), transparent 48%),
+    radial-gradient(circle at 12% 12%, rgba(34, 211, 238, 0.26), transparent 42%),
+    radial-gradient(circle at 86% 78%, rgba(16, 185, 129, 0.2), transparent 48%),
     linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(7, 30, 36, 0.48));
   box-shadow:
     0 0 28px rgba(16, 185, 129, 0.13),
@@ -733,18 +733,23 @@ svg {
 
 .brother-site-card.is-football-site::after {
   position: absolute;
-  right: 17px;
-  bottom: 14px;
-  width: 82px;
-  height: 38px;
+  inset: 0;
+  z-index: 0;
   content: "";
   pointer-events: none;
   background:
-    linear-gradient(90deg, transparent 0 12px, rgba(16, 185, 129, 0.18) 12px 14px, transparent 14px 27px),
-    linear-gradient(90deg, transparent 0 32px, rgba(34, 211, 238, 0.16) 32px 34px, transparent 34px);
-  background-size: 42px 100%;
-  opacity: 0.48;
-  mask-image: linear-gradient(to top, transparent, #000 24%, #000 78%, transparent);
+    linear-gradient(90deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0.18) 46%, rgba(2, 6, 23, 0.62)),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.28), rgba(2, 6, 23, 0.62)),
+    url("/images/football-stadium-card.svg");
+  background-position: center;
+  background-size: cover;
+  opacity: 0.76;
+  mix-blend-mode: screen;
+}
+
+.brother-site-card.is-football-site .brother-site-card-grid,
+.brother-site-card.is-football-site .brother-site-actions {
+  text-shadow: 0 2px 14px rgba(2, 6, 23, 0.72);
 }
 
 .brother-site-card::before {
