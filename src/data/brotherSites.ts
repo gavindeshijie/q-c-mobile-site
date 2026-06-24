@@ -12,7 +12,7 @@ export type BrotherSite = {
   actionLabel?: string;
   footerNote?: string;
   unavailableMessage?: string;
-  accent?: "music" | "football";
+  accent?: "music" | "football" | "community";
 };
 
 export const brotherSites: BrotherSite[] = [
@@ -46,8 +46,23 @@ export const brotherSites: BrotherSite[] = [
     footerNote: "实时足球直播 · 胜率自动计算",
     accent: "football",
   },
-  ...Array.from({ length: 8 }, (_, index) => {
-    const number = String(index + 3).padStart(2, "0");
+  {
+    id: "chinese-community-site",
+    index: "03",
+    title: "华人社区网站",
+    description: "面向华人用户的社区交流与生活资讯入口，提供社区内容、信息发布和交流访问。",
+    domain: "8885838.com",
+    url: "https://8885838.com",
+    enabled: true,
+    status: "已上线",
+    category: "社区",
+    keywords: ["华人", "社区", "华人社区", "8885838", "8885838.com", "community"],
+    actionLabel: "进入网站",
+    footerNote: "华人社区交流 · 生活资讯入口",
+    accent: "community",
+  },
+  ...Array.from({ length: 7 }, (_, index) => {
+    const number = String(index + 4).padStart(2, "0");
 
     return {
       id: `site-${number}`,

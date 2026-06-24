@@ -24,6 +24,7 @@ const directoryCategories = [
   "财经",
   "旅游",
   "社交",
+  "社区",
   "生活",
   "娱乐",
   "科技",

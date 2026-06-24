@@ -906,6 +906,42 @@ svg {
   text-shadow: 0 2px 14px rgba(2, 6, 23, 0.72);
 }
 
+.brother-site-card.is-community-site {
+  border-color: rgba(103, 232, 249, 0.36);
+  background:
+    linear-gradient(90deg, rgba(14, 165, 233, 0.38) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(99, 102, 241, 0.28) 0 2px, transparent 2px),
+    radial-gradient(circle at 18% 18%, rgba(103, 232, 249, 0.24), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(129, 140, 248, 0.2), transparent 48%),
+    linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(12, 28, 58, 0.5));
+  box-shadow:
+    0 0 28px rgba(14, 165, 233, 0.15),
+    0 18px 46px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.brother-site-card.is-community-site::after {
+  position: absolute;
+  right: 14px;
+  bottom: 13px;
+  width: 82px;
+  height: 48px;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12px 12px, rgba(103, 232, 249, 0.42) 0 3px, transparent 4px),
+    radial-gradient(circle at 42px 8px, rgba(165, 180, 252, 0.4) 0 3px, transparent 4px),
+    radial-gradient(circle at 66px 26px, rgba(103, 232, 249, 0.34) 0 3px, transparent 4px),
+    linear-gradient(24deg, transparent 0 22px, rgba(103, 232, 249, 0.2) 22px 24px, transparent 24px),
+    linear-gradient(146deg, transparent 0 31px, rgba(165, 180, 252, 0.18) 31px 33px, transparent 33px);
+  opacity: 0.66;
+}
+
+.brother-site-card.is-community-site .brother-site-card-grid,
+.brother-site-card.is-community-site .brother-site-actions {
+  text-shadow: 0 2px 14px rgba(2, 6, 23, 0.7);
+}
+
 .brother-site-card::before {
   position: absolute;
   inset: 7px;
@@ -989,6 +1025,21 @@ svg {
 .brother-site-card.is-football-site .brother-site-index svg {
   color: rgba(134, 239, 172, 0.95);
   filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4));
+}
+
+.brother-site-card.is-community-site .brother-site-index {
+  border-color: rgba(103, 232, 249, 0.42);
+  background:
+    radial-gradient(circle at 28% 20%, rgba(103, 232, 249, 0.38), transparent 48%),
+    radial-gradient(circle at 88% 90%, rgba(129, 140, 248, 0.24), transparent 48%),
+    linear-gradient(145deg, rgba(30, 64, 175, 0.36), rgba(2, 6, 23, 0.46));
+}
+
+.brother-site-card.is-community-site .brother-site-index svg {
+  color: rgba(186, 230, 253, 0.96);
+  filter:
+    drop-shadow(0 0 7px rgba(103, 232, 249, 0.48))
+    drop-shadow(0 0 16px rgba(129, 140, 248, 0.24));
 }
 
 .brother-site-copy {

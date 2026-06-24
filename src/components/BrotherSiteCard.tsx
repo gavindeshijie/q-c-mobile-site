@@ -1,4 +1,4 @@
-import { ArrowUpRight, Globe2, Headphones, LockKeyhole, Trophy } from "lucide-react";
+import { ArrowUpRight, Globe2, Headphones, LockKeyhole, Trophy, UsersRound } from "lucide-react";
 
 import type { BrotherSite } from "@/data/brotherSites";
 
@@ -16,8 +16,11 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
       ? "is-music-site"
       : site.accent === "football"
         ? "is-football-site"
-        : "";
-  const iconOnlyIndex = site.accent === "music" || site.accent === "football";
+        : site.accent === "community"
+          ? "is-community-site"
+          : "";
+  const iconOnlyIndex =
+    site.accent === "music" || site.accent === "football" || site.accent === "community";
 
   return (
     <article className={`brother-site-card ${accentClass}`}>
@@ -42,6 +45,9 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
           ) : null}
           {site.accent === "football" ? (
             <Trophy size={27} strokeWidth={2.15} />
+          ) : null}
+          {site.accent === "community" ? (
+            <UsersRound size={27} strokeWidth={2.15} />
           ) : null}
         </div>
 
