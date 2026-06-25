@@ -161,6 +161,79 @@ export const siteContent = {
       icon: "mapPin",
     },
   ],
+  serviceMatcherIntro: {
+    title: "快速匹配服务",
+    subtitle: "按你的当前需求，直接找到最接近的业务入口。",
+  },
+  serviceMatcher: [
+    {
+      id: "build-system",
+      label: "我要做网站/系统",
+      need: "需要把项目做成可访问的网站、后台、商城或自动化工具。",
+      recommendation: "网站与软件定制",
+      href: "#web-software",
+      points: ["官网与落地页", "业务系统与后台", "自动化流程工具"],
+    },
+    {
+      id: "find-products",
+      label: "我要找商品",
+      need: "需要筛选适合泰国市场销售的科技小商品或组合货源。",
+      recommendation: "潮流科技小商品供应",
+      href: "#trend-tech-supply",
+      points: ["热门小商品", "稳定供货", "销售素材支持"],
+    },
+    {
+      id: "connect-local",
+      label: "我要找资源",
+      need: "需要本地渠道、商家、达人、推广或销售资源对接。",
+      recommendation: "本地资源整合与销售",
+      href: "#local-resource-sales",
+      points: ["渠道对接", "商家资源", "推广协同"],
+    },
+    {
+      id: "thai-store",
+      label: "我要开泰国网店",
+      need: "需要从开店、页面、商品到基础运营的一条龙支持。",
+      recommendation: "泰国本土网店一条龙服务",
+      href: "#thai-shop-service",
+      points: ["开店协助", "页面搭建", "基础运营"],
+    },
+  ],
+  trustSignals: [
+    {
+      value: "4",
+      label: "核心业务",
+      description: "网站软件、商品供应、本地资源、泰国网店。",
+    },
+    {
+      value: "1",
+      label: "统一入口",
+      description: "主站集中说明业务，兄弟网站独立访问。",
+    },
+    {
+      value: "24h",
+      label: "异步咨询",
+      description: "客服入口可提交问题，后台按会话继续处理。",
+    },
+  ],
+  faqs: [
+    {
+      question: "我不知道该选哪个业务怎么办？",
+      answer: "先用上方快速匹配服务，根据目标选择入口。仍不确定时，使用右下角客服说明需求。",
+    },
+    {
+      question: "兄弟网站和 q-c.hk 主站是什么关系？",
+      answer: "q-c.hk 是主入口和业务说明页；兄弟网站是独立项目入口，例如音乐、足球、社区等站点。",
+    },
+    {
+      question: "网站和软件定制可以做什么？",
+      answer: "可以先从官网、落地页、后台、商城、预约流程、自动化工具等低风险模块开始。",
+    },
+    {
+      question: "现在可以直接联系吗？",
+      answer: "可以。点击页面咨询入口或右下角客服按钮，留下需求和联系方式即可继续沟通。",
+    },
+  ],
   processIntro: {
     title: "合作流程",
   },

@@ -7,7 +7,9 @@ import { Header } from "@/components/Header";
 import { Hero3D } from "@/components/Hero3D";
 import { ProcessSection } from "@/components/ProcessSection";
 import { ScrollToTopOnLoad } from "@/components/ScrollToTopOnLoad";
+import { ServiceMatcherSection } from "@/components/ServiceMatcherSection";
 import { SupportChatWidget } from "@/components/SupportChatWidget";
+import { TrustFAQSection } from "@/components/TrustFAQSection";
 import { siteContent } from "@/data/siteContent";
 
 export default function Home() {
@@ -30,6 +32,14 @@ export default function Home() {
         <CapabilitySection
           intro={siteContent.capabilitiesIntro}
           capabilities={siteContent.capabilities}
+        />
+        <ServiceMatcherSection
+          intro={siteContent.serviceMatcherIntro}
+          items={siteContent.serviceMatcher}
+        />
+        <TrustFAQSection
+          faqs={siteContent.faqs}
+          trustSignals={siteContent.trustSignals}
         />
         <ProcessSection
           intro={siteContent.processIntro}
