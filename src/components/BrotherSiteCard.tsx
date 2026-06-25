@@ -1,16 +1,14 @@
-import { ArrowUpRight, Globe2, Headphones, LockKeyhole, Trophy, UsersRound } from "lucide-react";
+import { ArrowUpRight, Globe2, Headphones, Trophy, UsersRound } from "lucide-react";
 
 import type { BrotherSite } from "@/data/brotherSites";
 
 type BrotherSiteCardProps = {
   site: BrotherSite;
-  onUnavailable: (message: string) => void;
 };
 
-export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
+export function BrotherSiteCard({ site }: BrotherSiteCardProps) {
   const isAvailable = site.enabled && Boolean(site.url);
-  const domainText = site.domain || "暂未设置";
-  const unavailableMessage = site.unavailableMessage ?? "该兄弟网站暂未开放。";
+  const domainText = site.domain;
   const accentClass =
     site.accent === "music"
       ? "is-music-site"
@@ -22,17 +20,19 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
   const iconOnlyIndex =
     site.accent === "music" || site.accent === "football" || site.accent === "community";
 
+  if (!isAvailable) {
+    return null;
+  }
+
   return (
     <article className={`brother-site-card ${accentClass}`}>
-      {isAvailable ? (
-        <a
-          href={site.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="brother-site-card-link"
-          aria-label={`打开${site.title}：${site.domain}`}
-        />
-      ) : null}
+      <a
+        href={site.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="brother-site-card-link"
+        aria-label={`打开${site.title}：${site.domain}`}
+      />
 
       <div className="brother-site-card-grid">
         <div
@@ -65,26 +65,15 @@ export function BrotherSiteCard({ site, onUnavailable }: BrotherSiteCardProps) {
       </div>
 
       <div className="brother-site-actions">
-        {isAvailable ? (
-          <span className="brother-site-action-stack">
-            {site.footerNote ? (
-              <span className="brother-site-note">{site.footerNote}</span>
-            ) : null}
-            <span className="brother-site-button is-live">
-              {site.actionLabel ?? "进入网站"}
-              <ArrowUpRight size={15} strokeWidth={2.2} />
-            </span>
+        <span className="brother-site-action-stack">
+          {site.footerNote ? (
+            <span className="brother-site-note">{site.footerNote}</span>
+          ) : null}
+          <span className="brother-site-button is-live">
+            {site.actionLabel ?? "进入网站"}
+            <ArrowUpRight size={15} strokeWidth={2.2} />
           </span>
-        ) : (
-          <button
-            type="button"
-            className="brother-site-button"
-            onClick={() => onUnavailable(unavailableMessage)}
-          >
-            {site.actionLabel ?? "即将开放"}
-            <LockKeyhole size={14} strokeWidth={2.2} />
-          </button>
-        )}
+        </span>
       </div>
     </article>
   );

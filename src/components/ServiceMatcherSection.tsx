@@ -38,7 +38,7 @@ export function ServiceMatcherSection({ intro, items }: ServiceMatcherSectionPro
         </span>
         <div>
           <p className="text-[11px] font-black uppercase tracking-[0.18em] text-cyan-200/70">
-            AI MATCH
+            需求匹配
           </p>
           <h2 className="mt-1 text-xl font-black tracking-tight text-white">{intro.title}</h2>
           <p className="mt-1 text-xs leading-5 text-slate-300/72">{intro.subtitle}</p>

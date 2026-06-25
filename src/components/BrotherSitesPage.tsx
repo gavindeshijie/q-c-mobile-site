@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown, Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { BrotherSiteCard } from "@/components/BrotherSiteCard";
 import type { BrotherSite } from "@/data/brotherSites";
@@ -14,42 +14,31 @@ const directoryCategories = [
   "全部",
   "音乐",
   "体育",
-  "游戏",
-  "影视",
-  "新闻",
-  "购物",
-  "工具",
-  "AI",
-  "教育",
-  "财经",
-  "旅游",
-  "社交",
   "社区",
-  "生活",
-  "娱乐",
-  "科技",
-  "待配置",
 ];
 
 export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
-  const [notice, setNotice] = useState("");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("全部");
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const availableSites = useMemo(
+    () => sites.filter((site) => site.enabled && site.url),
+    [sites],
+  );
 
   const categories = useMemo(() => {
     const knownCategories = new Set(directoryCategories);
-    const extraCategories = sites
+    const extraCategories = availableSites
       .map((site) => site.category)
       .filter((category) => category && !knownCategories.has(category));
 
     return [...directoryCategories, ...Array.from(new Set(extraCategories))];
-  }, [sites]);
+  }, [availableSites]);
 
   const filteredSites = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return sites.filter((site) => {
+    return availableSites.filter((site) => {
       const categoryMatched =
         activeCategory === "全部" || site.category === activeCategory;
       const searchText = [
@@ -65,16 +54,7 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
 
       return categoryMatched && (!normalizedQuery || searchText.includes(normalizedQuery));
     });
-  }, [activeCategory, query, sites]);
-
-  useEffect(() => {
-    if (!notice) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => setNotice(""), 2400);
-    return () => window.clearTimeout(timer);
-  }, [notice]);
+  }, [activeCategory, availableSites, query]);
 
   return (
     <section className="brother-sites-page">
@@ -84,12 +64,6 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
         <span className="brother-sites-grid" />
         <span className="brother-sites-scan" />
       </div>
-
-      {notice ? (
-        <div className="brother-sites-page-toast" role="status">
-          {notice}
-        </div>
-      ) : null}
 
       <div className="brother-sites-content">
         <header className="brother-sites-hero">
@@ -149,7 +123,6 @@ export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {
             <BrotherSiteCard
               key={site.id}
               site={site}
-              onUnavailable={(message) => setNotice(message)}
             />
           ))}
         </div>

@@ -64,7 +64,7 @@ export function BusinessDetailSections({
                 </span>
                 <span className="business-detail-signal inline-flex items-center gap-1.5">
                   <span />
-                  LIVE NODE
+                  业务模块
                 </span>
               </div>
 

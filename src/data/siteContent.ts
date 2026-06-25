@@ -133,7 +133,7 @@ export const siteContent = {
       thai: "บริการครบวงจรร้านค้าออนไลน์ไทย",
       english: "THAI SHOP FULL SERVICE",
       summary:
-        "为进入泰国网店市场的商家预留完整服务页框架，后续可继续加入平台、商品和运营内容。",
+        "为进入泰国网店市场的商家整理开店、供货、页面搭建和基础运营支持流程。",
       points: ["网店开设协助", "商品供应支持", "页面搭建与基础运营"],
       accent: "gold",
     },
@@ -211,9 +211,9 @@ export const siteContent = {
       description: "主站集中说明业务，兄弟网站独立访问。",
     },
     {
-      value: "24h",
-      label: "异步咨询",
-      description: "客服入口可提交问题，后台按会话继续处理。",
+      value: "会话",
+      label: "客服记录",
+      description: "客服入口可提交问题，并按会话记录继续沟通。",
     },
   ],
   faqs: [
@@ -231,7 +231,7 @@ export const siteContent = {
     },
     {
       question: "现在可以直接联系吗？",
-      answer: "可以。点击页面咨询入口或右下角客服按钮，留下需求和联系方式即可继续沟通。",
+      answer: "可以。点击页面咨询入口或右下角客服按钮，留下需求、联系方式和目标业务即可继续沟通。",
     },
   ],
   processIntro: {
