@@ -942,6 +942,41 @@ svg {
   text-shadow: 0 2px 14px rgba(2, 6, 23, 0.7);
 }
 
+.brother-site-card.is-express-site {
+  border-color: rgba(251, 191, 36, 0.38);
+  background:
+    linear-gradient(90deg, rgba(251, 191, 36, 0.34) 0 2px, transparent 2px),
+    linear-gradient(270deg, rgba(34, 211, 238, 0.3) 0 2px, transparent 2px),
+    radial-gradient(circle at 14% 14%, rgba(251, 191, 36, 0.2), transparent 42%),
+    radial-gradient(circle at 88% 76%, rgba(34, 211, 238, 0.18), transparent 48%),
+    linear-gradient(145deg, rgba(3, 7, 18, 0.72), rgba(40, 28, 8, 0.48));
+  box-shadow:
+    0 0 28px rgba(251, 191, 36, 0.12),
+    0 18px 46px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+.brother-site-card.is-express-site::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 23, 0.74), rgba(2, 6, 23, 0.18) 48%, rgba(2, 6, 23, 0.62)),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.26), rgba(2, 6, 23, 0.64)),
+    url("/images/express-delivery-card.svg");
+  background-position: center;
+  background-size: cover;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+}
+
+.brother-site-card.is-express-site .brother-site-card-grid,
+.brother-site-card.is-express-site .brother-site-actions {
+  text-shadow: 0 2px 14px rgba(2, 6, 23, 0.72);
+}
+
 .brother-site-card::before {
   position: absolute;
   inset: 7px;
@@ -1040,6 +1075,21 @@ svg {
   filter:
     drop-shadow(0 0 7px rgba(103, 232, 249, 0.48))
     drop-shadow(0 0 16px rgba(129, 140, 248, 0.24));
+}
+
+.brother-site-card.is-express-site .brother-site-index {
+  border-color: rgba(251, 191, 36, 0.44);
+  background:
+    radial-gradient(circle at 28% 20%, rgba(251, 191, 36, 0.34), transparent 48%),
+    radial-gradient(circle at 88% 90%, rgba(34, 211, 238, 0.24), transparent 48%),
+    linear-gradient(145deg, rgba(146, 64, 14, 0.32), rgba(2, 6, 23, 0.46));
+}
+
+.brother-site-card.is-express-site .brother-site-index svg {
+  color: rgba(254, 240, 138, 0.96);
+  filter:
+    drop-shadow(0 0 7px rgba(251, 191, 36, 0.5))
+    drop-shadow(0 0 16px rgba(34, 211, 238, 0.2));
 }
 
 .brother-site-copy {

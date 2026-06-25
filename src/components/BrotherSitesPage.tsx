@@ -14,7 +14,7 @@ const directoryCategories = [
   "全部",
   "音乐",
   "体育",
-  "社区",
+  "物流",
 ];
 
 export function BrotherSitesPage({ sites }: BrotherSitesPageProps) {

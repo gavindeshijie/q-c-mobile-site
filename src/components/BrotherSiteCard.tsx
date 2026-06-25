@@ -1,4 +1,4 @@
-import { ArrowUpRight, Globe2, Headphones, Trophy, UsersRound } from "lucide-react";
+import { ArrowUpRight, Globe2, Headphones, Trophy, Truck, UsersRound } from "lucide-react";
 
 import type { BrotherSite } from "@/data/brotherSites";
 
@@ -16,9 +16,14 @@ export function BrotherSiteCard({ site }: BrotherSiteCardProps) {
         ? "is-football-site"
         : site.accent === "community"
           ? "is-community-site"
+          : site.accent === "express"
+            ? "is-express-site"
           : "";
   const iconOnlyIndex =
-    site.accent === "music" || site.accent === "football" || site.accent === "community";
+    site.accent === "music" ||
+    site.accent === "football" ||
+    site.accent === "community" ||
+    site.accent === "express";
 
   if (!isAvailable) {
     return null;
@@ -48,6 +53,9 @@ export function BrotherSiteCard({ site }: BrotherSiteCardProps) {
           ) : null}
           {site.accent === "community" ? (
             <UsersRound size={27} strokeWidth={2.15} />
+          ) : null}
+          {site.accent === "express" ? (
+            <Truck size={27} strokeWidth={2.15} />
           ) : null}
         </div>
 
